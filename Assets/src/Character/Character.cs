@@ -22,14 +22,15 @@ public class Character : MonoBehaviour
 
     Quaternion savedAxis = Quaternion.identity;
 
-    public Animator GolfClubController;
+    public Animator AnimationController;
+    public BallPointer ballPointer;
     public static Character Instance { get; private set; }
 
     public bool isShotting = false;
 
     public GameObject charMesh;
     public bool canRotate = true;
-    private bool ballIsMoving = false;
+    public bool ballIsMoving = false;
 
     public RectTransform fingerImage;
     public InputControl inputControl;
@@ -38,6 +39,11 @@ public class Character : MonoBehaviour
     private GameObject lookAt;
     private bool rotateY = false;
     public Transform cameraFollow;
+
+    public Vector3 cameraSavedPos=new Vector3();
+    public Quaternion cameraSavedRot = new Quaternion();
+
+    
 
     /// <summary>
     /// Awake is called when the script instance is being loaded.
@@ -48,11 +54,15 @@ public class Character : MonoBehaviour
        inputControl = new InputControl();
         inputControl.Enable();
         lookAt = gameObject;
+        cameraSavedPos = camara.transform.localPosition;
+        cameraSavedRot = camara.transform.localRotation;
+
     }
 
 
     void Start()
     {
+        
         rotationSpeed = 36f / Screen.width;
         foreach (InputDevice item in InputSystem.devices)
         {
@@ -81,7 +91,6 @@ public class Character : MonoBehaviour
         }
 
     }
-
     public void onClick(CallbackContext ctx)
     {
         isDragging = ctx.ReadValue<float>() == 1 ? true : false;
@@ -102,17 +111,8 @@ public class Character : MonoBehaviour
     public void setListeners()
     {
         client.room.State.turnState.players.OnChange += onPlayersChange;
-        client.room.State.world.objects.OnChange += OnBallChange;
     }
 
-    private void OnBallChange(ObjectState value, string key)
-    {
-        if (value.owner.sessionId == client.room.SessionId)
-        {
-
-
-        }
-    }
 
     public void removeListeners()
     {
@@ -123,7 +123,14 @@ public class Character : MonoBehaviour
     {
         if (value.user.sessionId == client.room.SessionId)
         {
+            if(savedShots is 0){
+                savedShots = value.shots;
+            }
             ballIsMoving = value.ballisMoving;
+            if(value.shots < savedShots){
+                //New shot time;
+                canWatchBall = false;
+            }
         }
 
     }
@@ -159,7 +166,7 @@ public class Character : MonoBehaviour
             await client.room.Send("shoot", new CustomVector3(direction.x, direction.y, direction.z,
                     force,
                     rotation.x, rotation.y, rotation.z, rotation.w, pointOfContact.x, pointOfContact.y));
-            GolfClubController.SetBool("isShotting", false);
+            AnimationController.SetBool("shooting", false);
             pointOfContact.x = 0;
             pointOfContact.y = 0;
             //ShootDirection.Instance.reset();
@@ -181,13 +188,12 @@ public class Character : MonoBehaviour
             showCharacter();
             if (!canShoot())
             {
-                hideCharacter();
+                //hideCharacter();
             }
             if (isDragging && canShoot() && !uiblocker.BlockedByUI && canRotate)
             {
                 lookAt = gameObject;
                 rotateY = false;
-                GolfClubController.SetBool("isShotting", true);
 
                 isShotting = true;
             }
@@ -200,7 +206,7 @@ public class Character : MonoBehaviour
     {
         if (hasInit)
         {
-            if (!canShoot())
+            if (!canShoot() && canWatchBall)
             {
                 watchBall();
             }
@@ -210,7 +216,10 @@ public class Character : MonoBehaviour
                 {
                     transform.rotation = savedRotation;
                 }
-                setChar();
+                if(canWatchBall){
+                    setChar();
+                }
+                
             }
 
         }
@@ -218,9 +227,11 @@ public class Character : MonoBehaviour
     Vector3 currentSmoothVel = Vector3.zero;
     float currentAngleVel = 0;
 
-    float smoothVelocity = 1.3f;
+    float smoothVelocity = .6f;
     private Quaternion savedRotation;
     private bool watchingBall = false;
+    public bool canWatchBall = false;
+    private float savedShots = 0 ;
 
     void watchBall()
     {
@@ -231,16 +242,16 @@ public class Character : MonoBehaviour
         watchingBall = true;
         GameObject ball = giveBall();
         cameraFollow.position = ball.transform.position;
-        Vector3 targetPosition = cameraFollow.transform.TransformPoint(new Vector3(0, 50, -80));
+        Vector3 targetPosition = cameraFollow.transform.TransformPoint(new Vector3(0, 150, -140));
         //transform.LookAt(cameraFollow.transform);
-        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref currentSmoothVel, smoothVelocity);
-        var target_rot = Quaternion.LookRotation(cameraFollow.position - transform.position);
-        var delta = Quaternion.Angle(transform.rotation, target_rot);
+       camara.transform.position = Vector3.SmoothDamp(camara.transform.position, targetPosition, ref currentSmoothVel, smoothVelocity);
+        var target_rot = Quaternion.LookRotation(cameraFollow.position - camara.transform.position);
+        var delta = Quaternion.Angle(camara.transform.rotation, target_rot);
         if (delta > 0.0f)
         {
             var t = Mathf.SmoothDampAngle(delta, 0.0f, ref currentAngleVel, smoothVelocity);
             t = 1.0f - t / delta;
-            transform.rotation = Quaternion.Slerp(transform.rotation, target_rot, t);
+            camara.transform.rotation = Quaternion.Slerp(camara.transform.rotation, target_rot, t);
         }
 
     }
@@ -254,7 +265,12 @@ public class Character : MonoBehaviour
         watchingBall = false;
         GameObject ball = giveBall();
         if(ball != null){
+           
+             //transform.position = ball.transform.position + paddingChar;
              transform.position = ball.transform.position + paddingChar;
+             transform.rotation = transform.rotation;
+              camara.transform.localPosition = cameraSavedPos;
+              camara.transform.localRotation = cameraSavedRot;
         }
        
         //transform.rotation = savedRotation;
@@ -296,7 +312,7 @@ public class Character : MonoBehaviour
     }
 
 
-    bool canShoot()
+    public bool canShoot()
     {
 
         return client.room.State.turnState.players[client.room.SessionId].shots > 0 && !ballIsMoving;

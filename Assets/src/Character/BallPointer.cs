@@ -50,7 +50,7 @@ public class BallPointer : MonoBehaviour
 
     }
 
-    void sendShot()
+    public void sendShot()
     {
         if (!uiblocker.BlockedByUI)
         {
@@ -69,6 +69,7 @@ public class BallPointer : MonoBehaviour
         saveHolding(ctx);
         if (ctx.valueType.FullName == "UnityEngine.Vector2" && isHolding)
         {
+            Character.Instance.AnimationController.SetBool("Shooting", true);
             Vector2 val = ctx.ReadValue<Vector2>();
             if (val.y > 0)
             {
@@ -98,8 +99,10 @@ public class BallPointer : MonoBehaviour
         }
         if (!isHolding && frame != 0)
         {
-            sendShot();
+             Character.Instance.AnimationController.SetBool("Shooting", false);
+            //sendShot();
         }
+
     }
     public void onDrag(CallbackContext ctx)
     {

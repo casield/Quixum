@@ -36,7 +36,7 @@ public class GolfClub : MonoBehaviour
     void Update()
     {
         if(Input.GetMouseButtonUp(0)){
-            Character.Instance.GolfClubController.SetBool("isShotting",false);
+            Character.Instance.AnimationController.SetBool("isShotting",false);
         }
 
         if(Input.GetMouseButton(0)){
