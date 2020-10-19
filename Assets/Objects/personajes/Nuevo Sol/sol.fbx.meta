@@ -4,57 +4,15 @@ ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable:
   - first:
-      74: 3303553510179252158
-    second: rig|cuello playera.009Action
+      74: -580978571528206696
+    second: Sol_Idle.001
   - first:
-      74: -5908631223349377638
-    second: rig|Golf club|Golf club|Golf clubAction|Golf club|Golf clubAction
+      74: 7499150396340420228
+    second: Sol_Rig|Sol_Idle
   - first:
-      74: -7801362543886190265
-    second: rig|Golf club|Golf club|Idle|Golf club|Idle
-  - first:
-      74: -2337582991117269007
-    second: rig|Golf club|Golf club|Tirar|Golf club|Tirar
-  - first:
-      74: 7979346174513633533
-    second: Golf club|cuello playera.009Action
-  - first:
-      74: 5516470494861235544
-    second: Golf club|Golf club|Golf club|Golf clubAction|Golf club|Golf clubAction
-  - first:
-      74: 5524662420371540621
-    second: Golf club|Golf club|Golf club|Idle|Golf club|Idle
-  - first:
-      74: 2405882522595260334
-    second: Golf club|Golf club|Golf club|Tirar|Golf club|Tirar
-  - first:
-      74: -6669015785933332353
-    second: cuello playera.009|cuello playera.009Action
-  - first:
-      74: 1362384587568623484
-    second: cuello playera.009|Golf club|Golf club|Golf clubAction|Golf club|Golf
-      clubAction
-  - first:
-      74: 5692990374005238329
-    second: cuello playera.009|Golf club|Golf club|Idle|Golf club|Idle
-  - first:
-      74: -3942777411012651642
-    second: cuello playera.009|Golf club|Golf club|Tirar|Golf club|Tirar
-  - first:
-      74: -3342028909690184865
-    second: rig|Hit_Ball
-  - first:
-      74: 8521110870660433811
-    second: rig|Personaje
-  - first:
-      74: -5566266010754869261
-    second: Golf club|Hit_Ball
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material sol
-    second: {fileID: 2100000, guid: 2d5c248fd6d326e4587408bd40cf31b8, type: 2}
+      74: 690888067081651762
+    second: Sol_Rig|Sol_Shot
+  externalObjects: {}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -81,14 +39,72 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Sol_Rig|Sol_Idle
+      takeName: Sol_Rig|Sol_Idle
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 1
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Sol_Rig|Sol_Shot
+      takeName: Sol_Rig|Sol_Shot
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 91
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 0
   meshes:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
     addColliders: 0
-    useSRGBMaterialColor: 0
+    useSRGBMaterialColor: 1
     sortHierarchyByName: 1
     importVisibility: 1
     importBlendShapes: 1
@@ -141,7 +157,7 @@ ModelImporter:
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 0
+  avatarSetup: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
