@@ -14,6 +14,8 @@ public class ClientMAP : MonoBehaviour
     public List<ObjectState> tiles = new List<ObjectState>();
     public List<ObstacleState> obstacles = new List<ObstacleState>();
 
+    public bool localhost;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,9 +24,16 @@ public class ClientMAP : MonoBehaviour
     }
     public void connect()
     {
-        client = new Colyseus.Client("ws://localhost:6017");
+        if(localhost){
+            client = new Colyseus.Client("ws://localhost:6017");
+            
+        }else{
+            client = new Colyseus.Client("ws://"+Client.serverIP+":6017");
+        }
+        
         Debug.Log("Connected");
         join();
+
 
     }
 

@@ -76,9 +76,17 @@ public class @InputControl : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""Shoot"",
-                    ""type"": ""Value"",
+                    ""type"": ""Button"",
                     ""id"": ""0f6340d7-d491-4b15-bf54-21d97c91d2dc"",
-                    ""expectedControlType"": """",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""a3fecbef-23cb-4985-b7fc-45f1533eb714"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
                 }
@@ -99,7 +107,7 @@ public class @InputControl : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""647ca47e-888b-4faa-a2cc-e92ce89a43ca"",
                     ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press(behavior=1)"",
                     ""processors"": """",
                     ""groups"": ""PC"",
                     ""action"": ""Click"",
@@ -240,28 +248,6 @@ public class @InputControl : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""43ebf6c4-a301-4a61-9219-682e8cccc59b"",
-                    ""path"": ""<Mouse>/delta"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""PC"",
-                    ""action"": ""Shoot"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""660ed601-a662-4da4-a87f-9390f8d0a9bf"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""PC"",
-                    ""action"": ""Shoot"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""90346d0d-1b4c-4b58-8b71-6ccb457e73b9"",
                     ""path"": ""<Touchscreen>/touch1/delta"",
                     ""interactions"": """",
@@ -279,6 +265,28 @@ public class @InputControl : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Touch"",
                     ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3edd7155-c5a4-4fa0-a9ba-a080d3ff050b"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6b5ef546-a666-442f-9e76-2d15e3b55a04"",
+                    ""path"": ""<Joystick>/stick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC;Touch;Joystick"",
+                    ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -312,6 +320,17 @@ public class @InputControl : IInputActionCollection, IDisposable
                     ""isOR"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Joystick"",
+            ""bindingGroup"": ""Joystick"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Joystick>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
         }
     ]
 }");
@@ -325,6 +344,7 @@ public class @InputControl : IInputActionCollection, IDisposable
         m_Normal_DoubleTap = m_Normal.FindAction("DoubleTap", throwIfNotFound: true);
         m_Normal_Zoom = m_Normal.FindAction("Zoom", throwIfNotFound: true);
         m_Normal_Shoot = m_Normal.FindAction("Shoot", throwIfNotFound: true);
+        m_Normal_Move = m_Normal.FindAction("Move", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -382,6 +402,7 @@ public class @InputControl : IInputActionCollection, IDisposable
     private readonly InputAction m_Normal_DoubleTap;
     private readonly InputAction m_Normal_Zoom;
     private readonly InputAction m_Normal_Shoot;
+    private readonly InputAction m_Normal_Move;
     public struct NormalActions
     {
         private @InputControl m_Wrapper;
@@ -394,6 +415,7 @@ public class @InputControl : IInputActionCollection, IDisposable
         public InputAction @DoubleTap => m_Wrapper.m_Normal_DoubleTap;
         public InputAction @Zoom => m_Wrapper.m_Normal_Zoom;
         public InputAction @Shoot => m_Wrapper.m_Normal_Shoot;
+        public InputAction @Move => m_Wrapper.m_Normal_Move;
         public InputActionMap Get() { return m_Wrapper.m_Normal; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -427,6 +449,9 @@ public class @InputControl : IInputActionCollection, IDisposable
                 @Shoot.started -= m_Wrapper.m_NormalActionsCallbackInterface.OnShoot;
                 @Shoot.performed -= m_Wrapper.m_NormalActionsCallbackInterface.OnShoot;
                 @Shoot.canceled -= m_Wrapper.m_NormalActionsCallbackInterface.OnShoot;
+                @Move.started -= m_Wrapper.m_NormalActionsCallbackInterface.OnMove;
+                @Move.performed -= m_Wrapper.m_NormalActionsCallbackInterface.OnMove;
+                @Move.canceled -= m_Wrapper.m_NormalActionsCallbackInterface.OnMove;
             }
             m_Wrapper.m_NormalActionsCallbackInterface = instance;
             if (instance != null)
@@ -455,6 +480,9 @@ public class @InputControl : IInputActionCollection, IDisposable
                 @Shoot.started += instance.OnShoot;
                 @Shoot.performed += instance.OnShoot;
                 @Shoot.canceled += instance.OnShoot;
+                @Move.started += instance.OnMove;
+                @Move.performed += instance.OnMove;
+                @Move.canceled += instance.OnMove;
             }
         }
     }
@@ -477,6 +505,15 @@ public class @InputControl : IInputActionCollection, IDisposable
             return asset.controlSchemes[m_TouchSchemeIndex];
         }
     }
+    private int m_JoystickSchemeIndex = -1;
+    public InputControlScheme JoystickScheme
+    {
+        get
+        {
+            if (m_JoystickSchemeIndex == -1) m_JoystickSchemeIndex = asset.FindControlSchemeIndex("Joystick");
+            return asset.controlSchemes[m_JoystickSchemeIndex];
+        }
+    }
     public interface INormalActions
     {
         void OnClick(InputAction.CallbackContext context);
@@ -487,5 +524,6 @@ public class @InputControl : IInputActionCollection, IDisposable
         void OnDoubleTap(InputAction.CallbackContext context);
         void OnZoom(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
+        void OnMove(InputAction.CallbackContext context);
     }
 }

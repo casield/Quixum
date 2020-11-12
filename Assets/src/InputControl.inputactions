@@ -63,9 +63,17 @@
                 },
                 {
                     "name": "Shoot",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "0f6340d7-d491-4b15-bf54-21d97c91d2dc",
-                    "expectedControlType": "",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "a3fecbef-23cb-4985-b7fc-45f1533eb714",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
                 }
@@ -86,7 +94,7 @@
                     "name": "",
                     "id": "647ca47e-888b-4faa-a2cc-e92ce89a43ca",
                     "path": "<Mouse>/leftButton",
-                    "interactions": "",
+                    "interactions": "Press(behavior=1)",
                     "processors": "",
                     "groups": "PC",
                     "action": "Click",
@@ -227,28 +235,6 @@
                 },
                 {
                     "name": "",
-                    "id": "43ebf6c4-a301-4a61-9219-682e8cccc59b",
-                    "path": "<Mouse>/delta",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "PC",
-                    "action": "Shoot",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "660ed601-a662-4da4-a87f-9390f8d0a9bf",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "PC",
-                    "action": "Shoot",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "90346d0d-1b4c-4b58-8b71-6ccb457e73b9",
                     "path": "<Touchscreen>/touch1/delta",
                     "interactions": "",
@@ -266,6 +252,28 @@
                     "processors": "",
                     "groups": "Touch",
                     "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3edd7155-c5a4-4fa0-a9ba-a080d3ff050b",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6b5ef546-a666-442f-9e76-2d15e3b55a04",
+                    "path": "<Joystick>/stick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC;Touch;Joystick",
+                    "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -295,6 +303,17 @@
             "devices": [
                 {
                     "devicePath": "<Touchscreen>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        },
+        {
+            "name": "Joystick",
+            "bindingGroup": "Joystick",
+            "devices": [
+                {
+                    "devicePath": "<Joystick>",
                     "isOptional": false,
                     "isOR": false
                 }

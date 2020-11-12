@@ -68,7 +68,6 @@ public class PowerLabel : MonoBehaviour
         }
         priceText.text = "" + state.cost;
         gameObject.name = "PowerLabel " + state.uID;
-        Debug.Log(state.type);
         if(powersDic.ContainsKey(state.type)){
             powerImage.sprite = powersDic[state.type];
         }

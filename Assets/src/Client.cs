@@ -43,6 +43,10 @@ public class Client : MonoBehaviour
     private string mapName = "";
 
     public bool localhost;
+    
+    public float time = 0;
+
+    public static string serverIP = "3.131.152.148"; 
 
     void Awake()
     {
@@ -66,7 +70,7 @@ public class Client : MonoBehaviour
         else
         {
             Debug.Log("Conectando a drokt.com");
-            client = new Colyseus.Client("ws://3.136.108.45:6017");
+            client = new Colyseus.Client("ws://"+serverIP+":6017");
         }
 
         //createRoom("bb");
@@ -139,6 +143,8 @@ public class Client : MonoBehaviour
         setListeners();
         readMessages();
 
+        this.gameObject.name +=" ["+this.room.SessionId+"]";
+
     }
 
     private void readMessages()
@@ -150,8 +156,17 @@ public class Client : MonoBehaviour
         room.OnMessage<BoxObject>("trowMode", onTrowMode);
         room.OnMessage<bool>("exitTrowMode", exitTrowMode);
         room.OnMessage<ObstacleState>("LongNeck", onLongNeck);
+        room.OnMessage<ObjectMessage>("objectM", onObjectMessage);
+        room.OnMessage<float>("time", (val)=>{
+            time = val;
+        });
 
 
+    }
+
+    private void onObjectMessage(ObjectMessage obj)
+    {
+        objects[obj.uID].onMessage(obj);
     }
 
     private void onLongNeck(ObstacleState state)
@@ -258,7 +273,7 @@ public class Client : MonoBehaviour
         t.transform.localScale = new Vector3(1, 1, 1);
         t.transform.rotation = new Quaternion(value.quaternion.x, value.quaternion.y, value.quaternion.z, value.quaternion.w);
 
-        t.name += "/" + value.uID;
+        t.name += " ["+value.uID+"]";
         IObstacle obstacle = t.GetComponent<IObstacle>();
         obstacles.Add(value.uID, obstacle);
 
@@ -312,10 +327,6 @@ public class Client : MonoBehaviour
             array.Add("" + i, ob);
             createObjects(array);
         }
-        else
-        {
-            createOtherObjects(ob);
-        }
         //ob.instantiate = true;
 
 
@@ -324,7 +335,6 @@ public class Client : MonoBehaviour
     void createObjects(MapSchema<ObjectState> objects)
     {
 
-        Debug.Log("Objects size: " + objects.Count);
 
         objects.ForEach((string s, ObjectState ob) =>
         {
@@ -338,12 +348,11 @@ public class Client : MonoBehaviour
                 if (ob.GetType().Equals(typeof(SphereObject)))
                 {
                     SphereObject sphereState = (SphereObject)ob;
-                    Debug.Log("Obj mesh: " + ob.mesh.Length);
                     if (ob.mesh.Length > 0)
                     {
-                        
-                        Debug.Log("Instantiating a mesh");
-                        UnityEngine.Object prefab = Resources.Load("Objects/"+ob.mesh); // Assets/Resources/Prefabs/prefab1.FBX
+
+                        //Debug.Log("Instantiating a mesh");
+                        UnityEngine.Object prefab = Resources.Load( ob.mesh); // Assets/Resources/Prefabs/prefab1.FBX
                         gameOb = (GameObject)Instantiate(prefab);
                     }
                     else
@@ -362,7 +371,18 @@ public class Client : MonoBehaviour
                 {
 
                     BoxObject boxState = (BoxObject)ob;
-                    gameOb = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    if (ob.mesh.Length > 0)
+                    {
+
+                        //Debug.Log("Instantiating a mesh");
+                        UnityEngine.Object prefab = Resources.Load(ob.mesh); // Assets/Resources/Prefabs/prefab1.FBX
+                        gameOb = (GameObject)Instantiate(prefab);
+                    }
+                    else
+                    {
+                        gameOb = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    }
+
                     gameOb.name = "Box (" + ob.uID + ")";
                     Vector3 size = new Vector3(boxState.halfSize.x, boxState.halfSize.y, boxState.halfSize.z);
                     size.Scale(new Vector3(2, 2, 2));
@@ -379,12 +399,12 @@ public class Client : MonoBehaviour
 
             }
 
-            createOtherObjects(ob);
-
-
-
             if (gameOb != null)
             {
+                gameOb.name = ob.type + " ["+ob.uID+"]";
+                if(ob.owner.sessionId != ""){
+                    gameOb.name+= "=> "+ob.owner.sessionId;
+                }
                 if (ob.type == "golfball")
                 {
                     Debug.Log("Creating GolfBall");
@@ -394,9 +414,19 @@ public class Client : MonoBehaviour
                     mMaterial = BallMaterial;
                     this.golfballs.Add(ob.owner.sessionId, serverObject);
                 }
+                if (ob.type == "player")
+                {
+                    Debug.Log("Creating player "+ob.owner.sessionId);
+                    Player objComp = gameOb.AddComponent<Player>();
+                    gameOb.layer = 8;
+                    objComp.setState(ob);
+                }
                 if (ob.type == "trownobj")
                 {
                     mMaterial = WallMaterial;
+                }
+                if(ob.type =="characer"){
+                    
                 }
                 if (ob.mesh.Length == 0)
                 {
@@ -409,38 +439,13 @@ public class Client : MonoBehaviour
 
             }
 
+            
+
 
         });
 
     }
 
-    private void createOtherObjects(ObjectState ob)
-    {
-       /* if (ob.type == "egg1")
-        {
-            UnityEngine.Object prefab = Resources.Load("Objects/dinosaurs/Egg");
-            GameObject egg = (GameObject)Instantiate(prefab);
-            egg.transform.rotation = new Quaternion(ob.quaternion.x, ob.quaternion.y, ob.quaternion.z, ob.quaternion.w);
-
-            var serverObject = new SObject(egg, ob);
-            if (this.objects.ContainsKey(ob.uID))
-            {
-                var insObj = this.objects[ob.uID].gameObject.transform;
-
-                insObj.parent = egg.transform;
-                insObj.transform.position = Vector3.zero;
-                insObj.gameObject.SetActive(false);
-                this.objects[ob.uID] = serverObject;
-            }
-            else
-            {
-                this.objects.Add(ob.uID, serverObject);
-            }
-
-            egg.transform.parent = ServerObjects.transform;
-
-        }*/
-    }
 
     void onLeave(NativeWebSocket.WebSocketCloseCode e)
     {

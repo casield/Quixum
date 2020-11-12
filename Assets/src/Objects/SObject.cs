@@ -7,4 +7,8 @@ public class SObject{
         gameObject = o;
         state = s;
     }
+    public void onMessage(ObjectMessage message){
+        gameObject.GetComponent<ConnectedObject>().onMessage(message);
+        
+    }
 }

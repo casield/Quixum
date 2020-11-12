@@ -13,8 +13,5 @@ public class UserState : Schema {
 
 	[Type(1, "string")]
 	public string name = "";
-
-	[Type(2, "string")]
-	public string shotsAvaible = "";
 }
 

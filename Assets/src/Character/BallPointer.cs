@@ -7,25 +7,23 @@ using static UnityEngine.InputSystem.InputAction;
 public class BallPointer : MonoBehaviour
 {
 
-    public MeshRenderer meshRenderer;
+    private MeshRenderer meshRenderer;
 
     private int frameCount = 8;
-    private int frameIndex = 0;
 
     private float force = .08f;
 
-    private float frame = 0;
+    public float velocity = 0;
     InputControl inputControl;
-    private bool isHolding = false;
+    private bool shotSended = false;
 
     // Start is called before the first frame update
     /// <summary>
     /// Awake is called when the script instance is being loaded.
     /// </summary>
 
-    void Start()
+    void Awake()
     {
-        Debug.Log(Screen.height);
 
         meshRenderer = GetComponent<MeshRenderer>();
         inputControl = Character.Instance.inputControl;
@@ -37,80 +35,50 @@ public class BallPointer : MonoBehaviour
         return Client.Instance.playerInput.currentControlScheme.ToLower() == "touch";
     }
 
-    void saveHolding(CallbackContext ctx)
+    /// <summary>
+    /// Update is called every frame, if the MonoBehaviour is enabled.
+    /// </summary>
+    void Update()
     {
-        if (ctx.valueType.FullName == "System.Single")
-        {
-            isHolding = ctx.ReadValue<float>() == 1;
+        if(inputControl.Normal.Shoot.ReadValue<float>() == 1){
+            velocity+=force;
+            setFrame((int)velocity);
+            
+            if(velocity >= frameCount){
+                velocity = 0;
+            }
+            Character.Instance.arcArrow.velocity = (velocity+1)*10;
+            shotSended = false;
+        }else{
+            if(velocity != 0 && !shotSended){
+                 sendShot();
+                 
+            }
+           
         }
-        if (ctx.valueType.FullName == "UnityEngine.Vector2" && !ctx.performed )
-        {
-            isHolding = false;
-        }
-
     }
+
 
     public void sendShot()
     {
-        if (!uiblocker.BlockedByUI)
+       if (!uiblocker.BlockedByUI)
         {
             Debug.Log("Sending shot");
 
-            Character.Instance.sendShot(frame);
-            frame = 0;
+            Character.Instance.sendShot(velocity,Character.Instance.arcArrow.angle);
+            velocity = 0;
             setFrame(0);
             Character.Instance.isShotting = false;
+            shotSended = true;
         }
-
+        
     }
-
-    public void onShoot(CallbackContext ctx)
-    {
-        saveHolding(ctx);
-        if (ctx.valueType.FullName == "UnityEngine.Vector2" && isHolding)
-        {
-            Character.Instance.AnimationController.SetBool("Shooting", true);
-            Vector2 val = ctx.ReadValue<Vector2>();
-            if (val.y > 0)
-            {
-                if (frame < frameCount - 1)
-                {
-                    frame += force;
-                    setFrame((int)frame);
-                }
-                else
-                {
-                    frame = frameCount - 1;
-                }
-
-            }
-            if (val.y < 0)
-            {
-                if (frame >= -frameIndex)
-                {
-                    frame -= force;
-                    setFrame((int)frame);
-                }
-                else
-                {
-                    frame = 0;
-                }
-            }
-        }
-        if (!isHolding && frame != 0)
-        {
-             Character.Instance.AnimationController.SetBool("Shooting", false);
-            //sendShot();
-        }
-
-    }
-    public void onDrag(CallbackContext ctx)
-    {
-
-    }
-
     private void setFrame(int frameIndex)
     {
+        if (meshRenderer == null)
+        {
+            meshRenderer = GetComponent<MeshRenderer>();
+        }
         Vector2 newOffset = new Vector2(frameIndex * (1.0f / frameCount), 0);
         meshRenderer.material.SetTextureOffset("_BaseMap", newOffset);
     }

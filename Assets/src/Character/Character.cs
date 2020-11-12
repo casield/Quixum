@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
+using UnityEngine.InputSystem.Interactions;
 using static UnityEngine.InputSystem.InputAction;
 
 public class Character : MonoBehaviour
@@ -12,9 +13,7 @@ public class Character : MonoBehaviour
     public Client client;
     private float rotationSpeed;
     float xRot, yRot = 0f;
-    Vector2 lastMousePos = new Vector2();
     Vector3 paddingChar = new Vector3(0, 0, -2.5f);
-    Vector3 paddingPointer = new Vector3(0, 0, 2f);
     bool hasInit, hasSetChar = false;
 
     public Vector3 pointOfContact = new Vector3();
@@ -28,11 +27,9 @@ public class Character : MonoBehaviour
 
     public bool isShotting = false;
 
-    public GameObject charMesh;
     public bool canRotate = true;
     public bool ballIsMoving = false;
 
-    public RectTransform fingerImage;
     public InputControl inputControl;
 
     public bool isDragging = false;
@@ -40,10 +37,15 @@ public class Character : MonoBehaviour
     private bool rotateY = false;
     public Transform cameraFollow;
 
-    public Vector3 cameraSavedPos=new Vector3();
+    public Vector3 cameraSavedPos = new Vector3();
     public Quaternion cameraSavedRot = new Quaternion();
+    MoveMessage message = new MoveMessage();
+    bool sendStop = false;
 
-    
+    public ArcArrow arcArrow;
+
+
+
 
     /// <summary>
     /// Awake is called when the script instance is being loaded.
@@ -51,45 +53,88 @@ public class Character : MonoBehaviour
     void Awake()
     {
         Instance = this;
-       inputControl = new InputControl();
-        inputControl.Enable();
+        inputControl = new InputControl();
         lookAt = gameObject;
         cameraSavedPos = camara.transform.localPosition;
         cameraSavedRot = camara.transform.localRotation;
+
+        arcArrow = GetComponentInChildren<ArcArrow>();
 
     }
 
 
     void Start()
     {
-        
+
         rotationSpeed = 36f / Screen.width;
         foreach (InputDevice item in InputSystem.devices)
         {
-            Debug.Log("Device: "+item.displayName);
+            Debug.Log("Device: " + item.displayName);
         }
+    }
+
+    public void onMove(CallbackContext ctx)
+    {
+        Vector2 v = ctx.ReadValue<Vector2>();
+
+        if (ctx.performed)
+        {
+            sendStop = false;
+            message.x = Convert.ToInt16(v.x * 100f);
+            message.y = Convert.ToInt16(v.y * 100f);
+            //message.y = float.Parse(v.y.ToString("0.00"));
+            // Debug.Log(message);
+
+            sendMoveMessage();
+            movingPad = true;
+        }
+        /*if(ctx.canceled && v.x == 0 && v.y == 0){
+            message.x = 0;
+            message.y = 0;
+            sendMoveMessage();
+        }*/
+
+
+    }
+
+    async void sendMoveMessage()
+    {
+        if (client != null)
+        {
+            if (client.room != null)
+            {
+                message.rotX = camara.transform.forward.x;
+                message.rotZ = camara.transform.forward.z;
+                message.uID = client.room.SessionId;
+                await client.room.Send("move", message);
+            }
+
+        }
+
+
     }
 
     void OnEnable()
     {
+        inputControl.Enable();
         transform.rotation = savedAxis;
     }
 
     void OnDisable()
     {
+        inputControl.Disable();
         savedAxis = transform.rotation;
     }
-    
+
 
     public void onDrag(CallbackContext ctx)
     {
-        if (isDragging && canShoot() && !uiblocker.BlockedByUI && this.enabled)
+        if (isDragging && !uiblocker.BlockedByUI && this.enabled)
         {
             Vector2 delta = ctx.ReadValue<Vector2>();
-           
+
             rotateView(delta.x, delta.y, rotateY, lookAt);
         }
-
     }
     public void onClick(CallbackContext ctx)
     {
@@ -123,11 +168,13 @@ public class Character : MonoBehaviour
     {
         if (value.user.sessionId == client.room.SessionId)
         {
-            if(savedShots is 0){
+            if (savedShots is 0)
+            {
                 savedShots = value.shots;
             }
             ballIsMoving = value.ballisMoving;
-            if(value.shots < savedShots){
+            if (value.shots < savedShots)
+            {
                 //New shot time;
                 canWatchBall = false;
             }
@@ -138,22 +185,24 @@ public class Character : MonoBehaviour
     public void showCharacter()
     {
 
-        charMesh.SetActive(true);
+        // charMesh.SetActive(true);
     }
     public void hideCharacter()
     {
 
-        charMesh.SetActive(false);
+        //charMesh.SetActive(false);
     }
     public async void stopBall(CallbackContext ctx)
     {
-        if(ctx.performed){
+        if (ctx.performed)
+        {
             await client.room.Send("stop", null);
         }
-        
+
     }
-    public async void sendShot(float force)
+    public async void sendShot(float force, float angle)
     {
+        angle = 0;
         if (canShoot() && !uiblocker.BlockedByUI)
         {
             yRot = 0;
@@ -163,13 +212,16 @@ public class Character : MonoBehaviour
             Quaternion rotation = transform.rotation;
             // savedRotation =
             savedRotation = rotation;
-            await client.room.Send("shoot", new CustomVector3(direction.x, direction.y, direction.z,
-                    force,
-                    rotation.x, rotation.y, rotation.z, rotation.w, pointOfContact.x, pointOfContact.y));
-            AnimationController.SetBool("shooting", false);
-            pointOfContact.x = 0;
-            pointOfContact.y = 0;
-            //ShootDirection.Instance.reset();
+            ShotMessage sm = new ShotMessage();
+            //angle+=15;
+            Quaternion qu = Quaternion.Euler(transform.rotation.eulerAngles.x + angle, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+            sm.force = force;
+            sm.angle = new Quat();
+            sm.angle.x = qu.x;
+            sm.angle.y = qu.y;
+            sm.angle.z = qu.z;
+            sm.angle.w = qu.w;
+            await client.room.Send("shoot", sm);
 
 
 
@@ -198,6 +250,14 @@ public class Character : MonoBehaviour
                 isShotting = true;
             }
         }
+        //        Debug.Log(inputControl.Normal.Move.ReadValue<Vector2>());
+        if (inputControl.Normal.Move.ReadValue<Vector2>() == Vector2.zero && !sendStop)
+        {
+            sendStop = true;
+            message.x = 0;
+            message.y = 0;
+            sendMoveMessage();
+        }
 
 
 
@@ -216,10 +276,11 @@ public class Character : MonoBehaviour
                 {
                     transform.rotation = savedRotation;
                 }
-                if(canWatchBall){
+                if (canWatchBall)
+                {
                     setChar();
                 }
-                
+
             }
 
         }
@@ -231,7 +292,8 @@ public class Character : MonoBehaviour
     private Quaternion savedRotation;
     private bool watchingBall = false;
     public bool canWatchBall = false;
-    private float savedShots = 0 ;
+    private float savedShots = 0;
+    private bool movingPad = false;
 
     void watchBall()
     {
@@ -241,63 +303,79 @@ public class Character : MonoBehaviour
         }
         watchingBall = true;
         GameObject ball = giveBall();
-        cameraFollow.position = ball.transform.position;
-        Vector3 targetPosition = cameraFollow.transform.TransformPoint(new Vector3(0, 150, -140));
-        //transform.LookAt(cameraFollow.transform);
-       camara.transform.position = Vector3.SmoothDamp(camara.transform.position, targetPosition, ref currentSmoothVel, smoothVelocity);
-        var target_rot = Quaternion.LookRotation(cameraFollow.position - camara.transform.position);
-        var delta = Quaternion.Angle(camara.transform.rotation, target_rot);
-        if (delta > 0.0f)
+        if (ball != null)
         {
-            var t = Mathf.SmoothDampAngle(delta, 0.0f, ref currentAngleVel, smoothVelocity);
-            t = 1.0f - t / delta;
-            camara.transform.rotation = Quaternion.Slerp(camara.transform.rotation, target_rot, t);
+            cameraFollow.position = ball.transform.position;
+            Vector3 targetPosition = cameraFollow.transform.TransformPoint(new Vector3(0, 150, -140));
+            //transform.LookAt(cameraFollow.transform);
+            camara.transform.position = Vector3.SmoothDamp(camara.transform.position, targetPosition, ref currentSmoothVel, smoothVelocity);
+            var target_rot = Quaternion.LookRotation(cameraFollow.position - camara.transform.position);
+            var delta = Quaternion.Angle(camara.transform.rotation, target_rot);
+            if (delta > 0.0f)
+            {
+                var t = Mathf.SmoothDampAngle(delta, 0.0f, ref currentAngleVel, smoothVelocity);
+                t = 1.0f - t / delta;
+                camara.transform.rotation = Quaternion.Slerp(camara.transform.rotation, target_rot, t);
+            }
         }
+
 
     }
 
     void setChar()
     {
-         if (GameMessages.i.gameObject.activeSelf)
+        if (GameMessages.i.gameObject.activeSelf)
         {
             GameMessages.i.hideMessage();
         }
         watchingBall = false;
         GameObject ball = giveBall();
-        if(ball != null){
-           
-             //transform.position = ball.transform.position + paddingChar;
-             transform.position = ball.transform.position + paddingChar;
-             transform.rotation = transform.rotation;
-              camara.transform.localPosition = cameraSavedPos;
-              camara.transform.localRotation = cameraSavedRot;
+        if (ball != null)
+        {
+
+            //transform.position = ball.transform.position + paddingChar;
+            transform.position = ball.transform.position + paddingChar;
+            transform.rotation = transform.rotation;
+            camara.transform.localPosition = cameraSavedPos;
+            camara.transform.localRotation = cameraSavedRot;
         }
-       
+
         //transform.rotation = savedRotation;
 
     }
 
 
-    void rotateView(float axis, float axisY, bool rotateY, GameObject lookAt)
+    async void rotateView(float axis, float axisY, bool rotateY, GameObject lookAt)
     {
-        
-            xRot += rotationSpeed * axis * 2;
-            yRot += rotationSpeed * axisY * 2;
-            GameObject ball = client.golfballs[client.room.SessionId].gameObject;
-            if (rotateY)
-            {
-                transform.rotation = Quaternion.Euler(-yRot, xRot, 0);
-            }
-            else
-            {
-                transform.rotation = Quaternion.Euler(0, xRot, 0);
-            }
-            transform.LookAt(gameObject.transform);
-            //transform.LookAt(gameObject.transform);
-        
+
+        xRot += rotationSpeed * axis * 2;
+        yRot += rotationSpeed * axisY * 2;
+        // GameObject ball = client.golfballs[client.room.SessionId].gameObject;
+        if (rotateY)
+        {
+            transform.rotation = Quaternion.Euler(-yRot, xRot, 0);
+        }
+        else
+        {
+            transform.rotation = Quaternion.Euler(0, xRot, 0);
+        }
+
+        Quaternion qu = Quaternion.Euler(transform.rotation.eulerAngles.x, +transform.rotation.eulerAngles.y + 90, transform.rotation.eulerAngles.z);
+        Quat quat = new Quat();
+        quat.x = qu.x;
+        quat.y = qu.y;
+        quat.z = qu.z;
+        quat.w = qu.w;
+
+       // await client.room.Send("rotate", quat);
+        transform.LookAt(gameObject.transform);
+
+
+        //transform.LookAt(gameObject.transform);
+
 
     }
-    
+
     public GameObject giveBall()
     {
         if (client.golfballs.Count > 0)
@@ -316,29 +394,6 @@ public class Character : MonoBehaviour
     {
 
         return client.room.State.turnState.players[client.room.SessionId].shots > 0 && !ballIsMoving;
-    }
-    class CustomVector3
-    {
-        public float x, y, z;
-        public float force;
-        public float rotx, roty, rotz, rotw;
-        public float contactx, contacty;
-
-
-        public CustomVector3(float x, float y, float z, float force, float rotx, float roty, float rotz, float rotw, float contactx, float contacty)
-        {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-            this.force = force;
-            this.rotx = rotx;
-            this.roty = roty;
-            this.rotz = rotz;
-            this.rotw = rotw;
-            this.contactx = contactx;
-            this.contacty = contacty;
-            // this.pointw = pointw; 
-        }
     }
 
 }

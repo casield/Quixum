@@ -41,7 +41,6 @@ public class Profile : MonoBehaviour
                 {
                     GameObject.Destroy(child.gameObject);
                 }
-                Debug.Log("Bag changed");
                 mapS.ForEach((powerState) =>
                 {
                     PowerLabel p = Instantiate(powerLabel_Prefab, ShopLayOut.transform).GetComponent<PowerLabel>();
