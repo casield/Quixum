@@ -46,7 +46,7 @@ public class Client : MonoBehaviour
     
     public float time = 0;
 
-    public static string serverIP = "3.131.152.148"; 
+    public static string serverIP = "3.21.43.144"; 
 
     void Awake()
     {
@@ -159,6 +159,7 @@ public class Client : MonoBehaviour
         room.OnMessage<ObjectMessage>("objectM", onObjectMessage);
         room.OnMessage<float>("time", (val)=>{
             time = val;
+            GUIConsole.Instance.deltaTime =time;
         });
 
 

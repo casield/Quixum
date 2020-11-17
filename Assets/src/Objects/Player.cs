@@ -27,11 +27,11 @@ public class Player : MonoBehaviour, ConnectedObject
     }
     public void setState(ObjectState state)
     {
-        Debug.Log("SessionID " + state.owner.sessionId);
         if (state.owner.sessionId == Client.Instance.room.SessionId)
         {
             Debug.Log("Is me");
             Character.Instance.ballPointer = ballPointer;
+            CameraController.Instance.player = this;
         }
         else
         {
