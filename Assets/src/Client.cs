@@ -33,6 +33,7 @@ public class Client : MonoBehaviour
     // Start is called before the first frame update
 
     public Dictionary<string, SObject> objects = new Dictionary<string, SObject>();
+    public Dictionary<string, SObject> updateObjects = new Dictionary<string, SObject>();
     public Dictionary<string, SObject> golfballs = new Dictionary<string, SObject>();
     public bool drawPhysics;
 
@@ -43,10 +44,10 @@ public class Client : MonoBehaviour
     private string mapName = "";
 
     public bool localhost;
-    
+
     public float time = 0;
 
-    public static string serverIP = "3.21.43.144"; 
+    public static string serverIP = "3.21.43.144";
 
     void Awake()
     {
@@ -70,7 +71,7 @@ public class Client : MonoBehaviour
         else
         {
             Debug.Log("Conectando a drokt.com");
-            client = new Colyseus.Client("ws://"+serverIP+":6017");
+            client = new Colyseus.Client("ws://" + serverIP + ":6017");
         }
 
         //createRoom("bb");
@@ -143,7 +144,7 @@ public class Client : MonoBehaviour
         setListeners();
         readMessages();
 
-        this.gameObject.name +=" ["+this.room.SessionId+"]";
+        this.gameObject.name += " [" + this.room.SessionId + "]";
 
     }
 
@@ -152,14 +153,16 @@ public class Client : MonoBehaviour
         room.OnMessage<string>("changeMap", onChangeMap);
 
         room.OnMessage<string>("error", onErrorMessage);
+        room.OnMessage<string>("info", onInfoMessage);
 
         room.OnMessage<BoxObject>("trowMode", onTrowMode);
         room.OnMessage<bool>("exitTrowMode", exitTrowMode);
         room.OnMessage<ObstacleState>("LongNeck", onLongNeck);
         room.OnMessage<ObjectMessage>("objectM", onObjectMessage);
-        room.OnMessage<float>("time", (val)=>{
+        room.OnMessage<float>("time", (val) =>
+        {
             time = val;
-            GUIConsole.Instance.deltaTime =time;
+            GUIConsole.Instance.deltaTime = time;
         });
 
 
@@ -176,7 +179,7 @@ public class Client : MonoBehaviour
     }
     private void exitTrowMode(bool exit)
     {
-        Character.Instance.showCharacter();
+        // Character.Instance.showCharacter();
         Character.Instance.enabled = true;
         TrowMode.Instance.enabled = false;
         // TrowMode.Instance.objectState = obj;
@@ -184,7 +187,7 @@ public class Client : MonoBehaviour
 
     private void onTrowMode(BoxObject obj)
     {
-        Character.Instance.hideCharacter();
+        //Character.InstancehideCharacter();
         Character.Instance.enabled = false;
         TrowMode.Instance.enabled = true;
         TrowMode.Instance.objectState = obj;
@@ -194,6 +197,11 @@ public class Client : MonoBehaviour
     {
         ServerMessagesController.Instance.showError(obj);
     }
+    private void onInfoMessage(string obj)
+    {
+        GameMessages.Instance.showMessage(obj, 2);
+    }
+
 
     public void setListeners()
     {
@@ -274,7 +282,7 @@ public class Client : MonoBehaviour
         t.transform.localScale = new Vector3(1, 1, 1);
         t.transform.rotation = new Quaternion(value.quaternion.x, value.quaternion.y, value.quaternion.z, value.quaternion.w);
 
-        t.name += " ["+value.uID+"]";
+        t.name += " [" + value.uID + "]";
         IObstacle obstacle = t.GetComponent<IObstacle>();
         obstacles.Add(value.uID, obstacle);
 
@@ -287,8 +295,14 @@ public class Client : MonoBehaviour
         if (objects.ContainsKey(i))
         {
             SObject itt = objects[i];
-            itt.gameObject.transform.position = new Vector3(itt.state.position.x, itt.state.position.y, itt.state.position.z);
-            itt.gameObject.transform.rotation = new Quaternion(itt.state.quaternion.x, itt.state.quaternion.y, itt.state.quaternion.z, itt.state.quaternion.w);
+            Vector3 desPos = new Vector3(itt.state.position.x, itt.state.position.y, itt.state.position.z);
+            /*itt.gameObject.transform.position = Vector3.Lerp(itt.gameObject.transform.position,desPos,1);
+            itt.gameObject.transform.rotation = new Quaternion(itt.state.quaternion.x, itt.state.quaternion.y, itt.state.quaternion.z, itt.state.quaternion.w);*/
+            if (!updateObjects.ContainsKey(body.uID))
+            {
+                updateObjects.Add(itt.state.uID, itt);
+            }
+
 
         }
         else
@@ -296,25 +310,21 @@ public class Client : MonoBehaviour
             //Debug.Log("Couldn't find key on ChangeObjects " + body.uID);
         }
 
-
     }
     void RemoveObject(ObjectState body, string i)
     {
-        if (body.instantiate)
+        Debug.Log("Eliminando el objeto " + body.type);
+        if (objects.ContainsKey(i))
         {
-            Debug.Log("Eliminando el objeto #" + body.type);
-            if (objects.ContainsKey(i))
-            {
-                SObject obj = objects[i];
-                DestroyImmediate(obj.gameObject);
-                objects.Remove(i);
-            }
-            else
-            {
-                Debug.LogError("Couldn't destroy object " + body.type + " / " + i);
-            }
+            SObject obj = objects[i];
+            Destroy(obj.gameObject);
+            objects.Remove(i);
+            Debug.Log("Eliminando el objeto " + obj.gameObject.name);
         }
-
+        else
+        {
+            Debug.LogError("Couldn't destroy object " + body.type + " / " + i);
+        }
 
     }
 
@@ -344,6 +354,7 @@ public class Client : MonoBehaviour
             SObject serverObject = null;
             var mMaterial = material;
 
+
             if (ob.instantiate)
             {
                 if (ob.GetType().Equals(typeof(SphereObject)))
@@ -353,7 +364,7 @@ public class Client : MonoBehaviour
                     {
 
                         //Debug.Log("Instantiating a mesh");
-                        UnityEngine.Object prefab = Resources.Load( ob.mesh); // Assets/Resources/Prefabs/prefab1.FBX
+                        UnityEngine.Object prefab = Resources.Load(ob.mesh); // Assets/Resources/Prefabs/prefab1.FBX
                         gameOb = (GameObject)Instantiate(prefab);
                     }
                     else
@@ -402,11 +413,12 @@ public class Client : MonoBehaviour
 
             if (gameOb != null)
             {
-                gameOb.name = ob.type + " ["+ob.uID+"]";
-                if(ob.owner.sessionId != ""){
-                    gameOb.name+= "=> "+ob.owner.sessionId;
+                gameOb.name = ob.type + " [" + ob.uID + "]";
+                if (ob.owner.sessionId != "")
+                {
+                    gameOb.name += "=> " + ob.owner.sessionId;
                 }
-                if (ob.type == "golfball")
+                if (ob.type == "GolfBall2")
                 {
                     Debug.Log("Creating GolfBall");
                     GolfBall objComp = gameOb.AddComponent<GolfBall>();
@@ -415,9 +427,9 @@ public class Client : MonoBehaviour
                     mMaterial = BallMaterial;
                     this.golfballs.Add(ob.owner.sessionId, serverObject);
                 }
-                if (ob.type == "player")
+                if (ob.type == "Player2")
                 {
-                    Debug.Log("Creating player "+ob.owner.sessionId);
+                    Debug.Log("Creating player " + ob.owner.sessionId);
                     Player objComp = gameOb.AddComponent<Player>();
                     gameOb.layer = 8;
                     objComp.setState(ob);
@@ -425,9 +437,6 @@ public class Client : MonoBehaviour
                 if (ob.type == "trownobj")
                 {
                     mMaterial = WallMaterial;
-                }
-                if(ob.type =="characer"){
-                    
                 }
                 if (ob.mesh.Length == 0)
                 {
@@ -440,7 +449,7 @@ public class Client : MonoBehaviour
 
             }
 
-            
+
 
 
         });
@@ -482,6 +491,18 @@ public class Client : MonoBehaviour
     void Update()
     {
         destroyAll();
+
+        foreach (var item in updateObjects)
+        {
+
+            SObject itt = item.Value;
+            Vector3 desPos = new Vector3(itt.state.position.x, itt.state.position.y, itt.state.position.z);
+            Quaternion desQuat = new Quaternion(itt.state.quaternion.x, itt.state.quaternion.y, itt.state.quaternion.z, itt.state.quaternion.w);
+            itt.gameObject.transform.position = Vector3.Lerp(itt.gameObject.transform.position, desPos, 1);
+            //itt.gameObject.transform.rotation = new Quaternion(itt.state.quaternion.x, itt.state.quaternion.y, itt.state.quaternion.z, itt.state.quaternion.w);
+            itt.gameObject.transform.rotation = Quaternion.Lerp(itt.gameObject.transform.rotation, desQuat, 1);
+        }
+        updateObjects.Clear();
         // Debug.Log(uiblocker.BlockedByUI);
     }
 

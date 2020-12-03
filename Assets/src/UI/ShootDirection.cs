@@ -95,12 +95,10 @@ public class ShootDirection : MonoBehaviour
             if (Character.Instance.isDragging)
             {
 
-                if (Character.Instance.giveBall() != null)
+              /*  if (Character.Instance.giveBall() != null)
                 {
                     sphere.transform.rotation = Character.Instance.giveBall().transform.rotation;
-                }
-
-
+                }*/
 
 
             }

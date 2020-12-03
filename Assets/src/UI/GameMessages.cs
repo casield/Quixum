@@ -5,7 +5,7 @@ using TMPro;
 
 public class GameMessages : MonoBehaviour
 {
-    public static GameMessages i;
+    public static GameMessages Instance;
     /// <summary>
     /// Awake is called when the script instance is being loaded.
     /// </summary>
@@ -15,7 +15,7 @@ public class GameMessages : MonoBehaviour
     Vector3 savedPosition;
     void Awake()
     {
-        i = this;
+        Instance = this;
     }
     
     public void showMessage(string text)

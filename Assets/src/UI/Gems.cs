@@ -32,8 +32,13 @@ public class Gems : MonoBehaviour
     {
         //
         client = Client.Instance;
-        client.room.State.turnState.players.OnChange += onPlayersChange;
+        client.room.State.users.OnChange += onUserChange;
 
+    }
+
+    private void onUserChange(UserState value, string key)
+    {
+        this.gemsText.text = ""+value.gems;
     }
 
     private void onPlayerChange(List<DataChange> changes)

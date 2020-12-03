@@ -33,7 +33,7 @@ public class GUIConsole : MonoBehaviour
     void OnDisable() { Application.logMessageReceived -= Log; }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) { doShow = !doShow; }
+        if (Input.GetKeyDown(KeyCode.K)) { doShow = !doShow; }
         objectsSize = serverObject.childCount;
        
     }

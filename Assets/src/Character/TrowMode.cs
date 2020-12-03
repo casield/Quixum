@@ -40,7 +40,7 @@ public class TrowMode : MonoBehaviour
 
     void OnEnable()
     {
-        GameObject ball = Character.Instance.giveBall();
+       /* GameObject ball = Character.Instance.giveBall();
         this.transform.position = new Vector3(0, ball.transform.position.y + 150, 0);
         this.transform.rotation = Quaternion.Euler(80, 0, 0);
         if (dragObject != null)
@@ -51,7 +51,7 @@ public class TrowMode : MonoBehaviour
         if (profileWindow.gameObject.activeSelf)
         {
             profileWindow.closeButton.clickButton();
-        }
+        }*/
 
     }
     void OnDisable()

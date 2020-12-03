@@ -13,5 +13,11 @@ public class ShotMessage : Schema {
 
 	[Type(1, "ref", typeof(Quat))]
 	public Quat angle = new Quat();
+
+	[Type(2, "string")]
+	public string client = "";
+
+	[Type(3, "string")]
+	public string room = "";
 }
 

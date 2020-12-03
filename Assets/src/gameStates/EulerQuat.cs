@@ -7,14 +7,11 @@
 
 using Colyseus.Schema;
 
-public class ObjectMessage : Schema {
-	[Type(0, "string")]
-	public string uID = "";
+public class EulerQuat : Schema {
+	[Type(0, "ref", typeof(Quat))]
+	public Quat quat = new Quat();
 
-	[Type(1, "string")]
-	public string message = "";
-
-	[Type(2, "string")]
-	public string room = "";
+	[Type(1, "ref", typeof(V3))]
+	public V3 euler = new V3();
 }
 

@@ -89,6 +89,22 @@ public class @InputControl : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""3fe92fe0-84bf-434c-8502-1098720de2ce"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Use_Power1"",
+                    ""type"": ""Button"",
+                    ""id"": ""0e82ea01-b4c8-4ff7-b786-ec5d8471a0a7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -139,7 +155,7 @@ public class @InputControl : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""419bfa49-aae1-4fc7-b822-bd0a51e3aae4"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""path"": ""<Keyboard>/p"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""PC"",
@@ -289,6 +305,28 @@ public class @InputControl : IInputActionCollection, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fbae7d84-e348-491f-b888-8d0fb008707e"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d8b36265-6ec3-4218-9eaa-5100e77c522b"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Use_Power1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -345,6 +383,8 @@ public class @InputControl : IInputActionCollection, IDisposable
         m_Normal_Zoom = m_Normal.FindAction("Zoom", throwIfNotFound: true);
         m_Normal_Shoot = m_Normal.FindAction("Shoot", throwIfNotFound: true);
         m_Normal_Move = m_Normal.FindAction("Move", throwIfNotFound: true);
+        m_Normal_Jump = m_Normal.FindAction("Jump", throwIfNotFound: true);
+        m_Normal_Use_Power1 = m_Normal.FindAction("Use_Power1", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -403,6 +443,8 @@ public class @InputControl : IInputActionCollection, IDisposable
     private readonly InputAction m_Normal_Zoom;
     private readonly InputAction m_Normal_Shoot;
     private readonly InputAction m_Normal_Move;
+    private readonly InputAction m_Normal_Jump;
+    private readonly InputAction m_Normal_Use_Power1;
     public struct NormalActions
     {
         private @InputControl m_Wrapper;
@@ -416,6 +458,8 @@ public class @InputControl : IInputActionCollection, IDisposable
         public InputAction @Zoom => m_Wrapper.m_Normal_Zoom;
         public InputAction @Shoot => m_Wrapper.m_Normal_Shoot;
         public InputAction @Move => m_Wrapper.m_Normal_Move;
+        public InputAction @Jump => m_Wrapper.m_Normal_Jump;
+        public InputAction @Use_Power1 => m_Wrapper.m_Normal_Use_Power1;
         public InputActionMap Get() { return m_Wrapper.m_Normal; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -452,6 +496,12 @@ public class @InputControl : IInputActionCollection, IDisposable
                 @Move.started -= m_Wrapper.m_NormalActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_NormalActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_NormalActionsCallbackInterface.OnMove;
+                @Jump.started -= m_Wrapper.m_NormalActionsCallbackInterface.OnJump;
+                @Jump.performed -= m_Wrapper.m_NormalActionsCallbackInterface.OnJump;
+                @Jump.canceled -= m_Wrapper.m_NormalActionsCallbackInterface.OnJump;
+                @Use_Power1.started -= m_Wrapper.m_NormalActionsCallbackInterface.OnUse_Power1;
+                @Use_Power1.performed -= m_Wrapper.m_NormalActionsCallbackInterface.OnUse_Power1;
+                @Use_Power1.canceled -= m_Wrapper.m_NormalActionsCallbackInterface.OnUse_Power1;
             }
             m_Wrapper.m_NormalActionsCallbackInterface = instance;
             if (instance != null)
@@ -483,6 +533,12 @@ public class @InputControl : IInputActionCollection, IDisposable
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
+                @Use_Power1.started += instance.OnUse_Power1;
+                @Use_Power1.performed += instance.OnUse_Power1;
+                @Use_Power1.canceled += instance.OnUse_Power1;
             }
         }
     }
@@ -525,5 +581,7 @@ public class @InputControl : IInputActionCollection, IDisposable
         void OnZoom(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
+        void OnUse_Power1(InputAction.CallbackContext context);
     }
 }

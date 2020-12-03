@@ -13,5 +13,11 @@ public class UserState : Schema {
 
 	[Type(1, "string")]
 	public string name = "";
+
+	[Type(2, "number")]
+	public float gems = 0;
+
+	[Type(3, "number")]
+	public float gasoline = 0;
 }
 

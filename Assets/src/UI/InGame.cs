@@ -80,11 +80,13 @@ public class InGame : MonoBehaviour
 
     void onTurnStateChange(List<Colyseus.Schema.DataChange> changes)
     {
+        Debug.Log("TunrState changed");
         changes.ForEach(val =>
         {
+             
             if (val.Field == "turn")
             {
-                turnNumberText.text = "" + val.Value;
+               turnNumberText.text = "" + val.Value;
             }
         });
 

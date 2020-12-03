@@ -70,7 +70,7 @@ public class Bag_UI : MonoBehaviour
 
     private void onTurnChange(List<DataChange> changes)
     {
-        if (!addedBagChanges)
+      /*  if (!addedBagChanges)
         {
             {
                 client.room.State.turnState.players[client.room.SessionId].bag.slots.OnAdd += onSlotAddOrChange;
@@ -82,7 +82,7 @@ public class Bag_UI : MonoBehaviour
 
 
 
-        }
+        }*/
     }
 
 

@@ -24,6 +24,15 @@ public class Player : MonoBehaviour, ConnectedObject
             animator.SetTrigger("Shooting");
             Character.Instance.canRotate = true;
         }
+        if (m.message == "Snap_true")
+        {
+            animator.SetBool("Snapped", true);
+        }
+        if (m.message == "Snap_false")
+        {
+
+            animator.SetBool("Snapped", false);
+        }
     }
     public void setState(ObjectState state)
     {

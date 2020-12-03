@@ -43,6 +43,9 @@ public class Character : MonoBehaviour
     bool sendStop = false;
 
     public ArcArrow arcArrow;
+    private Quaternion savedRotation;
+    private bool movingPad = false;
+    private bool sendJump = false;
 
 
 
@@ -60,8 +63,14 @@ public class Character : MonoBehaviour
 
         arcArrow = GetComponentInChildren<ArcArrow>();
 
+        inputControl.Normal.Use_Power1.performed+=onUserPower1;
+
     }
 
+    private async void onUserPower1(CallbackContext obj)
+    {
+        await this.client.room.Send("use_Power1");
+    }
 
     void Start()
     {
@@ -83,18 +92,10 @@ public class Character : MonoBehaviour
             message.x = Convert.ToInt16(v.x * 100f);
             message.y = Convert.ToInt16(v.y * 100f);
             //message.y = float.Parse(v.y.ToString("0.00"));
-            // Debug.Log(message);
 
             sendMoveMessage();
             movingPad = true;
         }
-        /*if(ctx.canceled && v.x == 0 && v.y == 0){
-            message.x = 0;
-            message.y = 0;
-            sendMoveMessage();
-        }*/
-
-
     }
 
     async void sendMoveMessage()
@@ -129,16 +130,10 @@ public class Character : MonoBehaviour
 
     public void onDrag(CallbackContext ctx)
     {
-        if (isDragging && !uiblocker.BlockedByUI && this.enabled)
-        {
-            Vector2 delta = ctx.ReadValue<Vector2>();
-
-            rotateView(delta.x, delta.y, rotateY, lookAt);
-        }
     }
     public void onClick(CallbackContext ctx)
     {
-        isDragging = ctx.ReadValue<float>() == 1 ? true : false;
+    
     }
     void init()
     {
@@ -146,51 +141,35 @@ public class Character : MonoBehaviour
         {
 
             setListeners();
-            setChar();
-            rotateView(0, 0, false, gameObject);
-
+          
             hasInit = true;
         }
 
     }
     public void setListeners()
     {
-        client.room.State.turnState.players.OnChange += onPlayersChange;
+       /* this.inputControl.Normal.Jump.performed+=onJump;
+        this.inputControl.Normal.Jump.canceled+=onJump;*/
+       
     }
 
+    private async void jumpControl()
+    {
+       if(inputControl.Normal.Jump.phase == InputActionPhase.Started){
+          await this.client.room.Send("jump",1);
+          this.sendJump = true;
+       }
+       if(inputControl.Normal.Jump.phase == InputActionPhase.Waiting && sendJump){
+          await this.client.room.Send("jump",0);
+          sendJump = false;
+       }
+
+      // Debug.Log(inputControl.Normal.Jump.phase);
+    }
 
     public void removeListeners()
     {
-        client.room.State.turnState.players.OnChange -= onPlayersChange;
-    }
-
-    private void onPlayersChange(TurnPlayerState value, string key)
-    {
-        if (value.user.sessionId == client.room.SessionId)
-        {
-            if (savedShots is 0)
-            {
-                savedShots = value.shots;
-            }
-            ballIsMoving = value.ballisMoving;
-            if (value.shots < savedShots)
-            {
-                //New shot time;
-                canWatchBall = false;
-            }
-        }
-
-    }
-
-    public void showCharacter()
-    {
-
-        // charMesh.SetActive(true);
-    }
-    public void hideCharacter()
-    {
-
-        //charMesh.SetActive(false);
+        //client.room.State.turnState.players.OnChange -= onPlayersChange;
     }
     public async void stopBall(CallbackContext ctx)
     {
@@ -203,7 +182,7 @@ public class Character : MonoBehaviour
     public async void sendShot(float force, float angle)
     {
         angle = 0;
-        if (canShoot() && !uiblocker.BlockedByUI)
+        if (!uiblocker.BlockedByUI)
         {
             yRot = 0;
 
@@ -213,8 +192,8 @@ public class Character : MonoBehaviour
             // savedRotation =
             savedRotation = rotation;
             ShotMessage sm = new ShotMessage();
-            //angle+=15;
-            Quaternion qu = Quaternion.Euler(transform.rotation.eulerAngles.x + angle, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+            Vector3 pivot = CameraController.Instance.cameraHelper.transform.rotation.eulerAngles;
+            Quaternion qu = Quaternion.Euler(pivot.x + angle, pivot.y, pivot.z);
             sm.force = force;
             sm.angle = new Quat();
             sm.angle.x = qu.x;
@@ -222,178 +201,27 @@ public class Character : MonoBehaviour
             sm.angle.z = qu.z;
             sm.angle.w = qu.w;
             await client.room.Send("shoot", sm);
-
-
-
-
         }
     }
     void Update()
     {
-        if (client.room != null && !hasInit)
-        {
-            init();
-        }
-        if (hasInit)
-        {
-
-            showCharacter();
-            if (!canShoot())
-            {
-                //hideCharacter();
-            }
-            if (isDragging && canShoot() && !uiblocker.BlockedByUI && canRotate)
-            {
-                lookAt = gameObject;
-                rotateY = false;
-
-                isShotting = true;
-            }
-        }
-        //        Debug.Log(inputControl.Normal.Move.ReadValue<Vector2>());
         if (inputControl.Normal.Move.ReadValue<Vector2>() == Vector2.zero && !sendStop)
         {
             sendStop = true;
             message.x = 0;
             message.y = 0;
             sendMoveMessage();
+           // Debug.Log("Sending stop");
         }
 
+       jumpControl();
 
 
     }
     void LateUpdate()
     {
-        if (hasInit)
-        {
-            if (!canShoot() && canWatchBall)
-            {
-                watchBall();
-            }
-            else
-            {
-                if (watchingBall)
-                {
-                    transform.rotation = savedRotation;
-                }
-                if (canWatchBall)
-                {
-                    setChar();
-                }
-
-            }
-
-        }
-    }
-    Vector3 currentSmoothVel = Vector3.zero;
-    float currentAngleVel = 0;
-
-    float smoothVelocity = .6f;
-    private Quaternion savedRotation;
-    private bool watchingBall = false;
-    public bool canWatchBall = false;
-    private float savedShots = 0;
-    private bool movingPad = false;
-
-    void watchBall()
-    {
-        if (!GameMessages.i.gameObject.activeSelf)
-        {
-            GameMessages.i.showMessage("Waiting others players");
-        }
-        watchingBall = true;
-        GameObject ball = giveBall();
-        if (ball != null)
-        {
-            cameraFollow.position = ball.transform.position;
-            Vector3 targetPosition = cameraFollow.transform.TransformPoint(new Vector3(0, 150, -140));
-            //transform.LookAt(cameraFollow.transform);
-            camara.transform.position = Vector3.SmoothDamp(camara.transform.position, targetPosition, ref currentSmoothVel, smoothVelocity);
-            var target_rot = Quaternion.LookRotation(cameraFollow.position - camara.transform.position);
-            var delta = Quaternion.Angle(camara.transform.rotation, target_rot);
-            if (delta > 0.0f)
-            {
-                var t = Mathf.SmoothDampAngle(delta, 0.0f, ref currentAngleVel, smoothVelocity);
-                t = 1.0f - t / delta;
-                camara.transform.rotation = Quaternion.Slerp(camara.transform.rotation, target_rot, t);
-            }
-        }
-
-
     }
 
-    void setChar()
-    {
-        if (GameMessages.i.gameObject.activeSelf)
-        {
-            GameMessages.i.hideMessage();
-        }
-        watchingBall = false;
-        GameObject ball = giveBall();
-        if (ball != null)
-        {
-
-            //transform.position = ball.transform.position + paddingChar;
-            transform.position = ball.transform.position + paddingChar;
-            transform.rotation = transform.rotation;
-            camara.transform.localPosition = cameraSavedPos;
-            camara.transform.localRotation = cameraSavedRot;
-        }
-
-        //transform.rotation = savedRotation;
-
-    }
-
-
-    async void rotateView(float axis, float axisY, bool rotateY, GameObject lookAt)
-    {
-
-        xRot += rotationSpeed * axis * 2;
-        yRot += rotationSpeed * axisY * 2;
-        // GameObject ball = client.golfballs[client.room.SessionId].gameObject;
-        if (rotateY)
-        {
-            transform.rotation = Quaternion.Euler(-yRot, xRot, 0);
-        }
-        else
-        {
-            transform.rotation = Quaternion.Euler(0, xRot, 0);
-        }
-
-        Quaternion qu = Quaternion.Euler(transform.rotation.eulerAngles.x, +transform.rotation.eulerAngles.y + 90, transform.rotation.eulerAngles.z);
-        Quat quat = new Quat();
-        quat.x = qu.x;
-        quat.y = qu.y;
-        quat.z = qu.z;
-        quat.w = qu.w;
-
-       // await client.room.Send("rotate", quat);
-        transform.LookAt(gameObject.transform);
-
-
-        //transform.LookAt(gameObject.transform);
-
-
-    }
-
-    public GameObject giveBall()
-    {
-        if (client.golfballs.Count > 0)
-        {
-            return client.golfballs[client.room.SessionId].gameObject;
-        }
-        else
-        {
-            return null;
-        }
-
-    }
-
-
-    public bool canShoot()
-    {
-
-        return client.room.State.turnState.players[client.room.SessionId].shots > 0 && !ballIsMoving;
-    }
+  
 
 }
