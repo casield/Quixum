@@ -58,9 +58,19 @@ public class CameraController : MonoBehaviour
     {
         float rotationVelocity = .5f;
         float rotation = rotationVelocity * v.x;
+        float rotationY = (rotationVelocity/6) * v.y;
+
+        if(cameraHelper.transform.rotation.eulerAngles.z <= 180){
+          //rotationY = 0;
+           
+        }
+
+        Debug.Log(cameraHelper.transform.rotation.eulerAngles);
+
+         cameraHelper.transform.Rotate(new Vector3(0, rotation,0),Space.World); 
         //transform.Rotate(new Vector3(0, rotation,0));
-        cameraHelper.transform.Rotate(new Vector3(0, rotation,0));
-        if (Client.Instance != null)
+        
+        if (Client.Instance != null && !uiblocker.BlockedByUI)
         {
             Quaternion qu = Quaternion.Euler(cameraHelper.transform.rotation.eulerAngles.x, cameraHelper.transform.rotation.eulerAngles.y + 90, cameraHelper.transform.rotation.eulerAngles.z);
             Quat quat = new Quat();

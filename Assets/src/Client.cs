@@ -141,8 +141,9 @@ public class Client : MonoBehaviour
     {
         leaveLastRoom();
         this.room = await client.JoinOrCreate<GameState>("GameRoom");
-        setListeners();
         readMessages();
+        setListeners();
+        
 
         this.gameObject.name += " [" + this.room.SessionId + "]";
 
@@ -150,6 +151,13 @@ public class Client : MonoBehaviour
 
     private void readMessages()
     {
+        Debug.Log("Read messages");
+        room.OnMessage<float>("time", (val) =>
+        {
+            time = val;
+            GUIConsole.Instance.deltaTime = time;
+        });
+
         room.OnMessage<string>("changeMap", onChangeMap);
 
         room.OnMessage<string>("error", onErrorMessage);
@@ -159,12 +167,7 @@ public class Client : MonoBehaviour
         room.OnMessage<bool>("exitTrowMode", exitTrowMode);
         room.OnMessage<ObstacleState>("LongNeck", onLongNeck);
         room.OnMessage<ObjectMessage>("objectM", onObjectMessage);
-        room.OnMessage<float>("time", (val) =>
-        {
-            time = val;
-            GUIConsole.Instance.deltaTime = time;
-        });
-
+        
 
     }
 
@@ -205,8 +208,6 @@ public class Client : MonoBehaviour
 
     public void setListeners()
     {
-
-
         room.OnError += (code, message) => Debug.LogError("ERROR, code =>" + code + ", message => " + message);
         room.State.world.objects.OnChange += OnChangeObjects;
         room.State.world.objects.OnAdd += AddObject;
@@ -313,7 +314,6 @@ public class Client : MonoBehaviour
     }
     void RemoveObject(ObjectState body, string i)
     {
-        Debug.Log("Eliminando el objeto " + body.type);
         if (objects.ContainsKey(i))
         {
             SObject obj = objects[i];
@@ -498,9 +498,15 @@ public class Client : MonoBehaviour
             SObject itt = item.Value;
             Vector3 desPos = new Vector3(itt.state.position.x, itt.state.position.y, itt.state.position.z);
             Quaternion desQuat = new Quaternion(itt.state.quaternion.x, itt.state.quaternion.y, itt.state.quaternion.z, itt.state.quaternion.w);
-            itt.gameObject.transform.position = Vector3.Lerp(itt.gameObject.transform.position, desPos, 1);
-            //itt.gameObject.transform.rotation = new Quaternion(itt.state.quaternion.x, itt.state.quaternion.y, itt.state.quaternion.z, itt.state.quaternion.w);
-            itt.gameObject.transform.rotation = Quaternion.Lerp(itt.gameObject.transform.rotation, desQuat, 1);
+            if (itt.gameObject != null)
+            {
+                itt.gameObject.transform.position = Vector3.Lerp(itt.gameObject.transform.position, desPos, 1);
+                //itt.gameObject.transform.rotation = new Quaternion(itt.state.quaternion.x, itt.state.quaternion.y, itt.state.quaternion.z, itt.state.quaternion.w);
+                itt.gameObject.transform.rotation = Quaternion.Lerp(itt.gameObject.transform.rotation, desQuat, 1);
+            }else{
+                Debug.Log("itt.GameObject is null");
+            }
+
         }
         updateObjects.Clear();
         // Debug.Log(uiblocker.BlockedByUI);

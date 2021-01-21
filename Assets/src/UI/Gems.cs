@@ -32,45 +32,20 @@ public class Gems : MonoBehaviour
     {
         //
         client = Client.Instance;
-        client.room.State.users.OnChange += onUserChange;
+      
+            Client.Instance.room.State.users.OnAdd+=onAddUser;
+            Client.Instance.room.State.users.OnChange+=onAddUser;
+        
 
     }
-
-    private void onUserChange(UserState value, string key)
+        private void onAddUser(UserState value, string key)
     {
-        this.gemsText.text = ""+value.gems;
-    }
-
-    private void onPlayerChange(List<DataChange> changes)
-    {
-        changes.ForEach(val =>
-        {
-            if (val.Field == "gems")
-            {
-                if (audioSource != null)
-                {
-                    audioSource.Play();
-                }
-                setGems(Int16.Parse(val.Value.ToString()));
-            }
-
-        });
-
-    }
-
-    /// <summary>
-    /// This function is called when the object becomes enabled and active.
-    /// </summary>
-
-    private void onPlayersChange(TurnPlayerState value, string key)
-    {
-        if (value.user.sessionId == client.room.SessionId && !registred)
-        {
-            setGems((int)value.gems);
-            value.OnChange += onPlayerChange;
-            registred = true;
+        if(value.sessionId == Client.Instance.room.SessionId){
+            this.gemsText.text = "" + value.gems;
         }
+        
     }
+
     public void setGems(int gems)
     {
         gemsText.text = "" + gems;

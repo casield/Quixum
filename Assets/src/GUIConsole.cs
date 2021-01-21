@@ -4,7 +4,7 @@ public class GUIConsole : MonoBehaviour
 {
     string myLog = "*begin log";
     string filename = "";
-    bool doShow = true;
+    bool doShow = false;
     int kChars = 700;
 
     int objectsSize = 0;

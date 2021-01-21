@@ -24,13 +24,16 @@ public class ClientMAP : MonoBehaviour
     }
     public void connect()
     {
-        if(localhost){
+        if (localhost)
+        {
             client = new Colyseus.Client("ws://localhost:6017");
-            
-        }else{
-            client = new Colyseus.Client("ws://"+Client.serverIP+":6017");
+
         }
-        
+        else
+        {
+            client = new Colyseus.Client("ws://" + Client.serverIP + ":6017");
+        }
+
         Debug.Log("Connected");
         join();
 
@@ -65,15 +68,19 @@ public class ClientMAP : MonoBehaviour
         for (int i = 0; i < od.Length; i++)
         {
             ObjectDesigner element = od[i];
-            objects.Add(element.toJson());
+
+            Vector3 scale = element.transform.localScale;
+            if (scale.x < 0 || scale.y < 0 || scale.z < 0)
+            {
+                Debug.Log(element.transform.localScale);
+                Debug.Log(element.name);
+            }
+            if(element.gameObject.activeSelf){
+                objects.Add(element.toJson());
+            }
+            
         }
 
-        TileDesigner[] td = mapGO.GetComponentsInChildren<TileDesigner>();
-        for (int i = 0; i < td.Length; i++)
-        {
-            TileDesigner element = td[i];
-            tiles.Add(element.toJson());
-        }
 
         ObstacleDesigner[] bsd = mapGO.GetComponentsInChildren<ObstacleDesigner>();
         for (int i = 0; i < bsd.Length; i++)
@@ -112,7 +119,7 @@ public class ClientMAP : MonoBehaviour
             changeName(item.Name);
             yield return new WaitForSeconds(1);
             nextMap(item);
-            
+
             finish();
             yield return new WaitForSeconds(1);
         }

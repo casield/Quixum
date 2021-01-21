@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TileDesigner : MonoBehaviour
 {
-    public int tileToLoad;
+    public string tileToLoad;
     // Start is called before the first frame update
     void Start()
     {

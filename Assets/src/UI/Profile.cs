@@ -73,7 +73,7 @@ public class Profile : MonoBehaviour
         });
         if (!addedBagChanges)
         {
-            client.room.State.turnState.players[client.room.SessionId].bag.OnChange += onBagChange;
+           /* client.room.State.turnState.players[client.room.SessionId].bag.OnChange += onBagChange;*/
             addedBagChanges = true;
         }
 

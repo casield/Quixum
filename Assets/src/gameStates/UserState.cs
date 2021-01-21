@@ -19,5 +19,8 @@ public class UserState : Schema {
 
 	[Type(3, "number")]
 	public float gasoline = 0;
+
+	[Type(4, "number")]
+	public float energy = 0;
 }
 

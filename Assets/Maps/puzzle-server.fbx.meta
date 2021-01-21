@@ -2,7 +2,16 @@ fileFormatVersion: 2
 guid: cc366f1912e22a84698f8511c6d81420
 ModelImporter:
   serializedVersion: 19301
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: -831680148379100735
+    second: rig|Golf clubAction
+  - first:
+      74: 3374748389425109202
+    second: rig|rigAction
+  - first:
+      74: -8516839553889445039
+    second: Golf club|Golf clubAction
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -81,7 +90,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.5
+    globalScale: 50
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

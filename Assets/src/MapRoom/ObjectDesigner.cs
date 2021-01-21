@@ -31,7 +31,7 @@ public class ObjectDesigner : MonoBehaviour
     }
     public ObjectState toJson()
     {
-        uID = uniqueId();
+        uID = this.uID!=""?this.uID:uniqueId();
         ObjectState p = new ObjectState();
         if (shape == "box")
         {

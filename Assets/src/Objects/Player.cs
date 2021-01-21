@@ -18,6 +18,7 @@ public class Player : MonoBehaviour, ConnectedObject
     }
     public void onMessage(ObjectMessage m)
     {
+        Debug.Log(m);
         if (m.message == "trigger_ShootAnim")
         {
 
