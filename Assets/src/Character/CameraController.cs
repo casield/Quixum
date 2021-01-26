@@ -13,12 +13,14 @@ public class CameraController : MonoBehaviour
     public Vector3 padding = new Vector3(0, 20, 0);
 
     [Range(0.0f, 1f)]
-    public float smoothSpeed = .5f;
+    public float smoothSpeed = 0f;
 
     public static CameraController Instance { get; private set; }
     public InputControl control;
     private bool isDragging = false;
     private bool initPlayer = false;
+
+    public Camera dCamera;
 
 
 
@@ -26,6 +28,7 @@ public class CameraController : MonoBehaviour
     {
         control = new InputControl();
         Instance = this;
+        dCamera = GetComponent<Camera>();
     }
 
     /// <summary>
@@ -56,17 +59,9 @@ public class CameraController : MonoBehaviour
 
     async private void rotateView(Vector2 v)
     {
-        float rotationVelocity = .5f;
+        float rotationVelocity = .05f;
         float rotation = rotationVelocity * v.x;
         float rotationY = (rotationVelocity/6) * v.y;
-
-        if(cameraHelper.transform.rotation.eulerAngles.z <= 180){
-          //rotationY = 0;
-           
-        }
-
-        Debug.Log(cameraHelper.transform.rotation.eulerAngles);
-
          cameraHelper.transform.Rotate(new Vector3(0, rotation,0),Space.World); 
         //transform.Rotate(new Vector3(0, rotation,0));
         

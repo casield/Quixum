@@ -988,9 +988,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &26556334
 BoxCollider:
@@ -1613,9 +1613,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &35284658
 BoxCollider:
@@ -2652,9 +2652,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &46035984
 BoxCollider:
@@ -3217,9 +3217,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &51241763
 BoxCollider:
@@ -3330,9 +3330,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &52538727
 BoxCollider:
@@ -4968,9 +4968,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &74828103
 BoxCollider:
@@ -5194,9 +5194,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &77488286
 BoxCollider:
@@ -5852,9 +5852,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &86539320
 BoxCollider:
@@ -6880,9 +6880,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &95724006
 BoxCollider:
@@ -7569,9 +7569,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &106621488
 BoxCollider:
@@ -8159,9 +8159,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &110243019
 BoxCollider:
@@ -8611,9 +8611,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &115650034
 BoxCollider:
@@ -8837,9 +8837,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &120155309
 BoxCollider:
@@ -8950,9 +8950,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &121631982
 BoxCollider:
@@ -9319,9 +9319,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &127758467
 BoxCollider:
@@ -10692,9 +10692,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &154735367
 BoxCollider:
@@ -11288,9 +11288,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &176664874
 BoxCollider:
@@ -11514,9 +11514,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &178246839
 BoxCollider:
@@ -11853,9 +11853,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &182391457
 BoxCollider:
@@ -11966,9 +11966,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &182541849
 BoxCollider:
@@ -12079,9 +12079,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &183617094
 BoxCollider:
@@ -13343,9 +13343,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &205359466
 BoxCollider:
@@ -13935,9 +13935,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &224051656
 BoxCollider:
@@ -14048,9 +14048,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &224057994
 BoxCollider:
@@ -14274,9 +14274,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &226721990
 BoxCollider:
@@ -15056,9 +15056,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &239686411
 BoxCollider:
@@ -15621,9 +15621,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &246584915
 BoxCollider:
@@ -16217,9 +16217,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &252113817
 BoxCollider:
@@ -16556,9 +16556,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &254450175
 BoxCollider:
@@ -17013,9 +17013,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &265997783
 BoxCollider:
@@ -17580,9 +17580,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &279205435
 BoxCollider:
@@ -17994,9 +17994,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &294305993
 BoxCollider:
@@ -18810,9 +18810,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &306618998
 BoxCollider:
@@ -19036,9 +19036,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &308394927
 BoxCollider:
@@ -21077,9 +21077,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &321910617
 BoxCollider:
@@ -21416,9 +21416,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &327440214
 BoxCollider:
@@ -22207,9 +22207,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &336224856
 BoxCollider:
@@ -23763,9 +23763,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &362484409
 BoxCollider:
@@ -24441,9 +24441,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &374696513
 BoxCollider:
@@ -24586,9 +24586,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &381108367
 BoxCollider:
@@ -25546,9 +25546,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &398857654
 BoxCollider:
@@ -26642,9 +26642,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &413169907
 BoxCollider:
@@ -26981,9 +26981,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &416012287
 BoxCollider:
@@ -27063,7 +27063,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cd82a5e0eb9f40439fb7a7d7441801e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: box
+  type: fallArea
   uID: 
   material: normalMaterial
   instantiate: 0
@@ -27684,9 +27684,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &422055632
 BoxCollider:
@@ -29853,7 +29853,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &457667748
 Transform:
   m_ObjectHideFlags: 0
@@ -30730,9 +30730,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &480826265
 BoxCollider:
@@ -30843,9 +30843,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &480897068
 BoxCollider:
@@ -31199,9 +31199,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &483650204
 BoxCollider:
@@ -31312,9 +31312,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &484334447
 BoxCollider:
@@ -32218,9 +32218,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &497319680
 BoxCollider:
@@ -32356,9 +32356,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &501763045
 BoxCollider:
@@ -34351,9 +34351,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &534625590
 BoxCollider:
@@ -34896,9 +34896,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &542238799
 BoxCollider:
@@ -35122,9 +35122,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &544014387
 BoxCollider:
@@ -36051,9 +36051,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &553745061
 BoxCollider:
@@ -36164,9 +36164,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &553869582
 BoxCollider:
@@ -36361,9 +36361,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &556143586
 BoxCollider:
@@ -37589,9 +37589,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &578944566
 BoxCollider:
@@ -37815,9 +37815,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &581114140
 BoxCollider:
@@ -38041,9 +38041,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &585877467
 BoxCollider:
@@ -38473,9 +38473,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &594820769
 BoxCollider:
@@ -39116,7 +39116,7 @@ GameObject:
   - component: {fileID: 601849992}
   - component: {fileID: 601849991}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39264,9 +39264,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &604082290
 BoxCollider:
@@ -41129,9 +41129,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &615586852
 BoxCollider:
@@ -41531,9 +41531,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &627130862
 BoxCollider:
@@ -42058,9 +42058,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &640099724
 BoxCollider:
@@ -42171,9 +42171,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &640515333
 BoxCollider:
@@ -42831,9 +42831,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &651656451
 BoxCollider:
@@ -43875,9 +43875,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &669211615
 BoxCollider:
@@ -43988,9 +43988,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &670112865
 BoxCollider:
@@ -45205,9 +45205,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &690296716
 BoxCollider:
@@ -46595,9 +46595,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &728565774
 BoxCollider:
@@ -47072,9 +47072,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &740359939
 BoxCollider:
@@ -47300,9 +47300,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &744608046
 BoxCollider:
@@ -47413,9 +47413,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &748078071
 BoxCollider:
@@ -47526,9 +47526,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &748735688
 BoxCollider:
@@ -50665,9 +50665,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &800598259
 BoxCollider:
@@ -51345,9 +51345,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &803673340
 BoxCollider:
@@ -52616,9 +52616,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &831928862
 BoxCollider:
@@ -52729,9 +52729,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &832669623
 BoxCollider:
@@ -54092,9 +54092,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &851634598
 BoxCollider:
@@ -54343,9 +54343,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &860670970
 BoxCollider:
@@ -54456,9 +54456,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &861590907
 BoxCollider:
@@ -56043,9 +56043,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &903820236
 BoxCollider:
@@ -56269,9 +56269,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &908315411
 BoxCollider:
@@ -56407,9 +56407,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &911947979
 BoxCollider:
@@ -56746,9 +56746,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &916510092
 BoxCollider:
@@ -57110,9 +57110,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &929427402
 BoxCollider:
@@ -59389,9 +59389,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &959100668
 BoxCollider:
@@ -59502,9 +59502,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &960141693
 BoxCollider:
@@ -60844,9 +60844,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &972608249
 BoxCollider:
@@ -61547,9 +61547,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &987607972
 BoxCollider:
@@ -62030,9 +62030,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &996112185
 BoxCollider:
@@ -62821,9 +62821,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1005168984
 BoxCollider:
@@ -63027,7 +63027,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc47170878f062d428eb6227508da6b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  localhost: 1
+  localhost: 0
 --- !u!4 &1010471407
 Transform:
   m_ObjectHideFlags: 0
@@ -64158,9 +64158,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1028915258
 BoxCollider:
@@ -64470,9 +64470,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1042525231
 BoxCollider:
@@ -65714,9 +65714,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1069671273
 BoxCollider:
@@ -65940,9 +65940,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1071341772
 BoxCollider:
@@ -66197,9 +66197,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1076447932
 BoxCollider:
@@ -66310,9 +66310,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1077685476
 BoxCollider:
@@ -66623,9 +66623,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1088953959
 BoxCollider:
@@ -66736,9 +66736,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1090056243
 BoxCollider:
@@ -66995,9 +66995,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1093475524
 BoxCollider:
@@ -67766,9 +67766,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1105675779
 BoxCollider:
@@ -67896,9 +67896,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1108727625
 BoxCollider:
@@ -68604,9 +68604,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1121869584
 BoxCollider:
@@ -70190,9 +70190,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1141674202
 BoxCollider:
@@ -70458,9 +70458,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1142780016
 BoxCollider:
@@ -71116,9 +71116,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1154133306
 BoxCollider:
@@ -71455,9 +71455,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1157376789
 BoxCollider:
@@ -71568,9 +71568,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1158645610
 BoxCollider:
@@ -72125,9 +72125,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1167757096
 BoxCollider:
@@ -72649,9 +72649,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1176270105
 BoxCollider:
@@ -74636,9 +74636,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1203071796
 BoxCollider:
@@ -75088,9 +75088,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1207997737
 BoxCollider:
@@ -75413,9 +75413,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1216022339
 BoxCollider:
@@ -78247,9 +78247,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1247927205
 BoxCollider:
@@ -79038,9 +79038,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1269878151
 BoxCollider:
@@ -79275,9 +79275,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1274411194
 BoxCollider:
@@ -80347,9 +80347,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1291693294
 BoxCollider:
@@ -81676,9 +81676,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1322644368
 BoxCollider:
@@ -81902,9 +81902,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1324490789
 BoxCollider:
@@ -82478,9 +82478,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1327871086
 BoxCollider:
@@ -82591,9 +82591,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1332969428
 BoxCollider:
@@ -83043,9 +83043,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1347124846
 BoxCollider:
@@ -83269,9 +83269,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1350153584
 BoxCollider:
@@ -84316,9 +84316,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1364576653
 BoxCollider:
@@ -84906,9 +84906,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1375182787
 BoxCollider:
@@ -85163,9 +85163,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1378409957
 BoxCollider:
@@ -85276,9 +85276,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1378552119
 BoxCollider:
@@ -86035,9 +86035,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1389708852
 BoxCollider:
@@ -86179,9 +86179,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1393401976
 BoxCollider:
@@ -89844,9 +89844,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1431284833
 BoxCollider:
@@ -90685,9 +90685,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1447431543
 BoxCollider:
@@ -91687,9 +91687,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1469134351
 BoxCollider:
@@ -93496,9 +93496,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1497242113
 BoxCollider:
@@ -93639,9 +93639,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1503641330
 BoxCollider:
@@ -93865,9 +93865,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1509944732
 BoxCollider:
@@ -94204,9 +94204,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1511245312
 BoxCollider:
@@ -96098,9 +96098,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1546942650
 BoxCollider:
@@ -96324,9 +96324,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1551518307
 BoxCollider:
@@ -96891,7 +96891,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1558489027}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -29.692755, y: 43.8, z: -40.28015}
+  m_LocalPosition: {x: -29.692755, y: 43.8, z: -203.5}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 606491353}
@@ -98320,9 +98320,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1582758946
 BoxCollider:
@@ -99235,9 +99235,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1595006102
 BoxCollider:
@@ -101685,9 +101685,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1646667267
 BoxCollider:
@@ -101911,9 +101911,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1647810841
 BoxCollider:
@@ -103069,9 +103069,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1664726658
 BoxCollider:
@@ -103651,9 +103651,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1671017629
 BoxCollider:
@@ -103789,9 +103789,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1676457504
 BoxCollider:
@@ -104379,9 +104379,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1685249006
 BoxCollider:
@@ -104492,9 +104492,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1686999886
 BoxCollider:
@@ -104605,9 +104605,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1693530805
 BoxCollider:
@@ -104718,9 +104718,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1695710833
 BoxCollider:
@@ -105473,9 +105473,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1714925526
 BoxCollider:
@@ -105699,9 +105699,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1716764403
 BoxCollider:
@@ -105812,9 +105812,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1716957817
 BoxCollider:
@@ -105925,9 +105925,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1717788136
 BoxCollider:
@@ -106891,9 +106891,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1738220279
 BoxCollider:
@@ -107865,9 +107865,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1755167623
 BoxCollider:
@@ -109221,9 +109221,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1772631378
 BoxCollider:
@@ -109836,9 +109836,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1782238574
 BoxCollider:
@@ -110370,9 +110370,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1791970794
 BoxCollider:
@@ -110483,9 +110483,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1798383684
 BoxCollider:
@@ -110709,9 +110709,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1803829663
 BoxCollider:
@@ -111161,9 +111161,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1807062386
 BoxCollider:
@@ -111299,9 +111299,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1809291006
 BoxCollider:
@@ -111525,9 +111525,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1810591844
 BoxCollider:
@@ -111638,9 +111638,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1811703204
 BoxCollider:
@@ -111945,9 +111945,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1820736409
 BoxCollider:
@@ -112767,9 +112767,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1833088996
 BoxCollider:
@@ -113106,9 +113106,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1838201129
 BoxCollider:
@@ -113668,9 +113668,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1843903080
 BoxCollider:
@@ -113919,9 +113919,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1848641998
 BoxCollider:
@@ -114032,9 +114032,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1848775106
 BoxCollider:
@@ -114546,9 +114546,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1855990992
 BoxCollider:
@@ -115255,9 +115255,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1864593375
 BoxCollider:
@@ -115990,9 +115990,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1875841256
 BoxCollider:
@@ -116905,9 +116905,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1895380606
 BoxCollider:
@@ -117276,9 +117276,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1900354894
 BoxCollider:
@@ -118157,9 +118157,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1917968170
 BoxCollider:
@@ -118754,9 +118754,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1928909980
 BoxCollider:
@@ -119206,9 +119206,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1933970589
 BoxCollider:
@@ -119889,9 +119889,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1943671797
 BoxCollider:
@@ -120115,9 +120115,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1944301982
 BoxCollider:
@@ -120509,9 +120509,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1949249071
 BoxCollider:
@@ -120622,9 +120622,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1950044509
 BoxCollider:
@@ -120848,9 +120848,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1950807403
 BoxCollider:
@@ -121621,9 +121621,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1971994880
 BoxCollider:
@@ -122045,9 +122045,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1981080522
 BoxCollider:
@@ -122949,9 +122949,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &1992301004
 BoxCollider:
@@ -123596,7 +123596,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cd82a5e0eb9f40439fb7a7d7441801e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: box
+  type: SuperSticky
   uID: 
   material: normalMaterial
   instantiate: 0
@@ -124217,9 +124217,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &2005883219
 BoxCollider:
@@ -124581,9 +124581,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &2012727503
 BoxCollider:
@@ -125178,9 +125178,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &2018050563
 BoxCollider:
@@ -127510,9 +127510,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &2058766433
 BoxCollider:
@@ -128583,9 +128583,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &2079268698
 BoxCollider:
@@ -128922,9 +128922,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &2083784196
 BoxCollider:
@@ -129148,9 +129148,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &2087899413
 BoxCollider:
@@ -129487,9 +129487,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &2094732870
 BoxCollider:
@@ -130659,9 +130659,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &2112587673
 BoxCollider:
@@ -130885,9 +130885,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &2117689833
 BoxCollider:
@@ -131701,9 +131701,9 @@ MonoBehaviour:
   type: box
   uID: 
   material: normalMaterial
-  instantiate: 0
+  instantiate: 1
   shape: box
-  mass: 0
+  mass: 1
   mesh: 
 --- !u!65 &2140704450
 BoxCollider:

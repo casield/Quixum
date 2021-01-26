@@ -19,7 +19,6 @@ public class Character : MonoBehaviour
     public Vector3 pointOfContact = new Vector3();
 
 
-    Quaternion savedAxis = Quaternion.identity;
 
     public Animator AnimationController;
     public BallPointer ballPointer;
@@ -37,7 +36,6 @@ public class Character : MonoBehaviour
     private bool rotateY = false;
     public Transform cameraFollow;
 
-    public Vector3 cameraSavedPos = new Vector3();
     public Quaternion cameraSavedRot = new Quaternion();
     MoveMessage message = new MoveMessage();
     bool sendStop = false;
@@ -46,6 +44,8 @@ public class Character : MonoBehaviour
     private Quaternion savedRotation;
     private bool movingPad = false;
     private bool sendJump = false;
+
+    public Player player;
 
 
 
@@ -58,8 +58,6 @@ public class Character : MonoBehaviour
         Instance = this;
         inputControl = new InputControl();
         lookAt = gameObject;
-        cameraSavedPos = camara.transform.localPosition;
-        cameraSavedRot = camara.transform.localRotation;
 
         arcArrow = GetComponentInChildren<ArcArrow>();
 
@@ -118,13 +116,11 @@ public class Character : MonoBehaviour
     void OnEnable()
     {
         inputControl.Enable();
-        transform.rotation = savedAxis;
     }
 
     void OnDisable()
     {
         inputControl.Disable();
-        savedAxis = transform.rotation;
     }
 
 

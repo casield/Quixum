@@ -1657,7 +1657,7 @@ GameObject:
   - component: {fileID: 4086073145700492526}
   - component: {fileID: 7950130098693242516}
   m_Layer: 8
-  m_Name: 'sol '
+  m_Name: sol_prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2156,6 +2156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95f19e1d509ed7943806fec1a5444325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  velocity: 0
 --- !u!1 &4613968870993234862
 GameObject:
   m_ObjectHideFlags: 0

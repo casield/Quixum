@@ -39,8 +39,8 @@ public class Player : MonoBehaviour, ConnectedObject
     {
         if (state.owner.sessionId == Client.Instance.room.SessionId)
         {
-            Debug.Log("Is me");
             Character.Instance.ballPointer = ballPointer;
+            Character.Instance.player = this;
             CameraController.Instance.player = this;
         }
         else

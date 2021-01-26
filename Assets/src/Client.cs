@@ -47,7 +47,7 @@ public class Client : MonoBehaviour
 
     public float time = 0;
 
-    public static string serverIP = "3.21.43.144";
+    public static string serverIP = "3.141.34.90";
 
     void Awake()
     {
@@ -323,7 +323,7 @@ public class Client : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Couldn't destroy object " + body.type + " / " + i);
+            Debug.LogError("Couldn't destroy object " + body.type + " / " + body.uID);
         }
 
     }
@@ -413,7 +413,7 @@ public class Client : MonoBehaviour
 
             if (gameOb != null)
             {
-                gameOb.name = ob.type + " [" + ob.uID + "]";
+                gameOb.name = ob.type + " [" + ob.uID + "]" + " / MAterial: "+ob.material;
                 if (ob.owner.sessionId != "")
                 {
                     gameOb.name += "=> " + ob.owner.sessionId;

@@ -165,17 +165,6 @@ public class @InputControl : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""c023329b-9a91-4067-9246-2e3b3e818605"",
-                    ""path"": ""<Touchscreen>/primaryTouch/tap"",
-                    ""interactions"": ""MultiTap(tapTime=0.2,tapDelay=0.4,pressPoint=0.5)"",
-                    ""processors"": """",
-                    ""groups"": ""Touch"",
-                    ""action"": ""Stop Ball"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""84d4b0d0-3d64-47b0-ae51-0b744e977086"",
                     ""path"": ""<Keyboard>/enter"",
                     ""interactions"": """",
@@ -259,28 +248,6 @@ public class @InputControl : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Touch"",
                     ""action"": ""Zoom"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""90346d0d-1b4c-4b58-8b71-6ccb457e73b9"",
-                    ""path"": ""<Touchscreen>/touch1/delta"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Touch"",
-                    ""action"": ""Shoot"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""a8e9dc66-f8e8-4c83-958f-a862e009fa64"",
-                    ""path"": ""<Touchscreen>/touch1/press"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Touch"",
-                    ""action"": ""Shoot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
