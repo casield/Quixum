@@ -25,8 +25,5 @@ public class GameState : Schema {
 
 	[Type(5, "ref", typeof(TurnsState))]
 	public TurnsState turnState = new TurnsState();
-
-	[Type(6, "ref", typeof(ChatState))]
-	public ChatState chat = new ChatState();
 }
 

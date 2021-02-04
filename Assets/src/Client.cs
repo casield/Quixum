@@ -47,7 +47,7 @@ public class Client : MonoBehaviour
 
     public float time = 0;
 
-    public static string serverIP = "3.141.34.90";
+    public static string serverIP = "3.13.63.39";
 
     void Awake()
     {
@@ -143,7 +143,7 @@ public class Client : MonoBehaviour
         this.room = await client.JoinOrCreate<GameState>("GameRoom");
         readMessages();
         setListeners();
-        
+
 
         this.gameObject.name += " [" + this.room.SessionId + "]";
 
@@ -162,12 +162,8 @@ public class Client : MonoBehaviour
 
         room.OnMessage<string>("error", onErrorMessage);
         room.OnMessage<string>("info", onInfoMessage);
-
-        room.OnMessage<BoxObject>("trowMode", onTrowMode);
-        room.OnMessage<bool>("exitTrowMode", exitTrowMode);
-        room.OnMessage<ObstacleState>("LongNeck", onLongNeck);
         room.OnMessage<ObjectMessage>("objectM", onObjectMessage);
-        
+
 
     }
 
@@ -175,27 +171,6 @@ public class Client : MonoBehaviour
     {
         objects[obj.uID].onMessage(obj);
     }
-
-    private void onLongNeck(ObstacleState state)
-    {
-        obstacles[state.uID].activate();
-    }
-    private void exitTrowMode(bool exit)
-    {
-        // Character.Instance.showCharacter();
-        Character.Instance.enabled = true;
-        TrowMode.Instance.enabled = false;
-        // TrowMode.Instance.objectState = obj;
-    }
-
-    private void onTrowMode(BoxObject obj)
-    {
-        //Character.InstancehideCharacter();
-        Character.Instance.enabled = false;
-        TrowMode.Instance.enabled = true;
-        TrowMode.Instance.objectState = obj;
-    }
-
     private void onErrorMessage(string obj)
     {
         ServerMessagesController.Instance.showError(obj);
@@ -212,8 +187,6 @@ public class Client : MonoBehaviour
         room.State.world.objects.OnChange += OnChangeObjects;
         room.State.world.objects.OnAdd += AddObject;
         room.State.world.objects.OnRemove += RemoveObject;
-        room.State.world.tiles.OnAdd += OnAddTiles;
-        room.State.world.obstacles.OnAdd += OnAddObstacles;
         room.OnLeave += onLeave;
 
 
@@ -234,8 +207,6 @@ public class Client : MonoBehaviour
         room.State.world.objects.OnAdd -= AddObject;
         room.State.world.objects.OnRemove -= RemoveObject;
 
-        room.State.world.tiles.OnAdd -= OnAddTiles;
-        room.State.world.obstacles.OnAdd -= OnAddObstacles;
         room.OnLeave -= onLeave;
 
         Character.Instance.removeListeners();
@@ -244,8 +215,6 @@ public class Client : MonoBehaviour
     private void onChangeMap(object obj)
     {
         Debug.Log("Change Map");
-
-
         foreach (KeyValuePair<string, IObstacle> child in obstacles)
         {
             GameObject.Destroy(child.Value.gObject);
@@ -254,42 +223,7 @@ public class Client : MonoBehaviour
         {
             GameObject.Destroy(child);
         }
-        //this.golfballs.Clear();
-        // this.objects.Clear();
-        //this.obstacles.Clear();
-        //removeListeners();
-        //setListeners();
     }
-
-
-
-    private void OnAddTiles(ObjectState value, int key)
-    {
-
-        UnityEngine.Object prefab = Resources.Load("Tiles/" + value.type); // Assets/Resources/Prefabs/prefab1.FBX
-        GameObject t = (GameObject)Instantiate(prefab, new Vector3(value.position.x, value.position.y, value.position.z), Quaternion.identity);
-        t.transform.parent = ServerObjects.transform;
-        t.transform.localScale = new Vector3(1, 1, 1);
-        t.transform.rotation = new Quaternion(value.quaternion.x, value.quaternion.y, value.quaternion.z, value.quaternion.w);
-
-        tiles.Add(t);
-    }
-    private void OnAddObstacles(ObstacleState value, int key)
-    {
-        Debug.Log("Create obstacles in " + this.mapName);
-        UnityEngine.Object prefab = Resources.Load("Objects/" + value.objectname); // Assets/Resources/Prefabs/prefab1.FBX
-        GameObject t = (GameObject)Instantiate(prefab, new Vector3(value.position.x, value.position.y, value.position.z), Quaternion.identity);
-        t.transform.parent = ServerObjects.transform;
-        t.transform.localScale = new Vector3(1, 1, 1);
-        t.transform.rotation = new Quaternion(value.quaternion.x, value.quaternion.y, value.quaternion.z, value.quaternion.w);
-
-        t.name += " [" + value.uID + "]";
-        IObstacle obstacle = t.GetComponent<IObstacle>();
-        obstacles.Add(value.uID, obstacle);
-
-    }
-
-
     void OnChangeObjects(ObjectState body, string i)
     {
 
@@ -297,18 +231,14 @@ public class Client : MonoBehaviour
         {
             SObject itt = objects[i];
             Vector3 desPos = new Vector3(itt.state.position.x, itt.state.position.y, itt.state.position.z);
-            /*itt.gameObject.transform.position = Vector3.Lerp(itt.gameObject.transform.position,desPos,1);
-            itt.gameObject.transform.rotation = new Quaternion(itt.state.quaternion.x, itt.state.quaternion.y, itt.state.quaternion.z, itt.state.quaternion.w);*/
             if (!updateObjects.ContainsKey(body.uID))
             {
                 updateObjects.Add(itt.state.uID, itt);
             }
-
-
         }
         else
         {
-            //Debug.Log("Couldn't find key on ChangeObjects " + body.uID);
+            Debug.Log("Couldn't find key on ChangeObjects " + body.uID);
         }
 
     }
@@ -325,10 +255,7 @@ public class Client : MonoBehaviour
         {
             Debug.LogError("Couldn't destroy object " + body.type + " / " + body.uID);
         }
-
     }
-
-
     void AddObject(ObjectState ob, string i)
     {
 
@@ -338,122 +265,100 @@ public class Client : MonoBehaviour
             array.Add("" + i, ob);
             createObjects(array);
         }
-        //ob.instantiate = true;
-
-
     }
 
     void createObjects(MapSchema<ObjectState> objects)
     {
-
-
         objects.ForEach((string s, ObjectState ob) =>
         {
             GameObject gameOb = null;
-
             SObject serverObject = null;
-            var mMaterial = material;
-
-
             if (ob.instantiate)
             {
-                if (ob.GetType().Equals(typeof(SphereObject)))
-                {
-                    SphereObject sphereState = (SphereObject)ob;
-                    if (ob.mesh.Length > 0)
-                    {
-
-                        //Debug.Log("Instantiating a mesh");
-                        UnityEngine.Object prefab = Resources.Load(ob.mesh); // Assets/Resources/Prefabs/prefab1.FBX
-                        gameOb = (GameObject)Instantiate(prefab);
-                    }
-                    else
-                    {
-                        gameOb = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                    }
-
-                    gameOb.name = "Esfera (" + ob.uID + ")";
-                    float size = (sphereState.radius) * 2;
-                    gameOb.transform.localScale = new Vector3(size, size, size);
-                    serverObject = new SObject(gameOb, sphereState);
-
-                    this.objects.Add(s, serverObject);
-                }
-                if (ob.GetType().Equals(typeof(BoxObject)))
-                {
-
-                    BoxObject boxState = (BoxObject)ob;
-                    if (ob.mesh.Length > 0)
-                    {
-
-                        //Debug.Log("Instantiating a mesh");
-                        UnityEngine.Object prefab = Resources.Load(ob.mesh); // Assets/Resources/Prefabs/prefab1.FBX
-                        gameOb = (GameObject)Instantiate(prefab);
-                    }
-                    else
-                    {
-                        gameOb = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    }
-
-                    gameOb.name = "Box (" + ob.uID + ")";
-                    Vector3 size = new Vector3(boxState.halfSize.x, boxState.halfSize.y, boxState.halfSize.z);
-                    size.Scale(new Vector3(2, 2, 2));
-                    gameOb.transform.localScale = size;
-
-                    serverObject = new SObject(gameOb, boxState);
-                    this.objects.Add(s, serverObject);
-
-                }
-
-                gameOb.transform.parent = ServerObjects.transform;
-
-
-
+                gameOb = createObject(ob);
+                serverObject = new SObject(gameOb, ob);
+                this.objects.Add(ob.uID, serverObject);
             }
 
             if (gameOb != null)
             {
-                gameOb.name = ob.type + " [" + ob.uID + "]" + " / MAterial: "+ob.material;
-                if (ob.owner.sessionId != "")
-                {
-                    gameOb.name += "=> " + ob.owner.sessionId;
-                }
-                if (ob.type == "GolfBall2")
-                {
-                    Debug.Log("Creating GolfBall");
-                    GolfBall objComp = gameOb.AddComponent<GolfBall>();
-                    gameOb.layer = 8;
-                    objComp.setState(ob);
-                    mMaterial = BallMaterial;
-                    this.golfballs.Add(ob.owner.sessionId, serverObject);
-                }
-                if (ob.type == "Player2")
-                {
-                    Debug.Log("Creating player " + ob.owner.sessionId);
-                    Player objComp = gameOb.AddComponent<Player>();
-                    gameOb.layer = 8;
-                    objComp.setState(ob);
-                }
-                if (ob.type == "trownobj")
-                {
-                    mMaterial = WallMaterial;
-                }
-                if (ob.mesh.Length == 0)
-                {
-                    gameOb.GetComponent<Renderer>().material = mMaterial;
-                }
-
-                gameOb.transform.position = new Vector3(ob.position.x, ob.position.y, ob.position.z);
-                gameOb.transform.rotation = new Quaternion(ob.quaternion.x, ob.quaternion.y, ob.quaternion.z, ob.quaternion.w);
-
-
+                setUpGameObject(ob, gameOb, serverObject);
             }
-
-
-
-
         });
+    }
 
+    private void setUpGameObject(ObjectState ob, GameObject gameOb, SObject serverObject)
+    {
+        Material mMaterial = material;
+        gameOb.name = ob.type + " [" + ob.uID + "]";
+        if (ob.owner.sessionId != "")
+        {
+            gameOb.name += "=> " + ob.owner.sessionId;
+        }
+        if (ob.type == "GolfBall2")
+        {
+            Debug.Log("Creating GolfBall");
+            GolfBall objComp = gameOb.AddComponent<GolfBall>();
+            gameOb.layer = 8;
+            objComp.setState(ob);
+            mMaterial = BallMaterial;
+            this.golfballs.Add(ob.owner.sessionId, serverObject);
+        }
+        if (ob.type == "Player2")
+        {
+            Debug.Log("Creating player " + ob.owner.sessionId);
+            Player objComp = gameOb.AddComponent<Player>();
+            gameOb.layer = 8;
+            objComp.setState(ob);
+        }
+        if (ob.type == "TurnBox")
+        {
+            Debug.Log("Creating TurnBox ");
+            TurnBox objComp = gameOb.AddComponent<TurnBox>();
+            gameOb.layer = 8;
+            objComp.setState(ob);
+        }
+        if (ob.mesh.Length == 0)
+        {
+            gameOb.GetComponent<Renderer>().material = mMaterial;
+        }
+
+        gameOb.transform.position = new Vector3(ob.position.x, ob.position.y, ob.position.z);
+        gameOb.transform.rotation = new Quaternion(ob.quaternion.x, ob.quaternion.y, ob.quaternion.z, ob.quaternion.w);
+    }
+
+    GameObject createObject(ObjectState ob)
+    {
+        GameObject gameOb;
+        bool isBox = ob.GetType().Equals(typeof(BoxObject));
+        PrimitiveType primitiveType = isBox ? PrimitiveType.Cube : PrimitiveType.Sphere;
+        if (ob.mesh.Length > 0)
+        {
+            UnityEngine.Object prefab = Resources.Load(ob.mesh); // Assets/Resources/Prefabs/prefab1.FBX
+            gameOb = (GameObject)Instantiate(prefab);
+        }
+        else
+        {
+            gameOb = GameObject.CreatePrimitive(primitiveType);
+        }
+        gameOb.name = "Object (" + ob.uID + ")";
+        Vector3 size;
+        if (isBox)
+        {
+            BoxObject boxState = (BoxObject)ob;
+            size = new Vector3(boxState.halfSize.x, boxState.halfSize.y, boxState.halfSize.z);
+        }
+        else
+        {
+            SphereObject boxState = (SphereObject)ob;
+            size = new Vector3(boxState.radius, boxState.radius, boxState.radius);
+        }
+
+        size.Scale(new Vector3(2, 2, 2));
+
+        gameOb.transform.localScale = size;
+        gameOb.transform.parent = ServerObjects.transform;
+        return gameOb;
     }
 
 
@@ -503,7 +408,9 @@ public class Client : MonoBehaviour
                 itt.gameObject.transform.position = Vector3.Lerp(itt.gameObject.transform.position, desPos, 1);
                 //itt.gameObject.transform.rotation = new Quaternion(itt.state.quaternion.x, itt.state.quaternion.y, itt.state.quaternion.z, itt.state.quaternion.w);
                 itt.gameObject.transform.rotation = Quaternion.Lerp(itt.gameObject.transform.rotation, desQuat, 1);
-            }else{
+            }
+            else
+            {
                 Debug.Log("itt.GameObject is null");
             }
 

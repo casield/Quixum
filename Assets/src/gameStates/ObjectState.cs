@@ -29,13 +29,10 @@ public class ObjectState : Schema {
 	[Type(6, "string")]
 	public string material = "";
 
-	[Type(7, "ref", typeof(SoundState))]
-	public SoundState sound = new SoundState();
-
-	[Type(8, "number")]
+	[Type(7, "number")]
 	public float mass = 0;
 
-	[Type(9, "string")]
+	[Type(8, "string")]
 	public string mesh = "";
 }
 

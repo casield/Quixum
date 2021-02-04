@@ -8,16 +8,11 @@
 using Colyseus.Schema;
 
 public class TurnsState : Schema {
-	[Type(0, "map", typeof(MapSchema<TurnPlayerState>))]
-	public MapSchema<TurnPlayerState> players = new MapSchema<TurnPlayerState>();
-
-	[Type(1, "number")]
+	[Type(0, "number")]
 	public float turn = 0;
 
-	[Type(2, "number")]
-	public float timerToStart = 0;
+	[Type(1, "number")]
+	public float phase = 0;
 
-	[Type(3, "number")]
-	public float gemsPerTurn = 0;
 }
 

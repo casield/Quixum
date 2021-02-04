@@ -280,7 +280,7 @@ namespace Colyseus
 			}
 			else if (code == Protocol.ROOM_STATE_PATCH)
 			{
-				Debug.Log("ROOM_STATE_PATCH");
+				//Debug.Log("ROOM_STATE_PATCH");
 				Patch(bytes, 1);
 			}
 			else if (code == Protocol.ROOM_DATA)

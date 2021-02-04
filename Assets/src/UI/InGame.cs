@@ -83,7 +83,6 @@ public class InGame : MonoBehaviour
         Debug.Log("TunrState changed");
         changes.ForEach(val =>
         {
-             
             if (val.Field == "turn")
             {
                turnNumberText.text = "" + val.Value;

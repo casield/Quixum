@@ -1,26 +1,8 @@
 fileFormatVersion: 2
-guid: b1b2b74ebe6f08c42aa2c85cb1435bf9
+guid: 14d5b56dcbd0536469f30b1f3c438499
 ModelImporter:
   serializedVersion: 19301
-  internalIDToNameTable:
-  - first:
-      74: -2554927114110922173
-    second: Sol_Rig|Sol_Hello
-  - first:
-      74: 7499150396340420228
-    second: Sol_Rig|Sol_Idle
-  - first:
-      74: -8399698158858237113
-    second: Sol_Rig|Sol_Idle_Normal
-  - first:
-      74: 4041174768736422377
-    second: Sol_Rig|Sol_Power_Attack
-  - first:
-      74: -230255115534244160
-    second: Sol_Rig|Sol_Shot_End
-  - first:
-      74: 5459107057901663186
-    second: Sol_Rig|Sol_Shot_Start
+  internalIDToNameTable: []
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -52,10 +34,10 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 0.5
+    globalScale: 50
     meshCompression: 0
     addColliders: 0
-    useSRGBMaterialColor: 1
+    useSRGBMaterialColor: 0
     sortHierarchyByName: 1
     importVisibility: 1
     importBlendShapes: 1
@@ -99,7 +81,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.005
+    globalScale: 50
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
@@ -108,7 +90,7 @@ ModelImporter:
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 1
+  avatarSetup: 0
   additionalBone: 0
   userData: 
   assetBundleName: 

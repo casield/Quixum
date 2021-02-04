@@ -20,7 +20,7 @@ public class Shots : MonoBehaviour
     private void init()
     {
         client = Client.Instance;
-        client.room.State.turnState.players.OnChange += onPlayersChange;
+        //client.room.State.turnState.players.OnChange += onPlayersChange;
     }
 
     private void onPlayersChange(TurnPlayerState value, string key)

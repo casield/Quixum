@@ -21,7 +21,7 @@ public class Bag_UI : MonoBehaviour
     public void Init()
     {
         client = Client.Instance;
-        client.room.State.turnState.OnChange += onTurnChange;
+       // client.room.State.turnState.OnChange += onTurnChange;
 
     }
 

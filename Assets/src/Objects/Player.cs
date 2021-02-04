@@ -49,4 +49,9 @@ public class Player : MonoBehaviour, ConnectedObject
             Destroy(ballPointer.gameObject);
         }
     }
+
+    public void sendMessageToRoom(string m)
+    {
+        throw new System.NotImplementedException();
+    }
 }

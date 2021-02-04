@@ -41,7 +41,6 @@ public class Character : MonoBehaviour
     bool sendStop = false;
 
     public ArcArrow arcArrow;
-    private Quaternion savedRotation;
     private bool movingPad = false;
     private bool sendJump = false;
 
@@ -102,8 +101,8 @@ public class Character : MonoBehaviour
         {
             if (client.room != null)
             {
-                message.rotX = camara.transform.forward.x;
-                message.rotZ = camara.transform.forward.z;
+                /*message.rotX = camara.transform.forward.x;
+                message.rotZ = camara.transform.forward.z;*/
                 message.uID = client.room.SessionId;
                 await client.room.Send("move", message);
             }
@@ -123,14 +122,6 @@ public class Character : MonoBehaviour
         inputControl.Disable();
     }
 
-
-    public void onDrag(CallbackContext ctx)
-    {
-    }
-    public void onClick(CallbackContext ctx)
-    {
-    
-    }
     void init()
     {
         if (client.golfballs.Count > 0)
@@ -185,17 +176,9 @@ public class Character : MonoBehaviour
             Vector3 direction = transform.forward;
 
             Quaternion rotation = transform.rotation;
-            // savedRotation =
-            savedRotation = rotation;
+            
             ShotMessage sm = new ShotMessage();
-            Vector3 pivot = CameraController.Instance.cameraHelper.transform.rotation.eulerAngles;
-            Quaternion qu = Quaternion.Euler(pivot.x + angle, pivot.y, pivot.z);
             sm.force = force;
-            sm.angle = new Quat();
-            sm.angle.x = qu.x;
-            sm.angle.y = qu.y;
-            sm.angle.z = qu.z;
-            sm.angle.w = qu.w;
             await client.room.Send("shoot", sm);
         }
     }

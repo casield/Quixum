@@ -37,7 +37,7 @@ public class GolfBall:MonoBehaviour,Soundable
     // Start is called before the first frame update
 
     void init(){
-        state.sound.OnChange+=onSoundChange;
+       // state.sound.OnChange+=onSoundChange;
     }
 
     private void onSoundChange(List<DataChange> changes)
@@ -47,7 +47,7 @@ public class GolfBall:MonoBehaviour,Soundable
         {
            // Debug.Log("Change: "+item.Field + " / "+item.Value + " / "+ state.sound.volume);
             var ob = item.Field;
-            play(collitionSound,state.sound.volume);
+           // play(collitionSound,state.sound.volume);
         }
         
     }

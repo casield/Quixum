@@ -209,6 +209,17 @@ public class @InputControl : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""dc6a6e4b-9782-43de-b085-e39600184c8c"",
+                    ""path"": ""<Touchscreen>/touch1/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Touch"",
+                    ""action"": ""Position"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""de3e40db-c9b0-49b0-8be4-83925fec48c8"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": ""MultiTap"",

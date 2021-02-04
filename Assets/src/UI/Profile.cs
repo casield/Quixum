@@ -25,7 +25,7 @@ public class Profile : MonoBehaviour
     private void init()
     {
         client = Client.Instance;
-        client.room.State.turnState.OnChange += onTurnChange;
+        //client.room.State.turnState.OnChange += onTurnChange;
         closeButton.onClose(onClose);
     }
 

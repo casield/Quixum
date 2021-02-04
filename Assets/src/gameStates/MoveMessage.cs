@@ -16,11 +16,5 @@ public class MoveMessage : Schema {
 
 	[Type(2, "number")]
 	public float y = 0;
-
-	[Type(3, "number")]
-	public float rotX = 0;
-
-	[Type(4, "number")]
-	public float rotZ = 0;
 }
 

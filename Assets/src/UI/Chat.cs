@@ -68,7 +68,6 @@ public class Chat : MonoBehaviour
 
     void init()
     {
-        client.room.State.chat.messages.OnAdd += newMessage;
     }
 
     void newMessage(Message message, int i)

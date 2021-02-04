@@ -11,13 +11,10 @@ public class ShotMessage : Schema {
 	[Type(0, "number")]
 	public float force = 0;
 
-	[Type(1, "ref", typeof(Quat))]
-	public Quat angle = new Quat();
-
-	[Type(2, "string")]
+	[Type(1, "string")]
 	public string client = "";
 
-	[Type(3, "string")]
+	[Type(2, "string")]
 	public string room = "";
 }
 

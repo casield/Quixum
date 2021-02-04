@@ -11,8 +11,7 @@ public class ClientMAP : MonoBehaviour
 
 
     public List<ObjectState> objects = new List<ObjectState>();
-    public List<ObjectState> tiles = new List<ObjectState>();
-    public List<ObstacleState> obstacles = new List<ObstacleState>();
+    public List<V3> startPositionsArray = new List<V3>();
 
     public bool localhost;
 
@@ -46,15 +45,7 @@ public class ClientMAP : MonoBehaviour
         if (objects.Count > 0)
         {
             sendObjects();
-        }
-        if (tiles.Count > 0)
-        {
-            sendTiles();
-
-        }
-        if (obstacles.Count > 0)
-        {
-            sendObstacles(map.gameObject);
+            sendStartPositions();
         }
 
     }
@@ -62,8 +53,7 @@ public class ClientMAP : MonoBehaviour
     public void addToArrays(GameObject mapGO)
     {
         objects.Clear();
-        tiles.Clear();
-        obstacles.Clear();
+        startPositionsArray.Clear();
         ObjectDesigner[] od = mapGO.GetComponentsInChildren<ObjectDesigner>();
         for (int i = 0; i < od.Length; i++)
         {
@@ -80,21 +70,17 @@ public class ClientMAP : MonoBehaviour
             }
             
         }
-
-
-        ObstacleDesigner[] bsd = mapGO.GetComponentsInChildren<ObstacleDesigner>();
-        for (int i = 0; i < bsd.Length; i++)
+        StartPositionDesigner startPositions = mapGO.GetComponentInChildren<StartPositionDesigner>();
+        Debug.Log(startPositions);
+        foreach (Transform child in startPositions.transform)
         {
-            ObstacleDesigner element = bsd[i];
-            obstacles.Add(element.toJson());
-
+            V3 v3 = new V3();
+            v3.x = child.position.x;
+            v3.y = child.position.y;
+            v3.z = child.position.z;
+            startPositionsArray.Add(v3);
         }
-    }
 
-    async void sendExtraPoints(NamedPoint[] points)
-    {
-        await this.room.Send("extraPoints", points);
-        new WaitForSeconds(1);
     }
 
     async void join()
@@ -137,23 +123,10 @@ public class ClientMAP : MonoBehaviour
         await this.room.Send("objs", objects);
         Debug.Log(objects.Count + " objects sended");
     }
-
-    async void sendTiles()
+       async void sendStartPositions()
     {
-        await this.room.Send("tiles", tiles);
-        Debug.Log(tiles.Count + " tiles sended");
-    }
-    async void sendObstacles(GameObject mapGO)
-    {
-        await this.room.Send("obstacles", obstacles);
-        Debug.Log(obstacles.Count + " obstacles sended");
-        /*ObstacleDesigner[] bsd = mapGO.GetComponentsInChildren<ObstacleDesigner>();
-        for (int i = 0; i < bsd.Length; i++)
-        {
-            ObstacleDesigner element = bsd[i];
-            sendExtraPoints(element.giveExtraPoints());
-
-        }*/
+        await this.room.Send("startPositions", startPositionsArray);
+        Debug.Log(startPositionsArray.Count + " positions sended");
     }
 
 }
