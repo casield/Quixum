@@ -19,7 +19,6 @@ public class Gems : MonoBehaviour
     /// </summary>
     void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
 
     }
     void Start()
@@ -33,18 +32,21 @@ public class Gems : MonoBehaviour
         //
         client = Client.Instance;
       
-            Client.Instance.room.State.users.OnAdd+=onAddUser;
-            Client.Instance.room.State.users.OnChange+=onAddUser;
+        client.userState.OnChange+=onUserChange;
         
 
     }
-        private void onAddUser(UserState value, string key)
+
+    private void onUserChange(List<DataChange> changes)
     {
-        if(value.sessionId == Client.Instance.room.SessionId){
-            this.gemsText.text = "" + value.gems;
+        foreach (var ch in changes)
+        {
+            if(ch.Field == "gems"){
+                  setGems(int.Parse(ch.Value.ToString()));
+            }
         }
-        
     }
+
 
     public void setGems(int gems)
     {

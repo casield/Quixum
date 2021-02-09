@@ -26,7 +26,6 @@ public class Client : MonoBehaviour
     public GameObject ServerObjects;
     public GameObject PhysicsObjects;
     ArrayList tiles = new ArrayList();
-    public Dictionary<string, IObstacle> obstacles = new Dictionary<string, IObstacle>();
 
     ArrayList funcArray = new ArrayList();
 
@@ -48,6 +47,7 @@ public class Client : MonoBehaviour
     public float time = 0;
 
     public static string serverIP = "3.13.63.39";
+    public UserState userState;
 
     void Awake()
     {
@@ -157,9 +157,6 @@ public class Client : MonoBehaviour
             time = val;
             GUIConsole.Instance.deltaTime = time;
         });
-
-        room.OnMessage<string>("changeMap", onChangeMap);
-
         room.OnMessage<string>("error", onErrorMessage);
         room.OnMessage<string>("info", onInfoMessage);
         room.OnMessage<ObjectMessage>("objectM", onObjectMessage);
@@ -188,19 +185,22 @@ public class Client : MonoBehaviour
         room.State.world.objects.OnAdd += AddObject;
         room.State.world.objects.OnRemove += RemoveObject;
         room.OnLeave += onLeave;
+        room.State.users.OnAdd += onUserAdded;
+    }
 
-
-        //Call all onready
-
+    private void onUserAdded(UserState value, string key)
+    {
+        if (value.sessionId == room.SessionId)
+        {
+            this.userState = value;
+        }
         Instance = this;
-        Character.Instance.setListeners();
         foreach (UnityAction func in funcArray)
         {
             func();
         }
-
-
     }
+
     public void removeListeners()
     {
         room.State.world.objects.OnChange -= OnChangeObjects;
@@ -210,19 +210,6 @@ public class Client : MonoBehaviour
         room.OnLeave -= onLeave;
 
         Character.Instance.removeListeners();
-    }
-
-    private void onChangeMap(object obj)
-    {
-        Debug.Log("Change Map");
-        foreach (KeyValuePair<string, IObstacle> child in obstacles)
-        {
-            GameObject.Destroy(child.Value.gObject);
-        }
-        foreach (GameObject child in tiles)
-        {
-            GameObject.Destroy(child);
-        }
     }
     void OnChangeObjects(ObjectState body, string i)
     {
@@ -406,8 +393,24 @@ public class Client : MonoBehaviour
             if (itt.gameObject != null)
             {
                 itt.gameObject.transform.position = Vector3.Lerp(itt.gameObject.transform.position, desPos, 1);
-                //itt.gameObject.transform.rotation = new Quaternion(itt.state.quaternion.x, itt.state.quaternion.y, itt.state.quaternion.z, itt.state.quaternion.w);
-                itt.gameObject.transform.rotation = Quaternion.Lerp(itt.gameObject.transform.rotation, desQuat, 1);
+                itt.gameObject.transform.rotation = new Quaternion(itt.state.quaternion.x, itt.state.quaternion.y, itt.state.quaternion.z, itt.state.quaternion.w);
+
+                if (typeof(BoxObject).IsInstanceOfType(itt.state))
+                {
+                    
+                    BoxObject o = (BoxObject)itt.state;
+                    Debug.Log(Json.SerializeToString(o.halfSize));
+                    itt.gameObject.transform.localScale = new Vector3(o.halfSize.x,o.halfSize.y,o.halfSize.z);
+                }
+
+                 if (typeof(SphereObject).IsInstanceOfType(itt.state))
+                {
+                    SphereObject o = (SphereObject)itt.state;
+                    itt.gameObject.transform.localScale = new Vector3(o.radius,o.radius,o.radius);
+                }
+
+
+                // itt.gameObject.transform.rotation = Quaternion.Lerp(itt.gameObject.transform.rotation, desQuat, 1);
             }
             else
             {

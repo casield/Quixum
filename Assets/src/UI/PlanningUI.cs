@@ -29,6 +29,13 @@ public class PlanningUI : MonoBehaviour
     {
         client = Client.Instance;
         client.room.State.turnState.OnChange += onTurnChange;
+        client.userState.board.OnRemove+=onItemRemove;
+    }
+
+    private void onItemRemove(ArenaItemState value, string key)
+    {
+        Debug.Log("Destroying "+key);
+        planningBoard.droppedItems[key].destroy();
     }
 
     private void onTurnChange(List<DataChange> changes)
@@ -38,21 +45,43 @@ public class PlanningUI : MonoBehaviour
 
             if (change.Field == "phase")
             {
-                Debug.Log("change field " + change.Field);
-                this.gameObject.SetActive(true);
+                 Debug.Log("XD "+change.Value);
+                if (change.Value.ToString() == "1")
+                {
+                    Open();
+                }
+               
+                if (change.Value.ToString() == "2")
+                {
+                    Close();
+                }
+
             }
         }
     }
 
     public void setObject(TurnBox turnBox)
     {
-        Debug.Log("object setted");
         this.turnBox = turnBox;
         this.turnBox.sendMessageToRoom("probando");
     }
 
-    internal void open()
+    public async void sendBoard()
     {
+        if (Client.Instance.userState != null)
+        {
+            await Client.Instance.room.Send("readyPlanning","true");
+        }
+    }
+
+    public void Open()
+    {
+        this.gameObject.SetActive(true);
+    }
+
+    public void Close()
+    {
+        this.gameObject.SetActive(false);
     }
 
     void Start()
@@ -71,7 +100,6 @@ public class PlanningUI : MonoBehaviour
     }
     public void setDraggingObject(ArenaShopItem g)
     {
-        Debug.Log("Setting " + g);
         draggingObject = g;
         savedParentTransform = g.transform.parent.transform;
         draggingObject.transform.parent = this.transform;
@@ -79,8 +107,6 @@ public class PlanningUI : MonoBehaviour
     }
     public void dropObject()
     {
-        Debug.Log("Dropping " + draggingObject);
-        planningBoard.onDropObject(draggingObject);
         isDraggin = false;
     }
 

@@ -8,7 +8,7 @@ using UnityEngine.UI;
 using static UnityEngine.InputSystem.InputAction;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
-public class RotationController : MonoBehaviour
+public class RotationController : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
     Client client;
     Vector2 startPosition = new Vector2();
@@ -23,48 +23,29 @@ public class RotationController : MonoBehaviour
         Client.Instance.addReadyListener(init);
         startSprite.gameObject.SetActive(false);
         fingerSprite.gameObject.SetActive(false);
-        EnhancedTouchSupport.Enable();
-
-        Touch.onFingerDown += onFingerDown;
-        Touch.onFingerMove += onFingerMove;
-        Touch.onFingerUp += onFingerUp;
     }
 
-    private void onFingerUp(Finger obj)
+    private void drag(Vector2 pos)
     {
-        if (activeFinger == obj)
-        {
-            isDragging = false;
-            sendData(Vector2.zero);
-            changeSpritesVisibility(false);
-            activeFinger = null;
-        }
-
+        Vector2 pointerPosition = pos;
+        fingerSprite.transform.position = pointerPosition;
+        Vector2 result = startPosition - pointerPosition;
+        Vector2 normal = result.normalized;
+        sendData(result / (Screen.width / 4));
+        //Debug.Log(result);
     }
-
-    private void onFingerMove(Finger obj)
+    private void dragStart(Vector2 pos)
     {
-        if (isDragging && activeFinger == obj)
-        {
-            Vector2 pointerPosition = obj.screenPosition;
-            fingerSprite.transform.position = pointerPosition;
-            Vector2 result = startPosition - pointerPosition;
-            Vector2 normal = result.normalized;
-            sendData(result / (Screen.width / 4));
-        }
+        startPosition = pos;
+        isDragging = true;
+        startSprite.transform.position = startPosition;
+        changeSpritesVisibility(true);
     }
-
-    private void onFingerDown(Finger obj)
+    private void dragEnd()
     {
-        if (activeFinger == null)
-        {
-            activeFinger = obj;
-            startPosition = obj.screenPosition;
-            isDragging = true;
-            startSprite.transform.position = startPosition;
-            changeSpritesVisibility(true);
-        }
-
+        isDragging = false;
+        sendData(Vector2.zero);
+        changeSpritesVisibility(false);
     }
 
     private void init()
@@ -76,38 +57,6 @@ public class RotationController : MonoBehaviour
         startSprite.gameObject.SetActive(active);
         fingerSprite.gameObject.SetActive(active);
     }
-    /* public void onClick(CallbackContext context)
-     {
-         if (context.phase == UnityEngine.InputSystem.InputActionPhase.Started)
-         {
-             startPosition = Character.Instance.inputControl.Normal.Position.ReadValue<Vector2>();
-             isDragging = true;
-             startSprite.transform.position = startPosition;
-             changeSpritesVisibility(true);
-         }
-
-         if (context.phase == UnityEngine.InputSystem.InputActionPhase.Canceled)
-         {
-
-             isDragging = false;
-             sendData(Vector2.zero);
-             changeSpritesVisibility(true);
-         }
-     }
-
-     public void onMouseMove(CallbackContext context)
-     {
-         // Debug.Log(context.ReadValue<Vector2>());
-         if (isDragging)
-         {
-             Vector2 pointerPosition = context.ReadValue<Vector2>();
-             fingerSprite.transform.position = pointerPosition;
-             Vector2 result = startPosition - pointerPosition;
-             Vector2 normal = result.normalized;
-             sendData(result / (Screen.width / 4));
-         }
-
-     }*/
 
     public async void sendData(Vector2 eventData)
     {
@@ -121,16 +70,45 @@ public class RotationController : MonoBehaviour
             await client.room.Send("rotatePlayer", v3);
         }
     }
-
-    // Start is called before the first frame update
-    void Start()
+    
+    private void onFingerUp(Finger obj)
     {
+        if (activeFinger == obj)
+        {
+            dragEnd();
+            activeFinger = null;
+        }
 
     }
 
-    // Update is called once per frame
-    void Update()
+    private void onFingerMove(Finger obj)
     {
+        if (isDragging && activeFinger == obj)
+        {
+            drag(obj.screenPosition);
+        }
+    }
 
+    private void onFingerDown(Finger obj)
+    {
+        if (activeFinger == null)
+        {
+            activeFinger = obj;
+            drag(obj.screenPosition);
+        }
+
+    }    public void OnEndDrag(PointerEventData eventData)
+    {
+        dragEnd();
+    }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        dragStart(eventData.position);
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        drag(eventData.position);
     }
 }

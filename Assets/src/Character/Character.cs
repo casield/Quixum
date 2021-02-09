@@ -33,10 +33,7 @@ public class Character : MonoBehaviour
 
     public bool isDragging = false;
     private GameObject lookAt;
-    private bool rotateY = false;
-    public Transform cameraFollow;
 
-    public Quaternion cameraSavedRot = new Quaternion();
     MoveMessage message = new MoveMessage();
     bool sendStop = false;
 
@@ -125,21 +122,11 @@ public class Character : MonoBehaviour
     void init()
     {
         if (client.golfballs.Count > 0)
-        {
-
-            setListeners();
-          
+        { 
             hasInit = true;
         }
 
     }
-    public void setListeners()
-    {
-       /* this.inputControl.Normal.Jump.performed+=onJump;
-        this.inputControl.Normal.Jump.canceled+=onJump;*/
-       
-    }
-
     private async void jumpControl()
     {
        if(inputControl.Normal.Jump.phase == InputActionPhase.Started){
@@ -170,13 +157,7 @@ public class Character : MonoBehaviour
     {
         angle = 0;
         if (!uiblocker.BlockedByUI)
-        {
-            yRot = 0;
-
-            Vector3 direction = transform.forward;
-
-            Quaternion rotation = transform.rotation;
-            
+        {            
             ShotMessage sm = new ShotMessage();
             sm.force = force;
             await client.room.Send("shoot", sm);
@@ -197,10 +178,5 @@ public class Character : MonoBehaviour
 
 
     }
-    void LateUpdate()
-    {
-    }
-
-  
 
 }

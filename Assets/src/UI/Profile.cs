@@ -29,31 +29,6 @@ public class Profile : MonoBehaviour
         closeButton.onClose(onClose);
     }
 
-    private void onBagChange(List<DataChange> changes)
-    {
-        foreach (var item in changes)
-        {
-            if (item.Field == "shop")
-            {
-
-                ArraySchema<PowerState> mapS = (ArraySchema<PowerState>)item.Value;
-                foreach (Transform child in ShopLayOut.transform)
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
-                mapS.ForEach((powerState) =>
-                {
-                    PowerLabel p = Instantiate(powerLabel_Prefab, ShopLayOut.transform).GetComponent<PowerLabel>();
-                    p.load(powerState);
-
-                    p.onClick(() =>
-                    {
-                        p.buy();
-                    });
-                });
-            }
-        }
-    }
 
     void onClose()
     {

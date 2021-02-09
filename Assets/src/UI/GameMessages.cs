@@ -26,7 +26,6 @@ public class GameMessages : MonoBehaviour
         //textMessage.alpha = 0;
         LeanTween.scaleY(this.gameObject,1,1.3f).setEaseInElastic();
 
-
     }
     public void showMessage(string text, int time){
         showMessage(text);

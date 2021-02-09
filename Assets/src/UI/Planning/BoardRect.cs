@@ -9,6 +9,8 @@ public class BoardRect : MonoBehaviour
 {
     Image image;
     ArenaShopItem item;
+    private bool activated = false;
+
     public int index { get; private set; }
     public void OnDrop(ArenaShopItem item)
     {
@@ -21,44 +23,18 @@ public class BoardRect : MonoBehaviour
         }
     }
 
-    private void Activate()
+    public void Activate()
     {
-        Debug.Log("Activate");
-        image.color = new Color(1, 1, 1, .5f);
-        gameObject.name = "Activated";
-
-        if (item != null)
-        {
-            foreach (Vector2 space in item.spaces)
-            {
-                Vector2 pos = PlanningUI.Instance.planningBoard.getXY(index);
-                int i = PlanningUI.Instance.planningBoard.getI((int)pos.x + (int)space.x, (int)pos.y + (int)space.y);
-                if (i < PlanningUI.Instance.planningBoard.boardRects.Count - 1 && i > 0)
-                {
-                    PlanningUI.Instance.planningBoard.boardRects[i].Activate();
-                }
-
-            }
-        }
+        image.color = new Color(0, 0, .7f, .3f);
+        activated = true;
 
     }
 
-    public void Disable(){
-        image.color = new Color(1, 1, 1, 1);
-        if (item != null)
-        {
-            foreach (Vector2 space in item.spaces)
-            {
-                Vector2 pos = PlanningUI.Instance.planningBoard.getXY(index);
-                int i = PlanningUI.Instance.planningBoard.getI((int)pos.x + (int)space.x, (int)pos.y + (int)space.y);
+    public void Disable()
+    {
 
-                if (i < PlanningUI.Instance.planningBoard.boardRects.Count - 1 && i > 0)
-                {
-                    PlanningUI.Instance.planningBoard.boardRects[i].Disable();
-                }
-                item = null;
-            }
-        }
+        image.color = new Color(1, 1, 1, 1);
+        activated = false;
     }
 
     internal void setIndex(int i)

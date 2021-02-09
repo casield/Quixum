@@ -15,7 +15,6 @@ public class TurnBox : MonoBehaviour, ConnectedObject
 
     private void init()
     {
-        Debug.Log("Init");
         PlanningUI.Instance.setObject(this);
     }
 
@@ -35,7 +34,7 @@ public class TurnBox : MonoBehaviour, ConnectedObject
     }
     public void onMessage(ObjectMessage m)
     {
-        PlanningUI.Instance.open();
+        
     }
 
     public void setState(ObjectState state)

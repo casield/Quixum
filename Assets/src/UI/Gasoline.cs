@@ -28,21 +28,14 @@ public class Gasoline : MonoBehaviour
     private void init()
     {
      
-            Client.Instance.room.State.users.OnAdd += onAddUser;
-            Client.Instance.room.State.users.OnChange += onAddUser;
+           
         
     }
 
 
     private void onAddUser(UserState value, string key)
     {
-        if (value.sessionId == Client.Instance.room.SessionId)
-        {
-            /* Debug.Log("OnAddUser "+JsonUtility.ToJson(value));
-             value.OnChange += OnUserChange;*/
-            Debug.Log("Changes in Gasoline");
-            text.text = "" + value.gasoline;
-        }
+      
 
     }
 

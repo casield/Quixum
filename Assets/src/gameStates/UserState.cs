@@ -18,9 +18,12 @@ public class UserState : Schema {
 	public float gems = 0;
 
 	[Type(3, "number")]
-	public float gasoline = 0;
-
-	[Type(4, "number")]
 	public float energy = 0;
+
+	[Type(4, "map", typeof(MapSchema<ArenaItemState>))]
+	public MapSchema<ArenaItemState> shop = new MapSchema<ArenaItemState>();
+
+	[Type(5, "map", typeof(MapSchema<ArenaItemState>))]
+	public MapSchema<ArenaItemState> board = new MapSchema<ArenaItemState>();
 }
 

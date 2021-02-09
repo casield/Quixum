@@ -23,14 +23,6 @@ public class Shots : MonoBehaviour
         //client.room.State.turnState.players.OnChange += onPlayersChange;
     }
 
-    private void onPlayersChange(TurnPlayerState value, string key)
-    {
-        if (value.user.sessionId == client.room.SessionId)
-        {
-            setBalls((int)value.initialShots, (int)value.shots);
-        }
-    }
-
     void setBalls(int initialShots, int shotNumber)
     {
         if (initialShots == shotNumber)

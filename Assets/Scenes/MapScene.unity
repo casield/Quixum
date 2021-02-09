@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -72590,7 +72590,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: box
-  uID: 
+  uID: board2
   material: normalMaterial
   instantiate: 0
   shape: box
@@ -72609,7 +72609,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: box
-  uID: 
+  uID: board1
   material: normalMaterial
   instantiate: 0
   shape: box
@@ -79038,9 +79038,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24a3b996daca4374da2499c7d33332d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modelToLoad: dinosaurs/LongNeck
-  extraPoints:
-  - {fileID: 1564768122}
 --- !u!1 &1301188867
 GameObject:
   m_ObjectHideFlags: 0
@@ -84905,9 +84902,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24a3b996daca4374da2499c7d33332d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modelToLoad: dinosaurs/LongNeck
-  extraPoints:
-  - {fileID: 1189384132}
 --- !u!1 &1409972664
 GameObject:
   m_ObjectHideFlags: 0

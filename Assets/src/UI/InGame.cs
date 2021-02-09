@@ -15,8 +15,6 @@ public class InGame : MonoBehaviour
     public Button profileButton;
     public Profile profileWindow;
 
-    public Bag_UI bag;
-    public Chat chat;
 
     private int unreadMessages = 0;
     void Start()
@@ -27,19 +25,8 @@ public class InGame : MonoBehaviour
     void Init()
     {
         setListeners();
-        Chat.Instance.addNewMessageListener(onNewMessage);
         profileButton.onClick.AddListener(onClickProfile);
 
-    }
-    void OnEnable()
-    {
-        bag.gameObject.SetActive(true);
-        chat.gameObject.SetActive(true);
-    }
-       void OnDisable()
-    {
-        bag.gameObject.SetActive(false);
-        chat.gameObject.SetActive(false);
     }
 
     void onClickProfile()
@@ -51,10 +38,6 @@ public class InGame : MonoBehaviour
     {
         unreadMessages += 1;
 
-        if (Chat.Instance.chatWindow.IsActive())
-        {
-            unreadMessages = 0;
-        }
         unreadMessagesText.text = "" + unreadMessages;
         return true;
     }
@@ -80,7 +63,6 @@ public class InGame : MonoBehaviour
 
     void onTurnStateChange(List<Colyseus.Schema.DataChange> changes)
     {
-        Debug.Log("TunrState changed");
         changes.ForEach(val =>
         {
             if (val.Field == "turn")

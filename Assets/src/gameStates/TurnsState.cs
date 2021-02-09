@@ -14,5 +14,7 @@ public class TurnsState : Schema {
 	[Type(1, "number")]
 	public float phase = 0;
 
+	[Type(2, "map", typeof(MapSchema<UserState>))]
+	public MapSchema<UserState> ready = new MapSchema<UserState>();
 }
 

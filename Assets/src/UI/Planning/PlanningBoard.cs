@@ -12,6 +12,9 @@ public class PlanningBoard : MonoBehaviour
     int repeat = width * height;
     GameObject dragging;
     public List<BoardRect> boardRects = new List<BoardRect>();
+    public Dictionary<string,ArenaShopItem> droppedItems = new Dictionary<string, ArenaShopItem>();
+    public Sprite rectSprite;
+
 
     RectTransform rectTransform;
 
@@ -21,7 +24,9 @@ public class PlanningBoard : MonoBehaviour
         for (int i = 0; i < repeat; i++)
         {
             GameObject rect = new GameObject();
+            rect.name = "Planning Board Rect";
             Image img = rect.AddComponent<Image>();
+            img.sprite = rectSprite;
             BoardRect br = rect.AddComponent<BoardRect>();
             br.setIndex(i);
             rect.transform.parent = this.transform;
@@ -29,23 +34,6 @@ public class PlanningBoard : MonoBehaviour
         }
     }
 
-    public void onDropObject(ArenaShopItem item)
-    {
-        RectTransform itemTrans = (RectTransform)item.transform;
-        // rectTransform.rect.Overlaps(itemTrans.rect);
-        rectTransform.ForceUpdateRectTransforms();
-        if (RectTransformUtility.RectangleContainsScreenPoint(rectTransform, item.transform.position))
-        {
-            foreach (var br in boardRects)
-            {
-                br.OnDrop(item);
-            }
-        }
-        else
-        {
-            GameMessages.Instance.showMessage("Do you want to erase this object?", 10);
-        }
-    }
 
     public int getI(int x, int y)
     {
