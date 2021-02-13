@@ -30,15 +30,18 @@ public class BallFinder : MonoBehaviour
         if (golfBall != null)
         {
             Vector3 pos = CameraController.Instance.dCamera.WorldToScreenPoint(golfBall.gameObject.transform.position);
-             Vector3 clampedPoint = new Vector3(
-                   Mathf.Clamp(pos.x, 0,Screen.width),
-                   Mathf.Clamp(pos.z > 0?pos.y:-pos.y, 0, Screen.height), 0);
-                transform.position = clampedPoint;
+            Vector3 clampedPoint = new Vector3(
+                  Mathf.Clamp(pos.x, 0, Screen.width),
+                  Mathf.Clamp(pos.z > 0 ? pos.y : -pos.y, 0, Screen.height), 0);
+            transform.position = clampedPoint;
 
         }
         else
         {
-            golfBall = client.golfballs[Client.Instance.room.SessionId];
+          if(client != null && Client.Instance.room != null && Client.Instance.room.SessionId != null){
+               golfBall = client.golfballs[Client.Instance.room.SessionId];
+          }
+               
         }
     }
 }

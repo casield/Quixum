@@ -10,10 +10,9 @@ public class ServerMessagesController : MonoBehaviour
     public TextMeshProUGUI errorText;
     public static ServerMessagesController Instance;
 
-    void Awake()
+    public ServerMessagesController()
     {
-        Instance = this;
-        
+        Instance = this; 
     }
 
     void close(){

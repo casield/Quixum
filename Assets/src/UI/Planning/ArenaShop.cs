@@ -27,7 +27,7 @@ public class ArenaShop : MonoBehaviour
         Image img = shopItem.AddComponent<Image>();
         ArenaShopItem itm = shopItem.AddComponent<ArenaShopItem>();
         itm.Instantiate(value);
-        shopItem.transform.parent = layout.transform;
+        shopItem.transform.SetParent(layout.transform);
     }
 
     // Update is called once per frame

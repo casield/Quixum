@@ -36,7 +36,6 @@ public class Model_Object
 
 public class LevelDesignerWindow : EditorWindow
 {
-    Rect botonesRect = new Rect();
     Rect materialesRect = new Rect();
 
     public string MapName = "";

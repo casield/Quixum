@@ -2,12 +2,12 @@
 // THIS FILE HAS BEEN GENERATED AUTOMATICALLY
 // DO NOT CHANGE IT MANUALLY UNLESS YOU KNOW WHAT YOU'RE DOING
 // 
-// GENERATED USING @colyseus/schema 0.5.39
+// GENERATED USING @colyseus/schema 1.0.12
 // 
 
 using Colyseus.Schema;
 
-public class ObjectState : Schema {
+public partial class ObjectState : Schema {
 	[Type(0, "ref", typeof(V3))]
 	public V3 position = new V3();
 
@@ -15,24 +15,24 @@ public class ObjectState : Schema {
 	public Quat quaternion = new Quat();
 
 	[Type(2, "string")]
-	public string type = "";
+	public string type = default(string);
 
 	[Type(3, "ref", typeof(UserState))]
 	public UserState owner = new UserState();
 
 	[Type(4, "string")]
-	public string uID = "";
+	public string uID = default(string);
 
 	[Type(5, "boolean")]
-	public bool instantiate = false;
+	public bool instantiate = default(bool);
 
 	[Type(6, "string")]
-	public string material = "";
+	public string material = default(string);
 
 	[Type(7, "number")]
-	public float mass = 0;
+	public float mass = default(float);
 
 	[Type(8, "string")]
-	public string mesh = "";
+	public string mesh = default(string);
 }
 

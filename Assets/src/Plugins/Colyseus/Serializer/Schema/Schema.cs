@@ -4,6 +4,8 @@ using System.Collections.Specialized;
 using System.Collections.Generic;
 using System.Reflection;
 
+using UnityEngine;
+
 /***
   Allowed primitive types:
     "string"
@@ -28,786 +30,630 @@ using System.Reflection;
 
 namespace Colyseus.Schema
 {
-  class Context
-  {
-    protected static Context instance = new Context();
-    protected List<System.Type> types = new List<System.Type>();
-    protected Dictionary<uint, System.Type> typeIds = new Dictionary<uint, System.Type>();
-
-    public static Context GetInstance()
-    {
-      return instance;
-    }
-
-    public void SetTypeId(System.Type type, uint typeid)
-    {
-      typeIds[typeid] = type;
-    }
-
-    public System.Type Get(uint typeid)
-    {
-      return typeIds[typeid];
-    }
-  }
-
-  [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
-  public class Type : Attribute
-  {
-    public int Index;
-    public string FieldType;
-    public System.Type ChildType;
-    public string ChildPrimitiveType;
-
-    public Type(int index, string type, System.Type childType = null)
-    {
-      Index = index; // GetType().GetFields() doesn't guarantee order of fields, need to manually track them here!
-      FieldType = type;
-      ChildType = childType;
-    }
-
-    public Type(int index, string type, string childPrimitiveType)
-    {
-      Index = index; // GetType().GetFields() doesn't guarantee order of fields, need to manually track them here!
-      FieldType = type;
-      ChildPrimitiveType = childPrimitiveType;
-    }
-  }
-
-  public class Iterator {
-    public int Offset = 0;
-  }
-
-  public enum SPEC: byte
-  {
-    END_OF_STRUCTURE = 0xc1, // (msgpack spec: never used)
-    NIL = 0xc0,
-    INDEX_CHANGE = 0xd4,
-    TYPE_ID = 0xd5
-  }
-
-  public class DataChange
-  {
-    public string Field;
-    public object Value;
-    public object PreviousValue;
-  }
-
-  public delegate void OnChangeEventHandler(List<DataChange> changes);
-  public delegate void KeyValueEventHandler<T, K>(T value, K key);
-  public delegate void OnRemoveEventHandler();
-
-  public interface ISchemaCollection
-  {
-    void InvokeOnAdd(object item, object index);
-    void InvokeOnChange(object item, object index);
-    void InvokeOnRemove(object item, object index);
-
-    IDictionary GetItems();
-    void SetItems(object items);
-    void TriggerAll();
-
-    System.Type GetChildType();
-    bool ContainsKey(object key);
-
-    bool HasSchemaChild { get; }
-    int Count { get; }
-    object this[object key] { get; set; }
-
-    ISchemaCollection Clone();
-  }
-
-  public class ArraySchema<T> : ISchemaCollection
-  {
-    public Dictionary<int, T> Items;
-    public event KeyValueEventHandler<T, int> OnAdd;
-    public event KeyValueEventHandler<T, int> OnChange;
-    public event KeyValueEventHandler<T, int> OnRemove;
-    private bool _hasSchemaChild = Schema.CheckSchemaChild(typeof(T));
-
-    public ArraySchema()
-    {
-      Items = new Dictionary<int, T>();
-    }
-
-    public ArraySchema(Dictionary<int, T> items = null)
-    {
-      Items = items ?? new Dictionary<int, T>();
-    }
-
-    public ISchemaCollection Clone()
-    {
-      var clone = new ArraySchema<T>(Items)
-      {
-        OnAdd = OnAdd,
-        OnChange = OnChange,
-        OnRemove = OnRemove
-      };
-      return clone;
-    }
-
-    public System.Type GetChildType()
-    {
-      return typeof(T);
-    }
-
-    public bool ContainsKey(object key)
-    {
-      return Items.ContainsKey((int)key);
-    }
-
-    public bool HasSchemaChild
-    {
-      get { return _hasSchemaChild; }
-    }
-
-    public int Count
-    {
-      get { return Items.Count; }
-    }
-
-    public T this[int index]
-    {
-      get {
-        T value;
-        Items.TryGetValue(index, out value);
-        return value;
-      }
-      set { Items[index] = value; }
-    }
-
-    public object this[object key]
-    {
-      get {
-        T value;
-        Items.TryGetValue((int)key, out value);
-        return value;
-      }
-      set { Items[(int)key] = (HasSchemaChild) ? (T)value : (T)Convert.ChangeType(value, typeof(T)); }
-    }
-
-    public IDictionary GetItems()
-    {
-      return Items;
-    }
-
-    public void SetItems(object items)
-    {
-      Items = (Dictionary<int, T>) items;
-    }
-
-    public void ForEach (Action<T> action)
-    {
-      foreach (KeyValuePair<int, T> item in Items)
-      {
-        action(item.Value);
-      }
-    }
-
-    public void TriggerAll()
-    {
-      if (OnAdd == null) { return; }
-      for (var i = 0; i < Items.Count; i++) {
-        OnAdd.Invoke((T) Items[i], (int) i);
-      }
-    }
-
-    public void InvokeOnAdd(object item, object index)
-    {
-      OnAdd?.Invoke((T) item, (int) index);
-    }
-
-    public void InvokeOnChange(object item, object index)
-    {
-      OnChange?.Invoke((T) item, (int) index);
-    }
-
-    public void InvokeOnRemove(object item, object index)
-    {
-      OnRemove?.Invoke((T) item, (int) index);
-    }
-  }
-
-  public class MapSchema<T> : ISchemaCollection
-  {
-    public OrderedDictionary Items = new OrderedDictionary();
-    public event KeyValueEventHandler<T, string> OnAdd;
-    public event KeyValueEventHandler<T, string> OnChange;
-    public event KeyValueEventHandler<T, string> OnRemove;
-    private bool _hasSchemaChild = Schema.CheckSchemaChild(typeof(T));
-
-    public MapSchema()
-    {
-      Items = new OrderedDictionary();
-    }
-
-    public MapSchema(OrderedDictionary items = null)
-    {
-      Items = items ?? new OrderedDictionary();
-    }
-
-    public ISchemaCollection Clone()
-    {
-      var clone = new MapSchema<T>(Items)
-      {
-        OnAdd = OnAdd,
-        OnChange = OnChange,
-        OnRemove = OnRemove
-      };
-      return clone;
-    }
-
-    public System.Type GetChildType()
-    {
-      return typeof(T);
-    }
-
-    public bool ContainsKey(object key)
-    {
-      return Items.Contains(key);
-    }
-
-    public bool HasSchemaChild
-    {
-      get { return _hasSchemaChild; }
-    }
-
-    public T this[string key]
-    {
-      get {
-        T value;
-        TryGetValue(key, out value);
-        return value;
-      }
-      set { Items[key] = value; }
-    }
-
-    public object this[object key]
-    {
-      get {
-        T value;
-        TryGetValue(key as string, out value);
-        return value;
-      }
-      set { Items[(string)key] = (HasSchemaChild) ? (T)value : (T)Convert.ChangeType(value, typeof(T)); }
-    }
-
-    public IDictionary GetItems()
-    {
-      return Items;
-    }
-
-    public void Add(KeyValuePair<string, T> item)
-    {
-      Items[item.Key] = item.Value;
-    }
-
-    public void Clear()
-    {
-      Items.Clear();
-    }
-
-    public bool Contains(KeyValuePair<string, T> item)
-    {
-      return Items.Contains(item.Key);
-    }
-
-    public bool Remove(KeyValuePair<string, T> item)
-    {
-      T value;
-      if (TryGetValue(item.Key, out value) && Equals(value, item.Value))
-      {
-        Remove(item.Key);
-        return true;
-      }
-      return false;
-    }
-
-    public int Count
-    {
-      get { return Items.Count; }
-    }
-
-    public bool ContainsKey(string key)
-    {
-      return Items.Contains(key);
-    }
-
-    public void Add(string key, T value)
-    {
-      Items.Add(key, value);
-    }
-
-    public bool Remove(string key)
-    {
-      var result = Items.Contains(key);
-      if (result)
-      {
-        Items.Remove(key);
-      }
-      return result;
-    }
-
-    public bool TryGetValue(string key, out T value)
-    {
-      object foundValue;
-      if ((foundValue = Items[key]) != null || Items.Contains(key))
-      {
-        // Either found with a non-null value, or contained value is null.
-        value = (T)foundValue;
-        return true;
-      }
-      value = default(T);
-      return false;
-    }
-
-    public ICollection Keys
-    {
-      get { return Items.Keys; }
-    }
-
-    public ICollection Values
-    {
-      get { return Items.Values; }
-    }
-
-    public void SetItems(object items)
-    {
-      throw new NotImplementedException();
-    }
-
-    public void ForEach (Action<string, T> action)
-    {
-      foreach (DictionaryEntry item in Items)
-      {
-        action((string)item.Key, (T)item.Value);
-      }
-    }
-
-    public void TriggerAll()
-    {
-      if (OnAdd == null) { return; }
-      foreach(DictionaryEntry item in Items)
-      {
-        OnAdd.Invoke((T)item.Value, (string)item.Key);
-      }
-    }
-
-    public void InvokeOnAdd(object item, object index)
-    {
-      OnAdd?.Invoke((T)item, (string)index);
-    }
-
-    public void InvokeOnChange(object item, object index)
-    {
-      OnChange?.Invoke((T)item, (string)index);
-    }
-
-    public void InvokeOnRemove(object item, object index)
-    {
-      OnRemove?.Invoke((T)item, (string)index);
-    }
-  }
-
-  public class Schema
-  {
-    protected Dictionary<int, string> fieldsByIndex = new Dictionary<int, string>();
-    protected Dictionary<string, string> fieldTypes = new Dictionary<string, string>();
-    protected Dictionary<string, string> fieldChildPrimitiveTypes = new Dictionary<string, string>();
-    protected Dictionary<string, System.Type> fieldChildTypes = new Dictionary<string, System.Type>();
-
-    public event OnChangeEventHandler OnChange;
-    public event OnRemoveEventHandler OnRemove;
-
-    public Schema()
-    {
-      FieldInfo[] fields = GetType().GetFields();
-      foreach (FieldInfo field in fields)
-      {
-        object[] typeAttributes = field.GetCustomAttributes(typeof(Type), true);
-        for (var i=0; i<typeAttributes.Length; i++)
-        {
-          Type t = (Type)typeAttributes[i];
-          fieldsByIndex.Add(t.Index, field.Name);
-          fieldTypes.Add(field.Name, t.FieldType);
-          if (t.FieldType == "ref" || t.FieldType == "array" || t.FieldType == "map")
-          {
-            if (t.ChildPrimitiveType != null)
-            {
-              fieldChildPrimitiveTypes.Add(field.Name, t.ChildPrimitiveType);
-            }
-            else
-            {
-              fieldChildTypes.Add(field.Name, t.ChildType);
-            }
-          }
-        }
-      }
-    }
-
-    /* allow to retrieve property values by its string name */
-    public object this[string propertyName]
-    {
-      get {
-        return GetType().GetField(propertyName).GetValue(this);
-      }
-      set {
-        var field = GetType().GetField(propertyName);
-        field.SetValue(this, value);
-      }
-    }
-
-    public void Decode(byte[] bytes, Iterator it = null)
-    {
-      var decode = Decoder.GetInstance();
-
-      if (it == null) { it = new Iterator(); }
-
-      var changes = new List<DataChange>();
-      var totalBytes = bytes.Length;
-
-      while (it.Offset < totalBytes)
-      {
-        // skip TYPE_ID of existing instances
-        if (bytes[it.Offset] == (byte) SPEC.TYPE_ID)
-        {
-          it.Offset += 2;
-        }
-
-        var isNil = decode.NilCheck(bytes, it);
-        if (isNil) { it.Offset++; }
-
-        var index = bytes[it.Offset++];
-
-        if (index == (byte) SPEC.END_OF_STRUCTURE)
-        {
-          break;
-        }
-
-        // Schema version mismatch (backwards compatibility)
-        if (!fieldsByIndex.ContainsKey(index))
-        {
-          continue;
-        }
-
-        var field = fieldsByIndex[index];
-        var fieldType = fieldTypes[field];
-
-        System.Type childType;
-        fieldChildTypes.TryGetValue(field, out childType);
-
-        string childPrimitiveType;
-        fieldChildPrimitiveTypes.TryGetValue(field, out childPrimitiveType);
-
-        object value = null;
-
-        bool hasChange = false;
-
-        if (isNil)
-        {
-            value = null;
-            hasChange = true;
-        }
-
-        // Child schema type
-        else if (fieldType == "ref")
-        {
-          value = this[field] ?? CreateTypeInstance(bytes, it, childType);
-          (value as Schema).Decode(bytes, it);
-
-          hasChange = true;
-        }
-
-        // Array type
-        else if (fieldType == "array")
-        {
-          ISchemaCollection valueRef = (ISchemaCollection)(this[field] ?? Activator.CreateInstance(childType));
-          ISchemaCollection currentValue = valueRef.Clone();
-
-          int newLength = Convert.ToInt32(decode.DecodeNumber(bytes, it));
-          int numChanges = Math.Min(Convert.ToInt32(decode.DecodeNumber(bytes, it)), newLength);
-
-          bool hasRemoval = (currentValue.Count > newLength);
-          hasChange = (numChanges > 0) || hasRemoval;
-
-          bool hasIndexChange = false;
-
-          // ensure current array has the same length as encoded one
-          if (hasRemoval)
-          {
-            IDictionary items = currentValue.GetItems();
-
-            for (int i = newLength, l = currentValue.Count; i < l; i++)
-            {
-              var item = currentValue[i];
-              if (item is Schema)
-              {
-                (item as Schema).OnRemove?.Invoke();
-              }
-
-              items.Remove(i);
-              currentValue.InvokeOnRemove(item, i);
-            }
-          }
-
-          for (var i = 0; i < numChanges; i++)
-          {
-            var newIndex = Convert.ToInt32(decode.DecodeNumber(bytes, it));
-
-            int indexChangedFrom = -1;
-            if (decode.IndexChangeCheck(bytes, it))
-            {
-              decode.DecodeUint8(bytes, it);
-              indexChangedFrom = Convert.ToInt32(decode.DecodeNumber(bytes, it));
-              hasIndexChange = true;
-            }
-
-            var isNew = (!hasIndexChange && !currentValue.ContainsKey(newIndex)) || (hasIndexChange && indexChangedFrom != -1);
-
-            if (currentValue.HasSchemaChild)
-            {
-              Schema item = null;
-
-              if (isNew)
-              {
-                item = (Schema)CreateTypeInstance(bytes, it, currentValue.GetChildType());
-
-              }
-              else if (indexChangedFrom != -1)
-              {
-                item = (Schema)valueRef[indexChangedFrom];
-              }
-              else
-              {
-                item = (Schema)valueRef[newIndex];
-              }
-
-              if (item == null)
-              {
-                item = (Schema)CreateTypeInstance(bytes, it, currentValue.GetChildType());
-                isNew = true;
-              }
-
-              item.Decode(bytes, it);
-              currentValue[newIndex] = item;
-            }
-            else
-            {
-              currentValue[newIndex] = decode.DecodePrimitiveType(childPrimitiveType, bytes, it);
-            }
-
-            if (isNew)
-            {
-              currentValue.InvokeOnAdd(currentValue[newIndex], newIndex);
-            }
-            else
-            {
-              currentValue.InvokeOnChange(currentValue[newIndex], newIndex);
-            }
-          }
-
-          value = currentValue;
-        }
-
-        // Map type
-        else if (fieldType == "map")
-        {
-          ISchemaCollection valueRef = (ISchemaCollection)(this[field] ?? Activator.CreateInstance(childType));
-          ISchemaCollection currentValue = valueRef.Clone();
-
-          int length = Convert.ToInt32(decode.DecodeNumber(bytes, it));
-          hasChange = (length > 0);
-
-          bool hasIndexChange = false;
-
-          OrderedDictionary items = currentValue.GetItems() as OrderedDictionary;
-          string[] mapKeys = new string[items.Keys.Count];
-          items.Keys.CopyTo(mapKeys, 0);
-
-          for (var i = 0; i < length; i++)
-          {
-            // `encodeAll` may indicate a higher number of indexes it actually encodes
-            // TODO: do not encode a higher number than actual encoded entries
-            if (it.Offset > bytes.Length || bytes[it.Offset] == (byte)SPEC.END_OF_STRUCTURE)
-            {
-              break;
-            }
-
-            var isNilItem = decode.NilCheck(bytes, it);
-            if (isNilItem) { it.Offset++; }
-
-            string previousKey = null;
-            if (decode.IndexChangeCheck(bytes, it))
-            {
-              it.Offset++;
-              previousKey = mapKeys[Convert.ToInt32(decode.DecodeNumber(bytes, it))];
-              hasIndexChange = true;
-            }
-
-            bool hasMapIndex = decode.NumberCheck(bytes, it);
-            bool isSchemaType = childType != null;
-
-            string newKey = (hasMapIndex)
-                ? mapKeys[Convert.ToInt32(decode.DecodeNumber(bytes, it))]
-                : decode.DecodeString(bytes, it);
-
-            object item;
-            bool isNew = (!hasIndexChange && !valueRef.ContainsKey(newKey)) || (hasIndexChange && previousKey == null && hasMapIndex);
-
-            if (isNew && isSchemaType)
-            {
-              item = (Schema)CreateTypeInstance(bytes, it, currentValue.GetChildType());
-
-            } else if (previousKey != null)
-            {
-              item = valueRef[previousKey];
-            }
-            else
-            {
-              item = valueRef[newKey];
-            }
-
-            if (isNilItem)
-            {
-              if (item != null && isSchemaType)
-              {
-                (item as Schema).OnRemove?.Invoke();
-              }
-
-              valueRef.InvokeOnRemove(item, newKey);
-              items.Remove(newKey);
-              continue;
-
-            } else if (!isSchemaType)
-            {
-              currentValue[newKey] = decode.DecodePrimitiveType(childPrimitiveType, bytes, it);
-            }
-            else
-            {
-              (item as Schema).Decode(bytes, it);
-              currentValue[newKey] = item;
-            }
-
-            if (isNew)
-            {
-              currentValue.InvokeOnAdd(currentValue[newKey], newKey);
-            }
-            else
-            {
-              currentValue.InvokeOnChange(currentValue[newKey], newKey);
-            }
-          }
-
-          value = currentValue;
-        }
-
-        // Primitive type
-        else
-        {
-          value = decode.DecodePrimitiveType(fieldType, bytes, it);
-          hasChange = true;
-        }
-
-        if (hasChange)
-        {
-          changes.Add(new DataChange
-          {
-            Field = field,
-            Value = value,
-            PreviousValue = this[field]
-          });
-        }
-
-        this[field] = value;
-      }
-
-      if (changes.Count > 0)
-      {
-        OnChange?.Invoke(changes);
-      }
-    }
-
-    public void TriggerAll()
-    {
-      if (OnChange == null) { return; }
-
-      var changes = new List<DataChange>();
-      foreach(KeyValuePair<int, string> entry in fieldsByIndex)
-      {
-        var field = entry.Value;
-        if (this[field] != null)
-        {
-          changes.Add(new DataChange
-          {
-            Field = field,
-            Value = this[field],
-            PreviousValue = null
-          });
-        }
-      }
-
-      OnChange.Invoke(changes);
-    }
-
-    protected object CreateTypeInstance(byte[] bytes, Iterator it, System.Type type)
-    {
-      if (bytes[it.Offset] == (byte) SPEC.TYPE_ID)
-      {
-        it.Offset++;
-        uint typeId = Decoder.GetInstance().DecodeUint8(bytes, it);
-        System.Type anotherType = Context.GetInstance().Get(typeId);
-        return Activator.CreateInstance(anotherType);
-      }
-      else
-      {
-        return Activator.CreateInstance(type);
-      }
-    }
-
-    public static bool CheckSchemaChild(System.Type toCheck) {
-      System.Type generic = typeof(Schema);
-
-      while (toCheck != null && toCheck != typeof(object)) {
-        var cur = toCheck.IsGenericType ? toCheck.GetGenericTypeDefinition() : toCheck;
-
-        if (generic == cur) {
-          return true;
-        }
-
-        toCheck = toCheck.BaseType;
-      }
-
-      return false;
-    }
-  }
-
-  public class ReflectionField : Schema
-  {
-    [Type(0, "string")]
-    public string name;
-
-    [Type(1, "string")]
-    public string type;
-
-    [Type(2, "uint8")]
-    public uint referencedType;
-  }
-
-  public class ReflectionType : Schema
-  {
-    [Type(0, "uint8")]
-    public uint id;
-
-    [Type(1, "array", typeof(ArraySchema<ReflectionField>))]
-    public ArraySchema<ReflectionField> fields = new ArraySchema<ReflectionField>();
-  }
-
-  public class Reflection : Schema
-  {
-    [Type(0, "array", typeof(ArraySchema<ReflectionType>))]
-    public ArraySchema<ReflectionType> types = new ArraySchema<ReflectionType>();
-
-    [Type(1, "uint8")]
-    public uint rootType;
-  }
+	[AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
+	public class Type : Attribute
+	{
+		public int Index;
+		public string FieldType;
+		public System.Type ChildType;
+		public string ChildPrimitiveType;
+
+		public Type(int index, string type, System.Type childType = null, string childPrimitiveType = null)
+		{
+			Index = index; // GetType().GetFields() doesn't guarantee order of fields, need to manually track them here!
+			FieldType = type;
+			ChildType = childType;
+			ChildPrimitiveType = childPrimitiveType;
+		}
+	}
+
+	public class Iterator
+	{
+		public int Offset = 0;
+	}
+
+	public enum SPEC : byte
+	{
+		SWITCH_TO_STRUCTURE = 255,
+		TYPE_ID = 213
+	}
+
+	public enum OPERATION : byte
+	{
+		ADD = 128,
+		REPLACE = 0,
+		DELETE = 64,
+		DELETE_AND_ADD = 192,
+		CLEAR = 10,
+	}
+
+	public class DataChange
+	{
+		public byte Op;
+		public string Field;
+		public object DynamicIndex;
+		public object Value;
+		public object PreviousValue;
+	}
+
+	public delegate void OnChangeEventHandler(List<DataChange> changes);
+	public delegate void KeyValueEventHandler<T, K>(T value, K key);
+	public delegate void OnRemoveEventHandler();
+
+	public interface ISchemaCollection : IRef
+	{
+		void InvokeOnAdd(object item, object index);
+		void InvokeOnChange(object item, object index);
+		void InvokeOnRemove(object item, object index);
+
+		IDictionary GetItems();
+		void SetItems(object items);
+		void TriggerAll();
+		void Clear(ReferenceTracker refs);
+
+		System.Type GetChildType();
+		object GetTypeDefaultValue();
+		bool ContainsKey(object key);
+
+		bool HasSchemaChild { get; }
+		string ChildPrimitiveType { get; set; }
+
+		int Count { get; }
+		object this[object key] { get; set; }
+
+		void SetIndex(int index, object dynamicIndex);
+		object GetIndex(int index);
+		void SetByIndex(int index, object dynamicIndex, object value);
+
+		ISchemaCollection Clone();
+	}
+
+	public interface IRef
+	{
+		int __refId { get; set; }
+
+		object GetByIndex(int index);
+		void DeleteByIndex(int index);
+
+		void MoveEventHandlers(IRef previousInstance);
+	}
+
+	public class Schema : IRef
+	{
+		protected Dictionary<int, string> fieldsByIndex = new Dictionary<int, string>();
+		protected Dictionary<string, string> fieldTypes = new Dictionary<string, string>();
+		protected Dictionary<string, string> fieldChildPrimitiveTypes = new Dictionary<string, string>();
+		protected Dictionary<string, System.Type> fieldChildTypes = new Dictionary<string, System.Type>();
+
+		public event OnChangeEventHandler OnChange;
+		public event OnRemoveEventHandler OnRemove;
+
+		public int __refId { get; set; }
+
+		private ReferenceTracker refs;
+
+		public Schema()
+		{
+			FieldInfo[] fields = GetType().GetFields();
+			foreach (FieldInfo field in fields)
+			{
+				object[] typeAttributes = field.GetCustomAttributes(typeof(Type), true);
+				for (var i = 0; i < typeAttributes.Length; i++)
+				{
+					Type t = (Type)typeAttributes[i];
+					fieldsByIndex.Add(t.Index, field.Name);
+					fieldTypes.Add(field.Name, t.FieldType);
+
+					if (t.ChildPrimitiveType != null)
+					{
+						fieldChildPrimitiveTypes.Add(field.Name, t.ChildPrimitiveType);
+					}
+
+					if (t.ChildType != null)
+					{
+						fieldChildTypes.Add(field.Name, t.ChildType);
+					}
+				}
+			}
+		}
+
+		/* allow to retrieve property values by its string name */
+		public object this[string propertyName]
+		{
+			get
+			{
+				return GetType().GetField(propertyName).GetValue(this);
+			}
+			set
+			{
+				var field = GetType().GetField(propertyName);
+				field.SetValue(this, value);
+			}
+		}
+
+		public Dictionary<string, System.Type> GetFieldChildTypes()
+		{
+			// This is required for "garbage collection" inside ReferenceTracker.
+			return fieldChildTypes;
+		}
+
+		public void MoveEventHandlers(IRef previousInstance)
+		{
+			OnChange = ((Schema)previousInstance).OnChange;
+			OnRemove = ((Schema)previousInstance).OnRemove;
+
+			foreach (var item in ((Schema)previousInstance).fieldsByIndex)
+			{
+				var child = GetByIndex(item.Key);
+				if (child is IRef)
+				{
+					((IRef)child).MoveEventHandlers((IRef)previousInstance.GetByIndex(item.Key));
+				}
+			}
+		}
+
+		public void Decode(byte[] bytes, Iterator it = null, ReferenceTracker refs = null)
+		{
+			var decode = Decoder.GetInstance();
+
+			if (it == null) { it = new Iterator(); }
+			if (refs == null) { refs = new ReferenceTracker(); }
+
+			var totalBytes = bytes.Length;
+
+			int refId = 0;
+			IRef _ref = this;
+
+			this.refs = refs;
+			refs.Add(refId, _ref);
+
+			var changes = new List<DataChange>();
+			var allChanges = new OrderedDictionary(); // Dictionary<int, List<DataChange>>
+			allChanges.Add(refId, changes);
+
+			while (it.Offset < totalBytes)
+			{
+				var _byte = bytes[it.Offset++];
+
+				if (_byte == (byte)SPEC.SWITCH_TO_STRUCTURE)
+				{
+					refId = Convert.ToInt32(decode.DecodeNumber(bytes, it));
+					_ref = refs.Get(refId);
+
+					//
+					// Trying to access a reference that haven't been decoded yet.
+					//
+					if (_ref == null) { throw new Exception("refId not found: " + refId); }
+
+					// create empty list of changes for this refId.
+					changes = new List<DataChange>();
+					allChanges[(object)refId] = changes;
+
+					continue;
+				}
+
+				bool isSchema = _ref is Schema;
+
+				var operation = (byte) ((isSchema)
+					? (_byte >> 6) << 6 // "compressed" index + operation
+					: _byte); // "uncompressed" index + operation (array/map items)
+
+				if (operation == (byte)OPERATION.CLEAR)
+				{
+					((ISchemaCollection)_ref).Clear(refs);
+					continue;
+				}
+
+				int fieldIndex;
+				string fieldName = null;
+				string fieldType = null;
+
+				System.Type childType = null;
+
+				if (isSchema)
+				{
+					fieldIndex = _byte % ((operation == 0) ? 255 : operation); // FIXME: JS allows (0 || 255)
+					((Schema)_ref).fieldsByIndex.TryGetValue(fieldIndex, out fieldName);
+
+					// fieldType = ((Schema)_ref).fieldTypes[fieldName];
+					((Schema)_ref).fieldTypes.TryGetValue(fieldName ?? "", out fieldType);
+					((Schema)_ref).fieldChildTypes.TryGetValue(fieldName ?? "", out childType);
+				}
+				else
+				{
+					fieldName = ""; // FIXME
+
+					fieldIndex = Convert.ToInt32(decode.DecodeNumber(bytes, it));
+					if (((ISchemaCollection)_ref).HasSchemaChild)
+					{
+						fieldType = "ref";
+						childType = ((ISchemaCollection)_ref).GetChildType();
+					}
+					else
+					{
+						fieldType = ((ISchemaCollection)_ref).ChildPrimitiveType;
+					}
+				}
+
+				object value = null;
+				object previousValue = null;
+				object dynamicIndex = null;
+
+				if (!isSchema)
+				{
+					previousValue = _ref.GetByIndex(fieldIndex);
+
+					if ((operation & (byte)OPERATION.ADD) == (byte)OPERATION.ADD)
+					{
+						// MapSchema dynamic index.
+						dynamicIndex = (((ISchemaCollection)_ref).GetItems() is OrderedDictionary)
+							? (object)decode.DecodeString(bytes, it)
+							: fieldIndex;
+
+						((ISchemaCollection)_ref).SetIndex(fieldIndex, dynamicIndex);
+					} else
+					{
+						dynamicIndex = ((ISchemaCollection)_ref).GetIndex(fieldIndex);
+					}
+				}
+				else if (fieldName != null) // FIXME: duplicate check
+				{
+					previousValue = ((Schema)_ref)[fieldName];
+				}
+
+				//
+				// Delete operations
+				//
+				if ((operation & (byte)OPERATION.DELETE) == (byte)OPERATION.DELETE)
+				{
+					if (operation != (byte)OPERATION.DELETE_AND_ADD)
+					{
+						_ref.DeleteByIndex(fieldIndex);
+					}
+
+					// Flag `refId` for garbage collection.
+					if (previousValue != null && previousValue is IRef)
+					{
+						refs.Remove(((IRef)previousValue).__refId);
+					}
+
+					value = null;
+				}
+
+				if (fieldName == null)
+				{
+					//
+					// keep skipping next bytes until reaches a known structure
+					// by local decoder.
+					//
+					Iterator nextIterator = new Iterator() { Offset = it.Offset };
+
+					while (it.Offset < totalBytes)
+					{
+						if (decode.SwitchStructureCheck(bytes, it))
+						{
+							nextIterator.Offset = it.Offset + 1;
+							if (refs.Has(Convert.ToInt32(decode.DecodeNumber(bytes, nextIterator)))) {
+								break;
+							}
+						}
+
+						it.Offset++;
+					}
+
+					continue;
+
+				}
+				else if (operation == (byte)OPERATION.DELETE)
+				{
+					//
+					// FIXME: refactor me.
+					// Don't do anything.
+					//
+				}
+				else if (fieldType == "ref")
+				{
+					refId = Convert.ToInt32(decode.DecodeNumber(bytes, it));
+					value = refs.Get(refId);
+
+					if (operation != (byte)OPERATION.REPLACE)
+					{
+						var concreteChildType = GetSchemaType(bytes, it, childType);
+
+						if (value == null)
+						{
+							value = CreateTypeInstance(concreteChildType);
+
+							if (previousValue != null)
+							{
+								((Schema)value).MoveEventHandlers((Schema)previousValue);
+
+								if (
+									((IRef)previousValue).__refId > 0 &&
+									refId != ((IRef)previousValue).__refId
+								)
+								{
+									refs.Remove(((IRef)previousValue).__refId);
+								}
+							}
+						}
+
+						refs.Add(refId, (IRef)value, (value != previousValue));
+					}
+				}
+				else if (childType == null)
+				{
+					// primitive values
+					value = decode.DecodePrimitiveType(fieldType, bytes, it);
+				}
+				else
+				{
+					refId = Convert.ToInt32(decode.DecodeNumber(bytes, it));
+					value = refs.Get(refId);
+
+					ISchemaCollection valueRef = (refs.Has(refId))
+						? (ISchemaCollection)previousValue
+						: (ISchemaCollection)Activator.CreateInstance(childType);
+
+					value = valueRef.Clone();
+
+					// keep reference to nested childPrimitiveType.
+					string childPrimitiveType;
+					((Schema)_ref).fieldChildPrimitiveTypes.TryGetValue(fieldName, out childPrimitiveType);
+					((ISchemaCollection)value).ChildPrimitiveType = childPrimitiveType;
+
+					if (previousValue != null)
+					{
+						((ISchemaCollection)value).MoveEventHandlers(((ISchemaCollection)previousValue));
+
+						if (
+							((IRef)previousValue).__refId > 0 &&
+							refId != ((IRef)previousValue).__refId
+						)
+						{
+							refs.Remove(((IRef)previousValue).__refId);
+
+							var deletes = new List<DataChange>();
+							var items = ((ISchemaCollection)previousValue).GetItems();
+
+							foreach (var key in items.Keys)
+							{
+								deletes.Add(new DataChange()
+								{
+									DynamicIndex = key,
+									Op = (byte)OPERATION.DELETE,
+									Value = null,
+									PreviousValue = items[key]
+								});
+							}
+
+							allChanges[(object)((IRef)previousValue).__refId] = deletes;
+						}
+					}
+
+					refs.Add(refId, (IRef)value, (valueRef != previousValue));
+				}
+
+				bool hasChange = (previousValue != value);
+
+				if (value != null)
+				{
+					if (value is IRef)
+					{
+						((IRef)value).__refId = refId;
+					}
+
+					if (_ref is Schema)
+					{
+						((Schema)_ref)[fieldName] = value;
+					}
+					else if (_ref is ISchemaCollection)
+					{
+						((ISchemaCollection)_ref).SetByIndex(fieldIndex, dynamicIndex, value);
+					}
+				}
+
+				if (hasChange)
+				{
+					changes.Add(new DataChange
+					{
+						Op = operation,
+						Field = fieldName,
+						DynamicIndex = dynamicIndex,
+						Value = value,
+						PreviousValue = previousValue
+					});
+				}
+			}
+
+			TriggerChanges(ref allChanges);
+
+			refs.GarbageCollection();
+		}
+
+		public void TriggerAll()
+		{
+			//
+			// first state not received from the server yet.
+			// nothing to trigger.
+			//
+			if (refs == null) { return;  }
+
+			var allChanges = new OrderedDictionary();
+			TriggerAllFillChanges(this, ref allChanges);
+			TriggerChanges(ref allChanges);
+		}
+
+		protected void TriggerAllFillChanges(IRef currentRef, ref OrderedDictionary allChanges)
+		{
+			// skip recursive structures...
+			if (allChanges.Contains(currentRef.__refId)) { return; }
+
+			var changes = new List<DataChange>();
+			allChanges[(object)currentRef.__refId] = changes;
+
+			if (currentRef is Schema)
+			{
+				foreach (var fieldName in ((Schema)currentRef).fieldsByIndex.Values)
+				{
+					var value = ((Schema)currentRef)[fieldName];
+					changes.Add(new DataChange
+					{
+						Field = fieldName,
+						Op = (byte)OPERATION.ADD,
+						Value = value
+					});
+
+					if (value is IRef)
+					{
+						TriggerAllFillChanges((IRef)value, ref allChanges);
+					}
+				}
+			} else
+			{
+				var items = ((ISchemaCollection)currentRef).GetItems();
+				foreach (object key in items.Keys)
+				{
+					var child = items[key];
+
+					changes.Add(new DataChange
+					{
+						Field = (string) key,
+						DynamicIndex = key,
+						Op = (byte)OPERATION.ADD,
+						Value = child
+					});
+
+					if (child is IRef)
+					{
+						TriggerAllFillChanges((IRef)child, ref allChanges);
+					}
+				}
+			}
+		}
+
+		protected void TriggerChanges(ref OrderedDictionary allChanges)
+		{
+			foreach (object refId in allChanges.Keys)
+			{
+				List<DataChange> changes = (List<DataChange>)allChanges[refId];
+
+				IRef _ref = refs.Get((int)refId);
+				bool isSchema = _ref is Schema;
+
+				foreach (DataChange change in changes)
+				{
+					//const listener = ref['$listeners'] && ref['$listeners'][change.field];
+
+					if (!isSchema)
+					{
+						ISchemaCollection container = ((ISchemaCollection)_ref);
+
+						if (change.Op == (byte)OPERATION.ADD && change.PreviousValue == container.GetTypeDefaultValue())
+						{
+							container.InvokeOnAdd(change.Value, change.DynamicIndex);
+
+						}
+						else if (change.Op == (byte)OPERATION.DELETE)
+						{
+							//
+							// FIXME: `previousValue` should always be avaiiable.
+							// ADD + DELETE operations are still encoding DELETE operation.
+							//
+							if (change.PreviousValue != container.GetTypeDefaultValue())
+							{
+								container.InvokeOnRemove(change.PreviousValue, change.DynamicIndex ?? change.Field);
+							}
+
+						}
+						else if (change.Op == (byte)OPERATION.DELETE_AND_ADD)
+						{
+							if (change.PreviousValue != container.GetTypeDefaultValue())
+							{
+								container.InvokeOnRemove(change.PreviousValue, change.DynamicIndex);
+							}
+							container.InvokeOnAdd(change.Value, change.DynamicIndex);
+
+						}
+						else if (
+							change.Op == (byte)OPERATION.REPLACE ||
+							change.Value != change.PreviousValue
+						)
+						{
+							container.InvokeOnChange(change.Value, change.DynamicIndex);
+						}
+					}
+
+					//
+					// trigger onRemove on child structure.
+					//
+					if (
+						(change.Op & (byte)OPERATION.DELETE) == (byte)OPERATION.DELETE &&
+						change.PreviousValue is Schema
+					)
+					{
+						((Schema)change.PreviousValue).OnRemove?.Invoke();
+					}
+				}
+
+				if (isSchema)
+				{
+					((Schema)_ref).OnChange?.Invoke(changes);
+				}
+			}
+		}
+
+		protected System.Type GetSchemaType(byte[] bytes, Iterator it, System.Type defaultType)
+		{
+			System.Type type = defaultType;
+
+			if (bytes[it.Offset] == (byte)SPEC.TYPE_ID)
+			{
+				it.Offset++;
+				int typeId = Convert.ToInt32(Decoder.GetInstance().DecodeNumber(bytes, it));
+				type = Context.GetInstance().Get(typeId);
+			}
+
+			return type;
+		}
+
+		protected object CreateTypeInstance(System.Type type)
+		{
+			return Activator.CreateInstance(type);
+		}
+
+		public object GetByIndex(int index)
+		{
+			string fieldName;
+			fieldsByIndex.TryGetValue(index, out fieldName);
+			return this[fieldName];
+		}
+
+		public void DeleteByIndex(int index)
+		{
+			string fieldName;
+			fieldsByIndex.TryGetValue(index, out fieldName);
+			this[fieldName] = null;
+		}
+
+		public static bool CheckSchemaChild(System.Type toCheck)
+		{
+			System.Type generic = typeof(Schema);
+
+			while (toCheck != null && toCheck != typeof(object))
+			{
+				var cur = toCheck.IsGenericType ? toCheck.GetGenericTypeDefinition() : toCheck;
+
+				if (generic == cur)
+				{
+					return true;
+				}
+
+				toCheck = toCheck.BaseType;
+			}
+
+			return false;
+		}
+	}
 
 }

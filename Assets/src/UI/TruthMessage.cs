@@ -14,9 +14,13 @@ public class TruthMessage : MonoBehaviour
     public TextMeshProUGUI titleText, descriptionText, trueText, falseText;
     private float showhideTime = .3f;
 
-    private void Awake()
+    public TruthMessage()
     {
         Instance = this;
+    }
+
+    private void Awake()
+    {
         this.transform.localScale = Vector3.zero;
     }
 

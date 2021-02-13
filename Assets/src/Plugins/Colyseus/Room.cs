@@ -20,7 +20,7 @@ namespace Colyseus
 		Task Leave(bool consented);
 	}
 
-    public class Room<T> : IRoom
+	public class Room<T> : IRoom
 	{
 		public delegate void RoomOnMessageEventHandler(object message);
 		public delegate void RoomOnStateChangeEventHandler(T state, bool isFirstState);
@@ -56,6 +56,7 @@ namespace Colyseus
 
 		protected Dictionary<string, IMessageHandler> OnMessageHandlers = new Dictionary<string, IMessageHandler>();
 
+		private Schema.Encoder Encode = Schema.Encoder.GetInstance();
 		private Schema.Decoder Decode = Schema.Decoder.GetInstance();
 
 		/// <summary>
@@ -155,7 +156,7 @@ namespace Colyseus
 		public async Task Send(string type)
 		{
 			byte[] encodedType = System.Text.Encoding.UTF8.GetBytes(type);
-			byte[] initialBytes = { Protocol.ROOM_DATA, (byte)(encodedType.Length | 0xa0) };
+			byte[] initialBytes = Encode.getInitialBytesFromEncodedType(encodedType);
 
 			byte[] bytes = new byte[initialBytes.Length + encodedType.Length];
 			Buffer.BlockCopy(initialBytes, 0, bytes, 0, initialBytes.Length);
@@ -175,7 +176,7 @@ namespace Colyseus
 			MsgPack.Serialize(message, serializationOutput, SerializationOptions.SuppressTypeInformation);
 
 			byte[] encodedType = System.Text.Encoding.UTF8.GetBytes(type);
-			byte[] initialBytes = { Protocol.ROOM_DATA, (byte) (encodedType.Length | 0xa0) };
+			byte[] initialBytes = Encode.getInitialBytesFromEncodedType(encodedType);
 			byte[] encodedMessage = serializationOutput.ToArray();
 
 			byte[] bytes = new byte[encodedType.Length + encodedMessage.Length + initialBytes.Length];
@@ -213,7 +214,6 @@ namespace Colyseus
 		protected async void ParseMessage (byte[] bytes)
 		{
 			byte code = bytes[0];
-			//Debug.Log("BYTE =>" + code);
 
 			if (code == Protocol.JOIN_ROOM)
 			{
@@ -224,11 +224,34 @@ namespace Colyseus
 
 				if (SerializerId == "schema")
 				{
-					serializer = new SchemaSerializer<T>();
+					try
+					{
+						serializer = new SchemaSerializer<T>();
+					}
+					catch (Exception e)
+					{
+						DisplaySerializerErrorHelp(e, "Consider using the \"schema-codegen\" and providing the same room state for matchmaking instead of \"" + typeof(T).Name + "\"");
+					}
 
 				} else if (SerializerId == "fossil-delta")
 				{
-					serializer = (ISerializer<T>) new FossilDeltaSerializer();
+					try
+					{
+						serializer = (ISerializer<T>)new FossilDeltaSerializer();
+					} catch (Exception e)
+					{
+						DisplaySerializerErrorHelp(e, "Consider using \"IndexedDictionary<string, object>\" instead of \"" + typeof(T).Name + "\" for matchmaking.");
+					}
+				} else
+				{
+					try
+					{
+						serializer = (ISerializer<T>)new NoneSerializer();
+					}
+					catch (Exception e)
+					{
+						DisplaySerializerErrorHelp(e, "Consider setting state in the server-side using \"this.setState(new " + typeof(T).Name + "())\"");
+					}
 				}
 
 				if (bytes.Length > offset)
@@ -251,10 +274,13 @@ namespace Colyseus
 			}
 			else if (code == Protocol.ROOM_DATA_SCHEMA)
 			{
-				Type messageType = Schema.Context.GetInstance().Get(bytes[1]);
+				Schema.Iterator it = new Schema.Iterator { Offset = 1 };
+				var typeId = Decode.DecodeNumber(bytes, it);
 
+				Type messageType = Schema.Context.GetInstance().Get(typeId);
 				var message = (Schema.Schema) Activator.CreateInstance(messageType);
-				message.Decode(bytes, new Schema.Iterator { Offset = 2 });
+
+				message.Decode(bytes, it);
 
 				IMessageHandler handler = null;
 				OnMessageHandlers.TryGetValue("s" + message.GetType(), out handler);
@@ -265,7 +291,7 @@ namespace Colyseus
 				}
 				else
 				{
-					Debug.LogError("room.OnMessage not registered for Schema message: " + message.GetType());
+					Debug.LogWarning("room.OnMessage not registered for Schema of type: '" + message.GetType() + "'");
 				}
 			}
 			else if (code == Protocol.LEAVE_ROOM)
@@ -280,7 +306,7 @@ namespace Colyseus
 			}
 			else if (code == Protocol.ROOM_STATE_PATCH)
 			{
-				//Debug.Log("ROOM_STATE_PATCH");
+				Debug.Log("ROOM_STATE_PATCH");
 				Patch(bytes, 1);
 			}
 			else if (code == Protocol.ROOM_DATA)
@@ -315,7 +341,7 @@ namespace Colyseus
 				}
 				else
 				{
-					Debug.LogError("room.OnMessage not registered for: " + type);
+					Debug.LogWarning("room.OnMessage not registered for: '" + type + "'");
 				}
 			}
 		}
@@ -326,5 +352,11 @@ namespace Colyseus
 			OnStateChange?.Invoke(serializer.GetState(), false);
 		}
 
+		protected void DisplaySerializerErrorHelp(Exception e, string helpMessage)
+		{
+			Debug.LogWarning("The serializer from the server is: '" + SerializerId + "'. " + helpMessage);
+			throw e;
+		}
 	}
+
 }

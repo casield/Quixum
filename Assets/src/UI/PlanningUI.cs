@@ -29,6 +29,7 @@ public class PlanningUI : MonoBehaviour
     {
         client = Client.Instance;
         client.room.State.turnState.OnChange += onTurnChange;
+        
         client.userState.board.OnRemove+=onItemRemove;
     }
 
@@ -46,12 +47,11 @@ public class PlanningUI : MonoBehaviour
             if (change.Field == "phase")
             {
                  Debug.Log("XD "+change.Value);
-                if (change.Value.ToString() == "1")
+                if (client.room.State.turnState.phase == 1)
                 {
                     Open();
                 }
-               
-                if (change.Value.ToString() == "2")
+                 if (client.room.State.turnState.phase == 2)
                 {
                     Close();
                 }
@@ -68,9 +68,9 @@ public class PlanningUI : MonoBehaviour
 
     public async void sendBoard()
     {
-        if (Client.Instance.userState != null)
+        if (Client.Instance.userState != null && Client.Instance.room != null)
         {
-            await Client.Instance.room.Send("readyPlanning","true");
+            await Client.Instance.room.Send("readyPlanning");
         }
     }
 
@@ -94,7 +94,7 @@ public class PlanningUI : MonoBehaviour
     {
         if (isDraggin)
         {
-            draggingObject.transform.parent = this.transform;
+            draggingObject.transform.parent.SetParent(this.transform);
             draggingObject.transform.position = Character.Instance.inputControl.Normal.Position.ReadValue<Vector2>();
         }
     }

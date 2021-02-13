@@ -5,7 +5,7 @@ using Colyseus.Schema;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class GolfBall:MonoBehaviour,Soundable
+public class GolfBall:MonoBehaviour
 {
     public AudioSource audioSource { get;set;}
     public ObjectState state;
@@ -37,20 +37,9 @@ public class GolfBall:MonoBehaviour,Soundable
     // Start is called before the first frame update
 
     void init(){
-       // state.sound.OnChange+=onSoundChange;
+    
     }
 
-    private void onSoundChange(List<DataChange> changes)
-    {
-        
-        foreach (var item in changes)
-        {
-           // Debug.Log("Change: "+item.Field + " / "+item.Value + " / "+ state.sound.volume);
-            var ob = item.Field;
-           // play(collitionSound,state.sound.volume);
-        }
-        
-    }
 
     // Update is called once per frame
     void Update()

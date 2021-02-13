@@ -13,7 +13,7 @@ public class GameMessages : MonoBehaviour
     public TextMeshProUGUI textMessage;
 
     Vector3 savedPosition;
-    void Awake()
+    public GameMessages()
     {
         Instance = this;
     }

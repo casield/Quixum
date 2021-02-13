@@ -14,7 +14,7 @@ public class ClientDebug : MonoBehaviour
     public bool localhost;
     private Colyseus.Client client;
     private Room<GameState> room;
-    public Dictionary<string, SObject> objects = new Dictionary<string, SObject>();
+    public IndexedDictionary<string, SObject> objects = new IndexedDictionary<string, SObject>();
 
     public GameObject ServerObjects;
 
@@ -49,7 +49,9 @@ public class ClientDebug : MonoBehaviour
 
     private async void JoinOrCreateRoom()
     {
-        this.room = await client.JoinOrCreate<GameState>("GameRoom");
+        this.room = await client.JoinOrCreate<GameState>("GameRoom",new Dictionary<string, object>() { });
+
+        //room.State["world"].onChange += OnChangeObjects;
         room.State.world.objects.OnChange += OnChangeObjects;
         room.State.world.objects.OnAdd += AddObject;
 
@@ -119,7 +121,8 @@ public class ClientDebug : MonoBehaviour
                     gameOb.name = "Esfera (" + ob.uID + ")";
                     float size = (sphereState.radius) * 2;
                     gameOb.transform.localScale = new Vector3(size, size, size);
-                    serverObject = new SObject(gameOb, sphereState);
+                    serverObject = gameOb.AddComponent<SObject>();
+                    serverObject.setState(sphereState);
 
                     this.objects.Add(s, serverObject);
                 }
@@ -145,7 +148,8 @@ public class ClientDebug : MonoBehaviour
                     size.Scale(new Vector3(2, 2, 2));
                     gameOb.transform.localScale = size;
 
-                    serverObject = new SObject(gameOb, boxState);
+                    serverObject = gameOb.AddComponent<SObject>();
+                    serverObject.setState(boxState);
                     this.objects.Add(s, serverObject);
 
                 }

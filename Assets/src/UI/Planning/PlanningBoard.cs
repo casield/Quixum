@@ -29,7 +29,7 @@ public class PlanningBoard : MonoBehaviour
             img.sprite = rectSprite;
             BoardRect br = rect.AddComponent<BoardRect>();
             br.setIndex(i);
-            rect.transform.parent = this.transform;
+            rect.transform.SetParent(this.transform);
             boardRects.Add(br);
         }
     }

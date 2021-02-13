@@ -183,7 +183,7 @@ public class ArenaShopItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
         else
         {
-            this.transform.parent = this.originalParent;
+            this.transform.SetParent( this.originalParent);
         }
     }
 
