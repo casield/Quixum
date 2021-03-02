@@ -14,12 +14,13 @@ public class BallFinder : MonoBehaviour
     {
         //  sprite = transform.
         sprite = GetComponent<Sprite>();
-        client = Client.Instance;
-        client.addReadyListener(init);
+
+        Client.Instance.addReadyListener(init);
     }
 
     private void init()
     {
+        client = Client.Instance;
         character = Character.Instance;
 
     }
@@ -38,10 +39,17 @@ public class BallFinder : MonoBehaviour
         }
         else
         {
-          if(client != null && Client.Instance.room != null && Client.Instance.room.SessionId != null){
-               golfBall = client.golfballs[Client.Instance.room.SessionId];
-          }
-               
+            if (client != null)
+            {
+                if (client.golfballs != null && client.golfballs.ContainsKey(client.room.SessionId))
+                {
+                    golfBall = client.golfballs[Client.Instance.room.SessionId];
+                }
+
+            }
+
+
+
         }
     }
 }

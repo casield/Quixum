@@ -21,6 +21,9 @@ ModelImporter:
   - first:
       74: 5459107057901663186
     second: Sol_Rig|Sol_Shot_Start
+  - first:
+      74: -1395352617157594626
+    second: camera position|Sol_Idle_Normal
   externalObjects: {}
   materials:
     materialImportMode: 1

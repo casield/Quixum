@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour, ConnectedObject
@@ -8,31 +10,55 @@ public class Player : MonoBehaviour, ConnectedObject
     /// </summary>
     BallPointer ballPointer;
     Animator animator;
+    private DrawLineMessage json;
+    private Color color;
 
     void Start()
     {
 
         animator = GetComponent<Animator>();
-
-        animator.SetTrigger("Hello");
     }
     public void onMessage(ObjectMessage m)
     {
-        if (m.message == "trigger_ShootAnim")
+        if (animator != null)
         {
+            if (m.message == "trigger_ShootAnim")
+            {
 
-            animator.SetTrigger("Shooting");
-            Character.Instance.canRotate = true;
-        }
-        if (m.message == "Snap_true")
-        {
-            animator.SetBool("Snapped", true);
-        }
-        if (m.message == "Snap_false")
-        {
+                animator.SetTrigger("Shooting");
+                Character.Instance.canRotate = true;
+            }
+            if (m.message == "Snap_true")
+            {
+                animator.SetBool("Snapped", true);
+            }
+            if (m.message == "Snap_false")
+            {
 
-            animator.SetBool("Snapped", false);
+                animator.SetBool("Snapped", false);
+            }
+            if (m.message == "Trigger_Hello")
+            {
+                Debug.Log("Sey hello");
+                animator.SetTrigger("Hello");
+            }
+            if (m.message.Contains("draw_line"))
+            {
+                string[] s = m.message.Split('@');
+                json = JsonUtility.FromJson<DrawLineMessage>(s[1]);
+                Debug.Log(json.x1);
+
+               color = new Color(1.0f, 1f, 1.0f);
+              
+            }
+            //Debug.Log(m.message);
         }
+    }
+    private void FixedUpdate() {
+        if(json != null){
+             Debug.DrawLine(new Vector3(json.x1,gameObject.transform.position.y,json.y1), new Vector3(json.x2,gameObject.transform.position.y,json.y2), color);
+        }
+         
     }
     public void setState(ObjectState state)
     {
@@ -53,4 +79,9 @@ public class Player : MonoBehaviour, ConnectedObject
     {
         throw new System.NotImplementedException();
     }
+}
+
+public class DrawLineMessage
+{
+    public float x1, x2, y1, y2;
 }

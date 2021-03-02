@@ -11,7 +11,7 @@ public class BallPointer : MonoBehaviour
 
     private int frameCount = 8;
 
-    private float force = .08f;
+    private float force = .1f;
 
     public float velocity = 0;
     InputControl inputControl;
@@ -26,10 +26,13 @@ public class BallPointer : MonoBehaviour
     {
 
         meshRenderer = GetComponent<MeshRenderer>();
-        inputControl = Character.Instance.inputControl;
 
     }
 
+    private void Start()
+    {
+        inputControl = Character.Instance.inputControl;
+    }
     bool isTouch()
     {
         return Client.Instance.playerInput.currentControlScheme.ToLower() == "touch";
@@ -38,40 +41,45 @@ public class BallPointer : MonoBehaviour
     /// <summary>
     /// Update is called every frame, if the MonoBehaviour is enabled.
     /// </summary>
-    void Update()
+    void FixedUpdate()
     {
-        if(inputControl.Normal.Shoot.ReadValue<float>() == 1){
-            velocity+=force;
+        if (inputControl.Normal.Shoot.ReadValue<float>() == 1)
+        {
+            velocity += force;
             setFrame((int)velocity);
-            
-            if(velocity >= frameCount){
+
+            if (velocity >= frameCount)
+            {
                 velocity = 0;
             }
-            Character.Instance.arcArrow.velocity = (velocity+1)*10;
+            Character.Instance.arcArrow.velocity = (velocity + 1) * 10;
             shotSended = false;
-        }else{
-            if(velocity != 0 && !shotSended){
-                 sendShot();
-                 
+        }
+        else
+        {
+            if (velocity != 0 && !shotSended)
+            {
+                sendShot();
+
             }
-           
+
         }
     }
 
 
     public void sendShot()
     {
-       if (!uiblocker.BlockedByUI)
+        if (!uiblocker.BlockedByUI)
         {
             Debug.Log("Sending shot");
 
-            Character.Instance.sendShot(velocity,Character.Instance.arcArrow.angle);
+            Character.Instance.sendShot(velocity, Character.Instance.arcArrow.angle);
             velocity = 0;
             setFrame(0);
             Character.Instance.isShotting = false;
             shotSended = true;
         }
-        
+
     }
     private void setFrame(int frameIndex)
     {

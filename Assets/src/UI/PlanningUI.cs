@@ -102,7 +102,7 @@ public class PlanningUI : MonoBehaviour
     {
         draggingObject = g;
         savedParentTransform = g.transform.parent.transform;
-        draggingObject.transform.parent = this.transform;
+        draggingObject.transform.SetParent(this.transform);
         isDraggin = true;
     }
     public void dropObject()

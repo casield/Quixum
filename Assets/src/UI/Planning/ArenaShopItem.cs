@@ -34,20 +34,37 @@ public class ArenaShopItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         setSpaces();
         Sprite sprite = Resources.Load<Sprite>("Images/Arena/" + item.type);
         image = this.gameObject.GetComponent<Image>();
-        image.sprite = sprite;
-    }
 
+
+        image.sprite = sprite;
+
+        item.OnRemove += destroy;
+        if (item.position != null)
+        {
+            int xx = PlanningUI.Instance.planningBoard.getI((int)item.position.x, (int)item.position.y);
+            BoardRect rect = PlanningUI.Instance.planningBoard.boardRects[xx];
+            colorRects(rect, true);
+        }
+
+    }
     internal void destroy()
     {
-        colorRects(lastBoard, false);
-        Destroy(this.gameObject);
+        if (lastBoard != null)
+        {
+            colorRects(lastBoard, false);
+        }
 
+        Destroy(this.gameObject);
     }
 
     public void setBoardRect(BoardRect br)
     {
         this.boardRect = br;
         this.transform.position = this.boardRect.transform.position;
+        if (boardRect != null)
+        {
+            ((RectTransform)this.transform).sizeDelta = ((RectTransform)boardRect.transform).sizeDelta;
+        }
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -73,18 +90,20 @@ public class ArenaShopItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             if (rect != null)
             {
                 colorRects(rect, true);
-         
+
                 if (rectOnDrag != null && rectOnDrag != rect)
                 {
                     colorRects(rectOnDrag, false);
-                      rectOnDrag = rect;
-                }else{
+                    rectOnDrag = rect;
+                }
+                else
+                {
                     rectOnDrag = rect;
                     Debug.Log("one time");
                 }
 
 
-              
+
 
             }
         }
@@ -109,12 +128,12 @@ public class ArenaShopItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             {
                 if (isMine())
                 {
-                   
+
                     moveToPosition(rect);
                     updateState();
                     colorRects(rect, true);
                     rect.OnDrop(this);
-                     tryBuy();
+                    tryBuy();
                 }
                 else
                 {
@@ -163,28 +182,15 @@ public class ArenaShopItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         state.position.x = pos.x;
         state.position.y = pos.y;
 
+
     }
     private IEnumerator WaitBuyResponse(BoardRect rect)
     {
+        moveToPosition(rect);
         tryBuy();
+
+        rect.OnDrop(this);
         yield return new WaitForSeconds(.5f);
-
-        if (isMine())
-        {
-            moveToPosition(rect);
-            rect.OnDrop(this);
-
-            PlanningUI.Instance.planningBoard.droppedItems.Add(state.uID, this);
-            Debug.Log("Adding " + state.uID);
-
-
-            colorRects(rect, true);
-            tryBuy();
-        }
-        else
-        {
-            this.transform.SetParent( this.originalParent);
-        }
     }
 
 

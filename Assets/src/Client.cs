@@ -30,7 +30,7 @@ public class Client : MonoBehaviour
     void Awake()
     {
         ServerObjects = new GameObject("Server Objects");
-        
+
         Instance = this;
     }
 
@@ -84,14 +84,12 @@ public class Client : MonoBehaviour
                 this.room = await client.JoinById<GameState>(id);
                 name = this.room.Name;
 
-                Instance = this;
                 setListeners();
             }
         }
         else
         {
             this.room = await client.JoinById<GameState>(id);
-            Instance = this;
             setListeners();
         }
 
@@ -158,11 +156,10 @@ public class Client : MonoBehaviour
         if (value.sessionId == room.SessionId)
         {
             this.userState = value;
-        }
-        Instance = this;
-        foreach (UnityAction func in funcArray)
-        {
-            func();
+            foreach (UnityAction func in funcArray)
+            {
+                func();
+            }
         }
     }
     public void setListeners()
@@ -268,7 +265,16 @@ public class Client : MonoBehaviour
         if (ob.mesh != null)
         {
             UnityEngine.Object prefab = Resources.Load(ob.mesh); // Assets/Resources/Prefabs/prefab1.FBX
-            gameOb = (GameObject)Instantiate(prefab);
+            if (prefab == null)
+            {
+                gameOb = GameObject.CreatePrimitive(primitiveType);
+                Debug.Log("Couldnt find " + ob.mesh);
+            }
+            else
+            {
+                gameOb = (GameObject)Instantiate(prefab);
+            }
+
         }
         else
         {

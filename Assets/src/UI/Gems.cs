@@ -24,16 +24,15 @@ public class Gems : MonoBehaviour
     void Start()
     {
         Client.Instance.addReadyListener(init);
-
     }
 
     private void init()
     {
         //
         client = Client.Instance;
-      
-        client.userState.OnChange+=onUserChange;
-        
+
+        client.userState.OnChange += onUserChange;
+
 
     }
 
@@ -41,8 +40,9 @@ public class Gems : MonoBehaviour
     {
         foreach (var ch in changes)
         {
-            if(ch.Field == "gems"){
-                  setGems(int.Parse(ch.Value.ToString()));
+            if (ch.Field == "gems")
+            {
+                setGems(int.Parse(ch.Value.ToString()));
             }
         }
     }

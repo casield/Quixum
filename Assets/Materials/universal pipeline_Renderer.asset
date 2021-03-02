@@ -1,5 +1,24 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7049161993242707201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 926f1cc83d1c8b942b27c91bd27caa46, type: 3}
+  m_Name: NewBlit
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  settings:
+    Event: 550
+    blitMaterial: {fileID: 2100000, guid: 4ed5ecbbf33a2684e8f003776392fe4e, type: 2}
+    blitMaterialPassIndex: 0
+    destination: 0
+    textureId: _BlitPassTexture
 --- !u!114 &-2064948208247657412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52,9 +71,10 @@ MonoBehaviour:
   m_Name: universal pipeline_Renderer
   m_EditorClassIdentifier: 
   m_RendererFeatures:
+  - {fileID: -7049161993242707201}
   - {fileID: 8693839498339448143}
   - {fileID: -2064948208247657412}
-  m_RendererFeatureMap: 4f75c838f6b8a6783cacd18f8bd457e3
+  m_RendererFeatureMap: ff7a95e483582c9e4f75c838f6b8a6783cacd18f8bd457e3
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   shaders:
     blitPS: {fileID: 4800000, guid: c17132b1f77d20942aa75f8429c0f8bc, type: 3}
@@ -65,10 +85,10 @@ MonoBehaviour:
     fallbackErrorPS: {fileID: 4800000, guid: e6e9a19c3678ded42a3bc431ebef7dbd, type: 3}
   m_OpaqueLayerMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 4294967295
   m_TransparentLayerMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 4294967295
   m_DefaultStencilState:
     overrideStencilState: 0
     stencilReference: 0
@@ -99,7 +119,7 @@ MonoBehaviour:
         serializedVersion: 2
         m_Bits: 256
       PassNames: []
-    overrideMaterial: {fileID: 2100000, guid: 866eb6c267c7f4a44a19368518cd5a6d, type: 2}
+    overrideMaterial: {fileID: 2100000, guid: 64677af5a16f51a46a04ea5b85154ce9, type: 2}
     overrideMaterialPassIndex: 0
     overrideDepthState: 1
     depthCompareFunction: 5

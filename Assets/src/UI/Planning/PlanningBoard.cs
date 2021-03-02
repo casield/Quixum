@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,16 +8,17 @@ using UnityEngine.UI;
 public class PlanningBoard : MonoBehaviour
 {
     // Start is called before the first frame update
-    static int width = 14;
-    static int height = 7;
+    static int width = 17;
+    static int height = 9;
     int repeat = width * height;
     GameObject dragging;
     public List<BoardRect> boardRects = new List<BoardRect>();
-    public Dictionary<string,ArenaShopItem> droppedItems = new Dictionary<string, ArenaShopItem>();
+    public Dictionary<string, ArenaShopItem> droppedItems = new Dictionary<string, ArenaShopItem>();
     public Sprite rectSprite;
 
 
     RectTransform rectTransform;
+    GridLayoutGroup layout;
 
     void Start()
     {
@@ -32,6 +34,44 @@ public class PlanningBoard : MonoBehaviour
             rect.transform.SetParent(this.transform);
             boardRects.Add(br);
         }
+
+        Client.Instance.addReadyListener(init);
+    }
+
+    private void init()
+    {
+       Client.Instance.userState.board.OnAdd += onAddItem;
+       Client.Instance.userState.board.OnChange += onChangeItem;
+    }
+
+    private void onChangeItem(ArenaItemState value, string key)
+    {
+       BoardRect b = boardRects[getI((int)value.position.x,(int)value.position.y)];
+        ArenaShopItem itm = droppedItems[value.uID];
+        itm.setBoardRect(b);
+        Debug.Log("Item changed");
+    }
+
+    private void onAddItem(ArenaItemState value, string key)
+    {
+        GameObject shopItem = new GameObject();
+        shopItem.name = value.type;
+        Image img = shopItem.AddComponent<Image>();
+        ArenaShopItem itm = shopItem.AddComponent<ArenaShopItem>();
+        itm.Instantiate(value);
+        shopItem.transform.SetParent(layout.transform.parent);
+        droppedItems[value.uID] = itm;
+    
+        Debug.Log("Added item at "+value.position.x+" / "+value.position.y);
+        itm.setBoardRect(boardRects[getI((int)value.position.x,(int)value.position.y)]);
+        
+    }
+
+    private void OnGUI()
+    {
+        layout = GetComponent<GridLayoutGroup>();
+        float num = ((RectTransform)this.transform).rect.width / width;
+        layout.cellSize = new Vector2(num, num);
     }
 
 

@@ -20,10 +20,13 @@ public partial class UserState : Schema {
 	[Type(3, "number")]
 	public float energy = default(float);
 
-	[Type(4, "map", typeof(MapSchema<ArenaItemState>))]
-	public MapSchema<ArenaItemState> shop = new MapSchema<ArenaItemState>();
+	[Type(4, "number")]
+	public float wins = default(float);
 
 	[Type(5, "map", typeof(MapSchema<ArenaItemState>))]
+	public MapSchema<ArenaItemState> shop = new MapSchema<ArenaItemState>();
+
+	[Type(6, "map", typeof(MapSchema<ArenaItemState>))]
 	public MapSchema<ArenaItemState> board = new MapSchema<ArenaItemState>();
 }
 
