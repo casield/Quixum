@@ -15,9 +15,11 @@ public class SObject : MonoBehaviour
     private Vector3 newPosition;
     private Quaternion newQuaternion;
     public bool updateToFPS = false;
-    public float refreshTime = .8f;
+    public float refreshTime = .2f;
     private float lastTime = 0;
     public float imaginaryRT = 0;
+
+
 
     private bool isBox(){
         return state.GetType().Equals(typeof(BoxObject));

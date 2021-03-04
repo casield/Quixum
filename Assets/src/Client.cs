@@ -253,8 +253,12 @@ public class Client : MonoBehaviour
             gameOb.GetComponent<Renderer>().material = mMaterial;
         }
 
+        System.Type t = System.Type.GetType(ob.type);
+
         gameOb.transform.position = new Vector3(ob.position.x, ob.position.y, ob.position.z);
         gameOb.transform.rotation = new Quaternion(ob.quaternion.x, ob.quaternion.y, ob.quaternion.z, ob.quaternion.w);
+          /* System.Type t = System.Type.GetType(ob.type);
+           Debug.Log(t.ToString());*/
     }
 
     GameObject createObject(ObjectState ob)

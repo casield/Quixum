@@ -59,15 +59,17 @@ public class CameraController : MonoBehaviour
 
 
     // Update is called once per frame
-    void LateUpdate()
+    void FixedUpdate()
     {
         if (player != null && !initPlayer)
         {
 
-             Vector3 desiredPosition = player.transform.position + padding;
+             Vector3 desiredPosition = player.transform.position - ((player.transform.right*-1) * 200);
+             desiredPosition.y +=100;
             transform.position = desiredPosition;
-            transform.LookAt(player.transform);
             transform.parent = player.transform;
+            transform.LookAt(player.transform);
+            
             initPlayer = true;
             
         }

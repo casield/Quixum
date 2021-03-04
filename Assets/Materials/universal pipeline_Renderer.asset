@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Active: 1
   settings:
-    Event: 550
+    Event: 1000
     blitMaterial: {fileID: 2100000, guid: 4ed5ecbbf33a2684e8f003776392fe4e, type: 2}
     blitMaterialPassIndex: 0
     destination: 0
@@ -71,10 +71,10 @@ MonoBehaviour:
   m_Name: universal pipeline_Renderer
   m_EditorClassIdentifier: 
   m_RendererFeatures:
-  - {fileID: -7049161993242707201}
   - {fileID: 8693839498339448143}
   - {fileID: -2064948208247657412}
-  m_RendererFeatureMap: ff7a95e483582c9e4f75c838f6b8a6783cacd18f8bd457e3
+  - {fileID: -7049161993242707201}
+  m_RendererFeatureMap: 4f75c838f6b8a6783cacd18f8bd457e3ff7a95e483582c9e
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   shaders:
     blitPS: {fileID: 4800000, guid: c17132b1f77d20942aa75f8429c0f8bc, type: 3}

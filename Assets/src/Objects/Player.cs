@@ -15,8 +15,15 @@ public class Player : MonoBehaviour, ConnectedObject
 
     void Start()
     {
-
+        
         animator = GetComponent<Animator>();
+        GetComponent<SObject>().refreshTime = .1f;
+        setNormalSize();
+    }
+
+    void setNormalSize()
+    {
+        this.transform.localScale = new Vector3(2, 2, 2);
     }
     public void onMessage(ObjectMessage m)
     {
