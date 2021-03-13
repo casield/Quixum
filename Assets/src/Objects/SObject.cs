@@ -15,7 +15,7 @@ public class SObject : MonoBehaviour
     private Vector3 newPosition;
     private Quaternion newQuaternion;
     public bool updateToFPS = false;
-    public float refreshTime = .2f;
+    public float refreshTime = 1f;
     private float lastTime = 0;
     public float imaginaryRT = 0;
 
@@ -38,8 +38,7 @@ public class SObject : MonoBehaviour
     private void onBoxSizeChange(List<DataChange> changes)
     {
         BoxObject bb = (BoxObject) state;
-        this.transform.localScale = new Vector3(bb.halfSize.x*2,bb.halfSize.y*2,bb.halfSize.z*2);
-        print(state.type+ " / "+changes.Count);
+        this.transform.localScale = new Vector3(bb.halfSize.x,bb.halfSize.y,bb.halfSize.z);
         updateTime();
     }
 

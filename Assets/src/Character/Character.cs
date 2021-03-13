@@ -35,13 +35,16 @@ public class Character : MonoBehaviour
     private GameObject lookAt;
 
     MoveMessage message = new MoveMessage();
+    MoveMessage jumpmessage = new MoveMessage();
     bool sendStop = false;
 
     public ArcArrow arcArrow;
     private bool movingPad = false;
     private bool sendJump = false;
 
-    public Player player;
+    public Player2 player;
+
+    public Material defaultMaterial;
 
 
 
@@ -100,8 +103,11 @@ public class Character : MonoBehaviour
             {
                 /*message.rotX = camara.transform.forward.x;
                 message.rotZ = camara.transform.forward.z;*/
-                message.uID = client.room.SessionId;
-                await client.room.Send("move", message);
+                if(player != null){
+                     message.uID = player.state.uID;
+                    await client.room.Send("move", message); 
+                }
+              
             }
 
         }
@@ -129,14 +135,15 @@ public class Character : MonoBehaviour
     }
     private async void jumpControl()
     {
-       if(inputControl.Normal.Jump.phase == InputActionPhase.Started){
-          await this.client.room.Send("jump",1);
+       if(inputControl.Normal.Jump.phase == InputActionPhase.Started ){
+           jumpmessage.uID = Character.Instance.player.state.uID;
+          await this.client.room.Send("jump",jumpmessage);
           this.sendJump = true;
        }
-       if(inputControl.Normal.Jump.phase == InputActionPhase.Waiting && sendJump){
-          await this.client.room.Send("jump",0);
+      /* if(inputControl.Normal.Jump.phase == InputActionPhase.Waiting && sendJump){
+          await this.client.room.Send("jump",Character.Instance.player.state.owner);
           sendJump = false;
-       }
+       }*/
 
       // Debug.Log(inputControl.Normal.Jump.phase);
     }
@@ -159,6 +166,7 @@ public class Character : MonoBehaviour
         if (!uiblocker.BlockedByUI)
         {            
             ShotMessage sm = new ShotMessage();
+            
             sm.force = force;
             await client.room.Send("shoot", sm);
         }
@@ -171,7 +179,7 @@ public class Character : MonoBehaviour
             message.x = 0;
             message.y = 0;
             sendMoveMessage();
-           // Debug.Log("Sending stop");
+            Debug.Log("Sending stop");
         }
 
        jumpControl();

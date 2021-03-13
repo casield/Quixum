@@ -18,6 +18,7 @@ public class RotationController : MonoBehaviour, IDragHandler, IBeginDragHandler
     public Image startSprite, fingerSprite;
     Finger activeFinger;
 
+        MoveMessage rotateMessage = new MoveMessage();
     private void Awake()
     {
         Client.Instance.addReadyListener(init);
@@ -64,10 +65,14 @@ public class RotationController : MonoBehaviour, IDragHandler, IBeginDragHandler
         if (client != null)
         {
             Vector2 delta = eventData;
-            V3 v3 = new V3();
+           /* V3 v3 = new V3();
             v3.x = (delta.x);
-            v3.y = 0;
-            await client.room.Send("rotatePlayer", v3);
+            v3.y = 0;*/
+            rotateMessage.uID = Character.Instance.player.state.uID;
+            rotateMessage.x = delta.x;
+            rotateMessage.y = 0;
+
+            await client.room.Send("rotatePlayer", rotateMessage);
         }
     }
     

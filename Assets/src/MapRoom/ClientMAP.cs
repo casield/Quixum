@@ -57,18 +57,16 @@ public class ClientMAP : MonoBehaviour
         ObjectDesigner[] od = mapGO.GetComponentsInChildren<ObjectDesigner>();
         for (int i = 0; i < od.Length; i++)
         {
-            ObjectDesigner element = od[i];
 
-            Vector3 scale = element.transform.localScale;
-            if (scale.x < 0 || scale.y < 0 || scale.z < 0)
+            ObjectDesigner element = od[i];
+            if (element.isActiveAndEnabled && element.gameObject.activeSelf)
             {
-                Debug.Log(element.transform.localScale);
-                Debug.Log(element.name);
-            }
-            if(element.gameObject.activeSelf){
+                //element.gameObject.transform.localScale.Scale(new Vector3(2, 2, 2));
                 objects.Add(element.toJson());
+
             }
-            
+
+
         }
         StartPositionDesigner startPositions = mapGO.GetComponentInChildren<StartPositionDesigner>();
         Debug.Log(startPositions);
@@ -123,7 +121,7 @@ public class ClientMAP : MonoBehaviour
         await this.room.Send("objs", objects);
         Debug.Log(objects.Count + " objects sended");
     }
-       async void sendStartPositions()
+    async void sendStartPositions()
     {
         await this.room.Send("startPositions", startPositionsArray);
         Debug.Log(startPositionsArray.Count + " positions sended");

@@ -6,7 +6,7 @@ using UnityEngine;
 public class ObjectDesigner : MonoBehaviour
 {
     // Start is called before the first frame update
-    public string type = "box";
+    public string type = "QuixBox";
     public string uID;
     public string material = "normalMaterial";
     public bool instantiate = false;
@@ -39,9 +39,9 @@ public class ObjectDesigner : MonoBehaviour
             p = new BoxObject();
             BoxObject bo = (BoxObject)p;
             bo.halfSize = new V3();
-            bo.halfSize.x = gameObject.transform.localScale.x / 2;
-            bo.halfSize.y = gameObject.transform.localScale.y / 2;
-            bo.halfSize.z = gameObject.transform.localScale.z / 2;
+            bo.halfSize.x = gameObject.transform.localScale.x ;
+            bo.halfSize.y = gameObject.transform.localScale.y ;
+            bo.halfSize.z = gameObject.transform.localScale.z ;
 
 
         }

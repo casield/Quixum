@@ -17,8 +17,8 @@ public partial class ObjectState : Schema {
 	[Type(2, "string")]
 	public string type = default(string);
 
-	[Type(3, "ref", typeof(UserState))]
-	public UserState owner = new UserState();
+	[Type(3, "string")]
+	public string owner = default(string);
 
 	[Type(4, "string")]
 	public string uID = default(string);

@@ -24,7 +24,7 @@ public class Client : MonoBehaviour
     public PlayerInput playerInput;
     public static Client Instance { get; private set; }
     public bool localhost;
-    public static string serverIP = "3.13.63.39";
+    public static string serverIP = "3.133.8.98";
     public UserState userState;
 
     void Awake()
@@ -124,15 +124,17 @@ public class Client : MonoBehaviour
         });
         room.OnMessage<string>("error", onErrorMessage);
         room.OnMessage<string>("info", onInfoMessage);
-        room.OnMessage<ObjectMessage>("objectM", onObjectMessage);
+        room.OnMessage<ObjectMessage>("objectMessage", onObjectMessage);
 
 
     }
 
     private void onObjectMessage(ObjectMessage obj)
     {
+       
         if (objects.ContainsKey(obj.uID))
         {
+        
             objects[obj.uID].onMessage(obj);
         }
         else
@@ -219,46 +221,21 @@ public class Client : MonoBehaviour
 
     private void setUpGameObject(ObjectState ob, GameObject gameOb, SObject serverObject)
     {
-        Material mMaterial = material;
+
         gameOb.name = ob.type + " [" + ob.uID + "]";
-        if (ob.owner.sessionId != "")
+        if (ob.owner != "")
         {
-            gameOb.name += "=> " + ob.owner.sessionId;
+            gameOb.name += "=> " + ob.owner;
         }
-        if (ob.type == "GolfBall2")
+        System.Type t = System.Type.GetType(ob.type + ",Assembly-CSharp");
+
+        if (t != null)
         {
-            Debug.Log("Creating GolfBall");
-            GolfBall objComp = gameOb.AddComponent<GolfBall>();
-            gameOb.layer = 8;
-            objComp.setState(ob);
-            mMaterial = BallMaterial;
-            this.golfballs.Add(ob.owner.sessionId, serverObject);
-        }
-        if (ob.type == "Player2")
-        {
-            Debug.Log("Creating player " + ob.owner.sessionId);
-            Player objComp = gameOb.AddComponent<Player>();
-            gameOb.layer = 8;
-            objComp.setState(ob);
-        }
-        if (ob.type == "TurnBox")
-        {
-            Debug.Log("Creating TurnBox ");
-            TurnBox objComp = gameOb.AddComponent<TurnBox>();
-            gameOb.layer = 8;
-            objComp.setState(ob);
-        }
-        if (ob.mesh == null)
-        {
-            gameOb.GetComponent<Renderer>().material = mMaterial;
+            Debug.Log(t.ToString());
+           ConnectedObject c = (ConnectedObject) gameOb.AddComponent(t);
+           c.setState(ob);
         }
 
-        System.Type t = System.Type.GetType(ob.type);
-
-        gameOb.transform.position = new Vector3(ob.position.x, ob.position.y, ob.position.z);
-        gameOb.transform.rotation = new Quaternion(ob.quaternion.x, ob.quaternion.y, ob.quaternion.z, ob.quaternion.w);
-          /* System.Type t = System.Type.GetType(ob.type);
-           Debug.Log(t.ToString());*/
     }
 
     GameObject createObject(ObjectState ob)
@@ -284,7 +261,7 @@ public class Client : MonoBehaviour
         {
             gameOb = GameObject.CreatePrimitive(primitiveType);
         }
-        gameOb.name = "Object (" + ob.uID + ")";
+        gameOb.name = "Object (" + ob.uID + ")" + ob.GetType().ToString();
         Vector3 size;
         if (isBox)
         {
@@ -294,10 +271,10 @@ public class Client : MonoBehaviour
         else
         {
             SphereObject boxState = (SphereObject)ob;
-            size = new Vector3(boxState.radius, boxState.radius, boxState.radius);
+            size = new Vector3(boxState.radius*2, boxState.radius*2, boxState.radius*2);
         }
 
-        size.Scale(new Vector3(2, 2, 2));
+        //size.Scale(new Vector3(2, 2, 2));
 
         gameOb.transform.localScale = size;
         gameOb.transform.parent = ServerObjects.transform;

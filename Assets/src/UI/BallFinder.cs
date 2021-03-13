@@ -9,6 +9,8 @@ public class BallFinder : MonoBehaviour
     SObject golfBall;
     private Character character;
     private Client client;
+
+    private Finder finder;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +18,8 @@ public class BallFinder : MonoBehaviour
         sprite = GetComponent<Sprite>();
 
         Client.Instance.addReadyListener(init);
+
+        finder = GetComponent<Finder>();
     }
 
     private void init()
@@ -28,28 +32,17 @@ public class BallFinder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (golfBall != null)
-        {
-            Vector3 pos = CameraController.Instance.dCamera.WorldToScreenPoint(golfBall.gameObject.transform.position);
-            Vector3 clampedPoint = new Vector3(
-                  Mathf.Clamp(pos.x, 0, Screen.width),
-                  Mathf.Clamp(pos.z > 0 ? pos.y : -pos.y, 0, Screen.height), 0);
-            transform.position = clampedPoint;
+      
 
-        }
-        else
-        {
+        if(finder.findObject == null){
             if (client != null)
             {
                 if (client.golfballs != null && client.golfballs.ContainsKey(client.room.SessionId))
                 {
-                    golfBall = client.golfballs[Client.Instance.room.SessionId];
+                    finder.findObject = client.golfballs[Client.Instance.room.SessionId].gameObject;
                 }
 
             }
-
-
-
         }
     }
 }
