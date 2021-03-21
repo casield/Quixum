@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Controls;
-using UnityEngine.InputSystem.Interactions;
 using static UnityEngine.InputSystem.InputAction;
 
 public class Character : MonoBehaviour
@@ -46,6 +44,8 @@ public class Character : MonoBehaviour
 
     public Material defaultMaterial;
 
+    public Vector2 movm = new Vector2();
+
 
 
 
@@ -60,7 +60,15 @@ public class Character : MonoBehaviour
 
         arcArrow = GetComponentInChildren<ArcArrow>();
 
-        inputControl.Normal.Use_Power1.performed+=onUserPower1;
+        inputControl.Normal.Use_Power1.performed += onUserPower1;
+
+        // inputControl.Normal.Move.started += onMove;
+        inputControl.Normal.Move2.canceled += OnMove;
+        inputControl.Normal.Move2.started += OnMove;
+
+        inputControl.Normal.Move2.performed += OnMove;
+
+        Debug.Log("Created character.cs");
 
     }
 
@@ -79,20 +87,20 @@ public class Character : MonoBehaviour
         }
     }
 
-    public void onMove(CallbackContext ctx)
+    public void OnMove(CallbackContext ctx)
     {
-        Vector2 v = ctx.ReadValue<Vector2>();
 
-        if (ctx.performed)
-        {
-            sendStop = false;
+        movm = ctx.ReadValue<Vector2>();
+       
+            Vector2 v = ctx.ReadValue<Vector2>();
             message.x = Convert.ToInt16(v.x * 100f);
             message.y = Convert.ToInt16(v.y * 100f);
-            //message.y = float.Parse(v.y.ToString("0.00"));
 
             sendMoveMessage();
-            movingPad = true;
-        }
+
+
+            Debug.Log(v);
+
     }
 
     async void sendMoveMessage()
@@ -101,13 +109,13 @@ public class Character : MonoBehaviour
         {
             if (client.room != null)
             {
-                /*message.rotX = camara.transform.forward.x;
-                message.rotZ = camara.transform.forward.z;*/
-                if(player != null){
-                     message.uID = player.state.uID;
-                    await client.room.Send("move", message); 
+
+                if (player != null)
+                {
+                    message.uID = player.state.uID;
+                    await client.room.Send("move", message);
                 }
-              
+
             }
 
         }
@@ -128,24 +136,19 @@ public class Character : MonoBehaviour
     void init()
     {
         if (client.golfballs.Count > 0)
-        { 
+        {
             hasInit = true;
         }
 
     }
     private async void jumpControl()
     {
-       if(inputControl.Normal.Jump.phase == InputActionPhase.Started ){
-           jumpmessage.uID = Character.Instance.player.state.uID;
-          await this.client.room.Send("jump",jumpmessage);
-          this.sendJump = true;
-       }
-      /* if(inputControl.Normal.Jump.phase == InputActionPhase.Waiting && sendJump){
-          await this.client.room.Send("jump",Character.Instance.player.state.owner);
-          sendJump = false;
-       }*/
-
-      // Debug.Log(inputControl.Normal.Jump.phase);
+        if (inputControl.Normal.Jump.phase == InputActionPhase.Started)
+        {
+            jumpmessage.uID = Character.Instance.player.state.uID;
+            await this.client.room.Send("jump", jumpmessage);
+            this.sendJump = true;
+        }
     }
 
     public void removeListeners()
@@ -164,25 +167,17 @@ public class Character : MonoBehaviour
     {
         angle = 0;
         if (!uiblocker.BlockedByUI)
-        {            
+        {
             ShotMessage sm = new ShotMessage();
-            
+
             sm.force = force;
             await client.room.Send("shoot", sm);
         }
     }
     void Update()
     {
-        if (inputControl.Normal.Move.ReadValue<Vector2>() == Vector2.zero && !sendStop)
-        {
-            sendStop = true;
-            message.x = 0;
-            message.y = 0;
-            sendMoveMessage();
-            Debug.Log("Sending stop");
-        }
 
-       jumpControl();
+        jumpControl();
 
 
     }

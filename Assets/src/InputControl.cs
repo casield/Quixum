@@ -83,14 +83,6 @@ public class @InputControl : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Move"",
-                    ""type"": ""Value"",
-                    ""id"": ""a3fecbef-23cb-4985-b7fc-45f1533eb714"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
                     ""name"": ""Jump"",
                     ""type"": ""Button"",
                     ""id"": ""3fe92fe0-84bf-434c-8502-1098720de2ce"",
@@ -103,6 +95,14 @@ public class @InputControl : IInputActionCollection, IDisposable
                     ""type"": ""Button"",
                     ""id"": ""0e82ea01-b4c8-4ff7-b786-ec5d8471a0a7"",
                     ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Move2"",
+                    ""type"": ""Value"",
+                    ""id"": ""6f83e1db-a13b-4b37-9599-fe2122fd25db"",
+                    ""expectedControlType"": ""Dpad"",
                     ""processors"": """",
                     ""interactions"": """"
                 }
@@ -275,17 +275,6 @@ public class @InputControl : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""6b5ef546-a666-442f-9e76-2d15e3b55a04"",
-                    ""path"": ""<Joystick>/stick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""PC;Touch;Joystick"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""fbae7d84-e348-491f-b888-8d0fb008707e"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
@@ -305,6 +294,61 @@ public class @InputControl : IInputActionCollection, IDisposable
                     ""action"": ""Use_Power1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""d8a592ce-9b37-482f-b150-e7f114562ddc"",
+                    ""path"": ""2DVector(mode=2)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move2"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""c743282c-20bc-424e-b122-72eac61edde0"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Move2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""dba8d136-a416-41bf-b288-7f68e44eaef1"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Move2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""645cdb0f-bad3-4c4c-9d50-04dbe2b640cf"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Move2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""7786f33d-efff-4eaa-979d-ccc46866ca17"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Move2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -360,9 +404,9 @@ public class @InputControl : IInputActionCollection, IDisposable
         m_Normal_DoubleTap = m_Normal.FindAction("DoubleTap", throwIfNotFound: true);
         m_Normal_Zoom = m_Normal.FindAction("Zoom", throwIfNotFound: true);
         m_Normal_Shoot = m_Normal.FindAction("Shoot", throwIfNotFound: true);
-        m_Normal_Move = m_Normal.FindAction("Move", throwIfNotFound: true);
         m_Normal_Jump = m_Normal.FindAction("Jump", throwIfNotFound: true);
         m_Normal_Use_Power1 = m_Normal.FindAction("Use_Power1", throwIfNotFound: true);
+        m_Normal_Move2 = m_Normal.FindAction("Move2", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -420,9 +464,9 @@ public class @InputControl : IInputActionCollection, IDisposable
     private readonly InputAction m_Normal_DoubleTap;
     private readonly InputAction m_Normal_Zoom;
     private readonly InputAction m_Normal_Shoot;
-    private readonly InputAction m_Normal_Move;
     private readonly InputAction m_Normal_Jump;
     private readonly InputAction m_Normal_Use_Power1;
+    private readonly InputAction m_Normal_Move2;
     public struct NormalActions
     {
         private @InputControl m_Wrapper;
@@ -435,9 +479,9 @@ public class @InputControl : IInputActionCollection, IDisposable
         public InputAction @DoubleTap => m_Wrapper.m_Normal_DoubleTap;
         public InputAction @Zoom => m_Wrapper.m_Normal_Zoom;
         public InputAction @Shoot => m_Wrapper.m_Normal_Shoot;
-        public InputAction @Move => m_Wrapper.m_Normal_Move;
         public InputAction @Jump => m_Wrapper.m_Normal_Jump;
         public InputAction @Use_Power1 => m_Wrapper.m_Normal_Use_Power1;
+        public InputAction @Move2 => m_Wrapper.m_Normal_Move2;
         public InputActionMap Get() { return m_Wrapper.m_Normal; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -471,15 +515,15 @@ public class @InputControl : IInputActionCollection, IDisposable
                 @Shoot.started -= m_Wrapper.m_NormalActionsCallbackInterface.OnShoot;
                 @Shoot.performed -= m_Wrapper.m_NormalActionsCallbackInterface.OnShoot;
                 @Shoot.canceled -= m_Wrapper.m_NormalActionsCallbackInterface.OnShoot;
-                @Move.started -= m_Wrapper.m_NormalActionsCallbackInterface.OnMove;
-                @Move.performed -= m_Wrapper.m_NormalActionsCallbackInterface.OnMove;
-                @Move.canceled -= m_Wrapper.m_NormalActionsCallbackInterface.OnMove;
                 @Jump.started -= m_Wrapper.m_NormalActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_NormalActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_NormalActionsCallbackInterface.OnJump;
                 @Use_Power1.started -= m_Wrapper.m_NormalActionsCallbackInterface.OnUse_Power1;
                 @Use_Power1.performed -= m_Wrapper.m_NormalActionsCallbackInterface.OnUse_Power1;
                 @Use_Power1.canceled -= m_Wrapper.m_NormalActionsCallbackInterface.OnUse_Power1;
+                @Move2.started -= m_Wrapper.m_NormalActionsCallbackInterface.OnMove2;
+                @Move2.performed -= m_Wrapper.m_NormalActionsCallbackInterface.OnMove2;
+                @Move2.canceled -= m_Wrapper.m_NormalActionsCallbackInterface.OnMove2;
             }
             m_Wrapper.m_NormalActionsCallbackInterface = instance;
             if (instance != null)
@@ -508,15 +552,15 @@ public class @InputControl : IInputActionCollection, IDisposable
                 @Shoot.started += instance.OnShoot;
                 @Shoot.performed += instance.OnShoot;
                 @Shoot.canceled += instance.OnShoot;
-                @Move.started += instance.OnMove;
-                @Move.performed += instance.OnMove;
-                @Move.canceled += instance.OnMove;
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
                 @Use_Power1.started += instance.OnUse_Power1;
                 @Use_Power1.performed += instance.OnUse_Power1;
                 @Use_Power1.canceled += instance.OnUse_Power1;
+                @Move2.started += instance.OnMove2;
+                @Move2.performed += instance.OnMove2;
+                @Move2.canceled += instance.OnMove2;
             }
         }
     }
@@ -558,8 +602,8 @@ public class @InputControl : IInputActionCollection, IDisposable
         void OnDoubleTap(InputAction.CallbackContext context);
         void OnZoom(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
-        void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnUse_Power1(InputAction.CallbackContext context);
+        void OnMove2(InputAction.CallbackContext context);
     }
 }

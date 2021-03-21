@@ -1338,7 +1338,6 @@ GameObject:
   - component: {fileID: 189951348}
   - component: {fileID: 189951351}
   - component: {fileID: 189951350}
-  - component: {fileID: 189951352}
   - component: {fileID: 189951349}
   m_Layer: 0
   m_Name: Dot
@@ -1373,7 +1372,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 189951347}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9d677f1681015749b15c436eec6d880, type: 3}
   m_Name: 
@@ -1417,19 +1416,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 189951347}
   m_CullTransparentMesh: 0
---- !u!114 &189951352
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 189951347}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3359ab6080c86ce49b2e3c4069b669ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ControlPath: <Joystick>/stick
 --- !u!1 &207009979
 GameObject:
   m_ObjectHideFlags: 0
@@ -6041,7 +6027,7 @@ MonoBehaviour:
   WallMaterial: {fileID: 2100000, guid: 4c08e422c163fa2458d1b42309106505, type: 2}
   BallMaterial: {fileID: 2100000, guid: f03d2c34bf0f9ed4c873583d8b890e07, type: 2}
   ServerObjects: {fileID: 0}
-  playerInput: {fileID: 1370752809}
+  playerInput: {fileID: 0}
   localhost: 1
 --- !u!4 &1004446867
 Transform:
@@ -6069,7 +6055,6 @@ GameObject:
   - component: {fileID: 1010974390}
   - component: {fileID: 1010974389}
   - component: {fileID: 1010974388}
-  - component: {fileID: 1010974391}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -6166,18 +6151,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1010974386}
   m_Mesh: {fileID: 365268262984141428, guid: d87b8fed2b5b6bf4a94a17f351268c2c, type: 3}
---- !u!114 &1010974391
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1010974386}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01fd81efa798cfb46b02014209d6e74a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1012348649
 GameObject:
   m_ObjectHideFlags: 0
@@ -7446,9 +7419,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1370752810}
   - component: {fileID: 1370752812}
-  - component: {fileID: 1370752811}
-  - component: {fileID: 1370752809}
   - component: {fileID: 1370752813}
+  - component: {fileID: 1370752809}
   m_Layer: 0
   m_Name: PlayerInput
   m_TagString: Untagged
@@ -7457,161 +7429,6 @@ GameObject:
   m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!114 &1370752809
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1370752808}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 6d4044437a979754591bd51d2de1705b,
-    type: 3}
-  m_NotificationBehavior: 2
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2115384386}
-        m_MethodName: onClick
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: cc52a894-1f5c-4e07-80b9-554189f2be11
-    m_ActionName: Normal/Click[/Mouse/leftButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 54c977c2-c6d7-4aea-8cc5-754eff88c589
-    m_ActionName: Normal/Drag[/Mouse/delta]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1010974388}
-        m_MethodName: stopBall
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: d546d233-ca01-4941-90e3-5432b02e4375
-    m_ActionName: Normal/Stop Ball[/Keyboard/space]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 381d6a11-24c6-4d3b-bb90-ddf833caa51f
-    m_ActionName: Normal/SendMessage[/Keyboard/enter]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2115384386}
-        m_MethodName: onMouseMove
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 95ddf023-1e6f-4fcb-9069-ebf104e79e2e
-    m_ActionName: Normal/Position[/Mouse/position]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1010974391}
-        m_MethodName: onClick
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 6401b954-b5ef-4827-a19f-02bc4219e5be
-    m_ActionName: Normal/DoubleTap[/Mouse/leftButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 8f49f871-0739-44bc-943d-4166ddd91dfb
-    m_ActionName: Normal/Zoom[/Mouse/scroll/y]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: onShoot
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 0f6340d7-d491-4b15-bf54-21d97c91d2dc
-    m_ActionName: Normal/Shoot[/Keyboard/d,/Keyboard/a]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1010974388}
-        m_MethodName: onMove
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: a3fecbef-23cb-4985-b7fc-45f1533eb714
-    m_ActionName: Normal/Move
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 3fe92fe0-84bf-434c-8502-1098720de2ce
-    m_ActionName: Normal/Jump[/Keyboard/space]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 0e82ea01-b4c8-4ff7-b786-ec5d8471a0a7
-    m_ActionName: Normal/Use_Power1[/Keyboard/e]
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Normal
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
---- !u!4 &1370752810
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1370752808}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 24.599998, z: 29.1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1370752811
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7648,7 +7465,21 @@ MonoBehaviour:
   m_TrackedDeviceOrientationAction: {fileID: 1025543830046995696, guid: ca9f5fa95ffab41fb9a615ab714db018,
     type: 3}
   m_DeselectOnBackgroundClick: 1
-  m_PointerBehavior: 2
+  m_PointerBehavior: 0
+--- !u!4 &1370752810
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1370752808}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 24.599998, z: 29.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1370752812
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -70,14 +70,6 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Move",
-                    "type": "Value",
-                    "id": "a3fecbef-23cb-4985-b7fc-45f1533eb714",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
                     "name": "Jump",
                     "type": "Button",
                     "id": "3fe92fe0-84bf-434c-8502-1098720de2ce",
@@ -90,6 +82,14 @@
                     "type": "Button",
                     "id": "0e82ea01-b4c8-4ff7-b786-ec5d8471a0a7",
                     "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Move2",
+                    "type": "Value",
+                    "id": "6f83e1db-a13b-4b37-9599-fe2122fd25db",
+                    "expectedControlType": "Dpad",
                     "processors": "",
                     "interactions": ""
                 }
@@ -262,17 +262,6 @@
                 },
                 {
                     "name": "",
-                    "id": "6b5ef546-a666-442f-9e76-2d15e3b55a04",
-                    "path": "<Joystick>/stick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "PC;Touch;Joystick",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "fbae7d84-e348-491f-b888-8d0fb008707e",
                     "path": "<Keyboard>/space",
                     "interactions": "",
@@ -292,6 +281,61 @@
                     "action": "Use_Power1",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "2D Vector",
+                    "id": "d8a592ce-9b37-482f-b150-e7f114562ddc",
+                    "path": "2DVector(mode=2)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move2",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "c743282c-20bc-424e-b122-72eac61edde0",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "Move2",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "dba8d136-a416-41bf-b288-7f68e44eaef1",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "Move2",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "645cdb0f-bad3-4c4c-9d50-04dbe2b640cf",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "Move2",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "7786f33d-efff-4eaa-979d-ccc46866ca17",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "Move2",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }
