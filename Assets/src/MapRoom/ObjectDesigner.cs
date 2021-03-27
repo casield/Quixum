@@ -13,6 +13,8 @@ public class ObjectDesigner : MonoBehaviour
     public string shape = "box";
     public float mass = 0;
     public string mesh;
+    public bool isMesh = false;
+    
     void Start()
     {
 
@@ -54,13 +56,6 @@ public class ObjectDesigner : MonoBehaviour
 
 
         }
-        if (type == "ballspawn")
-        {
-            p = new SphereObject();
-            SphereObject bo = (SphereObject)p;
-            bo.radius = 5;
-        }
-
         p.quaternion.x = gameObject.transform.rotation.x;
         p.quaternion.y = gameObject.transform.rotation.y;
         p.quaternion.z = gameObject.transform.rotation.z;
@@ -75,6 +70,7 @@ public class ObjectDesigner : MonoBehaviour
         p.instantiate = instantiate;
         p.mass = mass;
         p.mesh = mesh;
+        p.isMesh = isMesh;
 
         return p;
 

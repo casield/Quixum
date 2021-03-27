@@ -8,7 +8,7 @@
 using Colyseus.Schema;
 
 public partial class BoxObject : ObjectState {
-	[Type(9, "ref", typeof(V3))]
+	[Type(10, "ref", typeof(V3))]
 	public V3 halfSize = new V3();
 }
 

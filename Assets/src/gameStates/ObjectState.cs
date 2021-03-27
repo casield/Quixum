@@ -34,5 +34,8 @@ public partial class ObjectState : Schema {
 
 	[Type(8, "string")]
 	public string mesh = default(string);
+
+	[Type(9, "boolean")]
+	public bool isMesh = default(bool);
 }
 

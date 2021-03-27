@@ -16,11 +16,13 @@ public class RotationController : MonoBehaviour, IDragHandler, IBeginDragHandler
     private InputControl control;
 
     public Image startSprite, fingerSprite;
+    public static RotationController Instance;
     Finger activeFinger;
 
-        MoveMessage rotateMessage = new MoveMessage();
+    public MoveMessage rotateMessage = new MoveMessage();
     private void Awake()
     {
+        Instance = this;
         Client.Instance.addReadyListener(init);
         startSprite.gameObject.SetActive(false);
         fingerSprite.gameObject.SetActive(false);
@@ -46,7 +48,9 @@ public class RotationController : MonoBehaviour, IDragHandler, IBeginDragHandler
     {
         isDragging = false;
         sendData(Vector2.zero);
+        actualSendData();
         changeSpritesVisibility(false);
+        CameraController.Instance.SetFollowObjectToPlayer();
     }
 
     private void init()
@@ -59,23 +63,28 @@ public class RotationController : MonoBehaviour, IDragHandler, IBeginDragHandler
         fingerSprite.gameObject.SetActive(active);
     }
 
-    public async void sendData(Vector2 eventData)
+    public void sendData(Vector2 eventData)
     {
 
-        if (client != null)
+        if (client != null && Character.Instance.player != null)
         {
             Vector2 delta = eventData;
-           /* V3 v3 = new V3();
-            v3.x = (delta.x);
-            v3.y = 0;*/
             rotateMessage.uID = Character.Instance.player.state.uID;
             rotateMessage.x = delta.x;
-            rotateMessage.y = 0;
+            rotateMessage.y = delta.y;
 
+
+        }
+    }
+
+    private async void actualSendData()
+    {
+        if (client != null)
+        {
             await client.room.Send("rotatePlayer", rotateMessage);
         }
     }
-    
+
     private void onFingerUp(Finger obj)
     {
         if (activeFinger == obj)
@@ -102,7 +111,8 @@ public class RotationController : MonoBehaviour, IDragHandler, IBeginDragHandler
             drag(obj.screenPosition);
         }
 
-    }    public void OnEndDrag(PointerEventData eventData)
+    }
+    public void OnEndDrag(PointerEventData eventData)
     {
         dragEnd();
     }
@@ -115,5 +125,14 @@ public class RotationController : MonoBehaviour, IDragHandler, IBeginDragHandler
     public void OnDrag(PointerEventData eventData)
     {
         drag(eventData.position);
+    }
+
+    private void FixedUpdate()
+    {
+        if (rotateMessage.x != 0 || rotateMessage.y != 0)
+        {
+            CameraController.Instance.MoveCameraY(rotateMessage.y);
+            actualSendData();
+        }
     }
 }

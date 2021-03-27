@@ -13,12 +13,14 @@ public class Player2 : MonoBehaviour, ConnectedObject
     private DrawLineMessage json;
     private Color color;
     public ObjectState state;
+    public SObject sObject;
 
     void Start()
     {
         
         animator = GetComponent<Animator>();
-        GetComponent<SObject>().refreshTime = 1f;
+        sObject = GetComponent<SObject>();
+        sObject.refreshTime = .5f;
         setNormalSize(); 
     }
 
@@ -28,7 +30,6 @@ public class Player2 : MonoBehaviour, ConnectedObject
     }
     public void onMessage(ObjectMessage m)
     {
-         Debug.Log("TOOOONS QUE PEDO"+m.message);
         if (animator != null)
         {
                 

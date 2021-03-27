@@ -102,7 +102,7 @@ public class @InputControl : IInputActionCollection, IDisposable
                     ""name"": ""Move2"",
                     ""type"": ""Value"",
                     ""id"": ""6f83e1db-a13b-4b37-9599-fe2122fd25db"",
-                    ""expectedControlType"": ""Dpad"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
                 }
@@ -349,6 +349,17 @@ public class @InputControl : IInputActionCollection, IDisposable
                     ""action"": ""Move2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a25248ee-ada8-4960-a74f-6a87dc4f3a56"",
+                    ""path"": ""<Joystick>/stick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }

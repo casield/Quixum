@@ -5,7 +5,7 @@ using UnityEngine;
 public class SObject : MonoBehaviour
 {
     public ObjectState state;
-    
+
     public string uID;
     public string type;
     public string mesh;
@@ -21,7 +21,8 @@ public class SObject : MonoBehaviour
 
 
 
-    private bool isBox(){
+    private bool isBox()
+    {
         return state.GetType().Equals(typeof(BoxObject));
     }
     public void setState(ObjectState state)
@@ -29,16 +30,18 @@ public class SObject : MonoBehaviour
         this.state = state;
         state.position.OnChange += onPositionChange;
         state.quaternion.OnChange += onQuaternionChange;
-        if(isBox()){
-            ((BoxObject) state).halfSize.OnChange+=onBoxSizeChange;
+        if (isBox())
+        {
+            ((BoxObject)state).halfSize.OnChange += onBoxSizeChange;
         }
+
         updateInGui();
     }
 
     private void onBoxSizeChange(List<DataChange> changes)
     {
-        BoxObject bb = (BoxObject) state;
-        this.transform.localScale = new Vector3(bb.halfSize.x,bb.halfSize.y,bb.halfSize.z);
+        BoxObject bb = (BoxObject)state;
+        this.transform.localScale = new Vector3(bb.halfSize.x, bb.halfSize.y, bb.halfSize.z);
         updateTime();
     }
 
@@ -62,29 +65,48 @@ public class SObject : MonoBehaviour
         updateTime();
     }
 
-    void updateTime(){
-        
-        imaginaryRT = Time.fixedTime-lastTime ;
+    void updateTime()
+    {
+
+        imaginaryRT = Time.fixedTime - lastTime;
         lastTime = Time.fixedTime;
-        if(imaginaryRT != 0 && updateToFPS){
+        if (imaginaryRT != 0 && updateToFPS)
+        {
             refreshTime = imaginaryRT;
         }
-        
+
     }
 
-    private void FixedUpdate() {
+    private void FixedUpdate()
+    {
 
-        
 
-        if(newPosition != null){
-            if(newPosition != this.transform.position){
+
+        if (newPosition != null)
+        {
+            if (newPosition != this.transform.position)
+            {
                 this.gameObject.transform.position = Vector3.Lerp(this.gameObject.transform.position, newPosition, refreshTime);
             }
         }
 
-          if(newQuaternion != null){
-            if(newQuaternion != this.transform.rotation){
-                this.gameObject.transform.rotation = Quaternion.Lerp(this.gameObject.transform.rotation, newQuaternion,refreshTime);
+        if (newQuaternion != null)
+        {
+            if (newQuaternion != this.transform.rotation)
+            {
+
+                if (state.isMesh)
+                {
+
+                    Quaternion meshQuat = Quaternion.Euler(0, -90, 0);
+                     this.gameObject.transform.rotation = Quaternion.Lerp(this.gameObject.transform.rotation, newQuaternion,refreshTime);
+                }
+                else
+                {
+                    this.gameObject.transform.rotation = Quaternion.Lerp(this.gameObject.transform.rotation, newQuaternion, refreshTime);
+                }
+
+              
             }
         }
     }

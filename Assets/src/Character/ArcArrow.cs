@@ -12,7 +12,7 @@ public class ArcArrow : MonoBehaviour
 
     public float angle;
     public float velocity;
-    public float gravity=9.8f;
+    public float gravity = 9.8f;
     private float radianAngle;
     void Start()
     {
@@ -22,8 +22,12 @@ public class ArcArrow : MonoBehaviour
 
     private void renderArc()
     {
-        lineRenderer.positionCount = segments+1;
-        lineRenderer.SetPositions(CalculateArcArray());
+        if (segments > 0)
+        {
+            lineRenderer.positionCount = segments + 1;
+            lineRenderer.SetPositions(CalculateArcArray());
+        }
+
     }
 
     private Vector3[] CalculateArcArray()

@@ -17,6 +17,15 @@ public class CameraController : MonoBehaviour
 
     public Camera dCamera;
 
+    private GameObject followObject;
+
+    private float moveYVelocity = 4;
+    private float maxYPosition = 30;
+
+    private Vector3 newPosition = new Vector3();
+
+
+
 
 
     void Awake()
@@ -24,6 +33,33 @@ public class CameraController : MonoBehaviour
 
         Instance = this;
         dCamera = GetComponent<Camera>();
+        followObject = new GameObject("Camera Follow Object");
+    }
+
+    public void SetFollowObjectToPlayer()
+    {
+        if (player != null)
+        {
+            newPosition = player.transform.position;
+        }
+
+        //followObject.transform.position = Vector3.zero;
+    }
+
+    public void MoveCameraY(float Y)
+    {
+        if (Math.Abs(Y) > 0.5)
+        {
+            if(Math.Abs(followObject.transform.localPosition.y) <= maxYPosition){
+                newPosition = followObject.transform.position + new Vector3(0, Y * moveYVelocity, 0);
+            }else{
+                followObject.transform.localPosition = new Vector3(0,maxYPosition-.01f,0);
+            }
+            
+        }
+        Debug.Log(Y);
+
+
     }
 
 
@@ -34,14 +70,30 @@ public class CameraController : MonoBehaviour
         if (player != null && !initPlayer)
         {
 
-             Vector3 desiredPosition = player.transform.position - ((player.transform.right*-1) * 200);
-             desiredPosition.y +=100;
+            Vector3 desiredPosition = player.transform.position - ((player.transform.right * -1) * 200);
+            desiredPosition.y += 100;
             transform.position = desiredPosition;
             transform.parent = player.transform;
             transform.LookAt(player.transform);
-            
+            followObject.transform.parent = player.gameObject.transform;
+            SetFollowObjectToPlayer();
             initPlayer = true;
-            
+
         }
+        if (player != null)
+        {
+            
+
+            newPosition.x = player.transform.position.x;
+            newPosition.z = player.transform.position.z;
+            if(RotationController.Instance.rotateMessage.y == 0){
+                newPosition.y = player.transform.position.y;
+            }
+
+            followObject.transform.position = Vector3.Lerp(followObject.transform.position, newPosition, player.sObject.refreshTime);
+
+            transform.LookAt(followObject.transform);
+        }
+
     }
 }
