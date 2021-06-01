@@ -290,7 +290,7 @@ public class @InputControl : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""PC"",
+                    ""groups"": ""PC;Touch;Joystick"",
                     ""action"": ""Use_Power1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -362,6 +362,71 @@ public class @InputControl : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Swipe"",
+            ""id"": ""e9f9cd6a-c5f7-4cf4-833c-8d124d7befa7"",
+            ""actions"": [
+                {
+                    ""name"": ""Touch"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""28511094-fc1e-404f-9ea0-bc3e2f556364"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Position"",
+                    ""type"": ""Value"",
+                    ""id"": ""d46cddcc-cd28-4f53-84e9-b74a57c3d960"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Gauntlet"",
+                    ""type"": ""Button"",
+                    ""id"": ""f0f7fa27-3a61-4156-8fcb-b4f109d1b5be"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)""
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""c2b8c671-1342-4f71-8a88-4e008f9365b6"",
+                    ""path"": ""<Pointer>/press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Touch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e62f9f39-73ae-4602-9ded-c4027cd120ab"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Position"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""867a3a3d-0833-4558-82b8-f64a890a2113"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Gauntlet"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -418,6 +483,11 @@ public class @InputControl : IInputActionCollection, IDisposable
         m_Normal_Jump = m_Normal.FindAction("Jump", throwIfNotFound: true);
         m_Normal_Use_Power1 = m_Normal.FindAction("Use_Power1", throwIfNotFound: true);
         m_Normal_Move2 = m_Normal.FindAction("Move2", throwIfNotFound: true);
+        // Swipe
+        m_Swipe = asset.FindActionMap("Swipe", throwIfNotFound: true);
+        m_Swipe_Touch = m_Swipe.FindAction("Touch", throwIfNotFound: true);
+        m_Swipe_Position = m_Swipe.FindAction("Position", throwIfNotFound: true);
+        m_Swipe_Gauntlet = m_Swipe.FindAction("Gauntlet", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -576,6 +646,55 @@ public class @InputControl : IInputActionCollection, IDisposable
         }
     }
     public NormalActions @Normal => new NormalActions(this);
+
+    // Swipe
+    private readonly InputActionMap m_Swipe;
+    private ISwipeActions m_SwipeActionsCallbackInterface;
+    private readonly InputAction m_Swipe_Touch;
+    private readonly InputAction m_Swipe_Position;
+    private readonly InputAction m_Swipe_Gauntlet;
+    public struct SwipeActions
+    {
+        private @InputControl m_Wrapper;
+        public SwipeActions(@InputControl wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Touch => m_Wrapper.m_Swipe_Touch;
+        public InputAction @Position => m_Wrapper.m_Swipe_Position;
+        public InputAction @Gauntlet => m_Wrapper.m_Swipe_Gauntlet;
+        public InputActionMap Get() { return m_Wrapper.m_Swipe; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(SwipeActions set) { return set.Get(); }
+        public void SetCallbacks(ISwipeActions instance)
+        {
+            if (m_Wrapper.m_SwipeActionsCallbackInterface != null)
+            {
+                @Touch.started -= m_Wrapper.m_SwipeActionsCallbackInterface.OnTouch;
+                @Touch.performed -= m_Wrapper.m_SwipeActionsCallbackInterface.OnTouch;
+                @Touch.canceled -= m_Wrapper.m_SwipeActionsCallbackInterface.OnTouch;
+                @Position.started -= m_Wrapper.m_SwipeActionsCallbackInterface.OnPosition;
+                @Position.performed -= m_Wrapper.m_SwipeActionsCallbackInterface.OnPosition;
+                @Position.canceled -= m_Wrapper.m_SwipeActionsCallbackInterface.OnPosition;
+                @Gauntlet.started -= m_Wrapper.m_SwipeActionsCallbackInterface.OnGauntlet;
+                @Gauntlet.performed -= m_Wrapper.m_SwipeActionsCallbackInterface.OnGauntlet;
+                @Gauntlet.canceled -= m_Wrapper.m_SwipeActionsCallbackInterface.OnGauntlet;
+            }
+            m_Wrapper.m_SwipeActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Touch.started += instance.OnTouch;
+                @Touch.performed += instance.OnTouch;
+                @Touch.canceled += instance.OnTouch;
+                @Position.started += instance.OnPosition;
+                @Position.performed += instance.OnPosition;
+                @Position.canceled += instance.OnPosition;
+                @Gauntlet.started += instance.OnGauntlet;
+                @Gauntlet.performed += instance.OnGauntlet;
+                @Gauntlet.canceled += instance.OnGauntlet;
+            }
+        }
+    }
+    public SwipeActions @Swipe => new SwipeActions(this);
     private int m_PCSchemeIndex = -1;
     public InputControlScheme PCScheme
     {
@@ -616,5 +735,11 @@ public class @InputControl : IInputActionCollection, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnUse_Power1(InputAction.CallbackContext context);
         void OnMove2(InputAction.CallbackContext context);
+    }
+    public interface ISwipeActions
+    {
+        void OnTouch(InputAction.CallbackContext context);
+        void OnPosition(InputAction.CallbackContext context);
+        void OnGauntlet(InputAction.CallbackContext context);
     }
 }

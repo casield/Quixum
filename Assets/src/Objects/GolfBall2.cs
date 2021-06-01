@@ -32,7 +32,13 @@ public class GolfBall2:MonoBehaviour, ConnectedObject
     }
     public void setState(ObjectState ob){
         this.state = ob;
-        Client.Instance.golfballs.Add(ob.owner,GetComponent<SObject>());
+       // if(Client.Instance.golfballs.)
+       if( !Client.Instance.golfballs.ContainsKey(ob.owner)){
+           Client.Instance.golfballs.Add(ob.owner,GetComponent<SObject>());
+       }else{
+           Debug.Log("GolfBall was aready added");
+       }
+        
     }
 
     // Start is called before the first frame update

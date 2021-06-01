@@ -24,6 +24,8 @@ public class CameraController : MonoBehaviour
 
     private Vector3 newPosition = new Vector3();
 
+    public float YPositionFollowObject = 30;
+
 
 
 
@@ -41,6 +43,7 @@ public class CameraController : MonoBehaviour
         if (player != null)
         {
             newPosition = player.transform.position;
+            newPosition.y+=50;
         }
 
         //followObject.transform.position = Vector3.zero;
@@ -57,7 +60,7 @@ public class CameraController : MonoBehaviour
             }
             
         }
-        Debug.Log(Y);
+        //Debug.Log(Y);
 
 
     }
@@ -86,10 +89,11 @@ public class CameraController : MonoBehaviour
 
             newPosition.x = player.transform.position.x;
             newPosition.z = player.transform.position.z;
+            
             if(RotationController.Instance.rotateMessage.y == 0){
                 newPosition.y = player.transform.position.y;
             }
-
+            newPosition.y = player.transform.position.y+YPositionFollowObject;
             followObject.transform.position = Vector3.Lerp(followObject.transform.position, newPosition, player.sObject.refreshTime);
 
             transform.LookAt(followObject.transform);

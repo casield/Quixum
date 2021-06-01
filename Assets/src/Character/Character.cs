@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
+[DefaultExecutionOrder(-1)]
 public class Character : MonoBehaviour
 {
     public Camera camara;
@@ -34,6 +35,7 @@ public class Character : MonoBehaviour
 
     MoveMessage message = new MoveMessage();
     MoveMessage jumpmessage = new MoveMessage();
+    GauntletMessage gauntletMessage = new GauntletMessage();
     bool sendStop = false;
 
     public ArcArrow arcArrow;
@@ -60,7 +62,7 @@ public class Character : MonoBehaviour
 
         arcArrow = GetComponentInChildren<ArcArrow>();
 
-        inputControl.Normal.Use_Power1.performed += onUserPower1;
+        inputControl.Swipe.Gauntlet.performed += onUseGauntlet;
 
         // inputControl.Normal.Move.started += onMove;
         inputControl.Normal.Move2.canceled += OnMove;
@@ -72,9 +74,13 @@ public class Character : MonoBehaviour
 
     }
 
-    private async void onUserPower1(CallbackContext obj)
+    private async void onUseGauntlet(CallbackContext obj)
     {
-        await this.client.room.Send("use_Power1");
+      
+        float number= obj.ReadValue<float>();
+         Debug.Log("Using gauntlet "+number);
+        gauntletMessage.active = number==0?false:true;
+        await this.client.room.Send("gauntlet",gauntletMessage);
     }
 
     void Start()

@@ -277,7 +277,7 @@
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
-                    "groups": "PC",
+                    "groups": "PC;Touch;Joystick",
                     "action": "Use_Power1",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -345,6 +345,71 @@
                     "processors": "",
                     "groups": "",
                     "action": "Move2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Swipe",
+            "id": "e9f9cd6a-c5f7-4cf4-833c-8d124d7befa7",
+            "actions": [
+                {
+                    "name": "Touch",
+                    "type": "PassThrough",
+                    "id": "28511094-fc1e-404f-9ea0-bc3e2f556364",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
+                    "name": "Position",
+                    "type": "Value",
+                    "id": "d46cddcc-cd28-4f53-84e9-b74a57c3d960",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
+                    "name": "Gauntlet",
+                    "type": "Button",
+                    "id": "f0f7fa27-3a61-4156-8fcb-b4f109d1b5be",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=2)"
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c2b8c671-1342-4f71-8a88-4e008f9365b6",
+                    "path": "<Pointer>/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "Touch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e62f9f39-73ae-4602-9ded-c4027cd120ab",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "Position",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "867a3a3d-0833-4558-82b8-f64a890a2113",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Gauntlet",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
