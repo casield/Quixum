@@ -20,6 +20,7 @@ public class SwipeDetection : MonoBehaviour
     public Material mat;
 
     private SwipeMessage swipeMessage;
+    private V3 v3;
 
     private void Awake()
     {
@@ -27,7 +28,12 @@ public class SwipeDetection : MonoBehaviour
         lineRenderer = GetComponent<LineRenderer>();
 
         lineRenderer.SetPositions(new Vector3[] { new Vector2(0, 0), new Vector2(0, 100) });
+        v3 = new V3();
+        v3.x = 0;
+        v3.y = 0;
+        v3.z = 0;
         swipeMessage = new SwipeMessage();
+        
     }
     private void OnEnable()
     {
@@ -63,6 +69,7 @@ public class SwipeDetection : MonoBehaviour
     {
         endTime = Time.fixedTime;
         startPosition = inputControl.Swipe.Position.ReadValue<Vector2>();
+        startPosition.z = CameraController.Instance.dCamera.nearClipPlane;
 
         /*startPosition.x /=Screen.width;
         startPosition.y /=Screen.height;*/
@@ -72,6 +79,8 @@ public class SwipeDetection : MonoBehaviour
     {
         startTime = Time.fixedTime;
         endPosition = inputControl.Swipe.Position.ReadValue<Vector2>();
+        endPosition.z = CameraController.Instance.dCamera.nearClipPlane;
+
         //endPosition.z=-1;
         Debug.Log("Swipe end" + endPosition.ToString());
         DetectSwipe();
@@ -89,13 +98,25 @@ public class SwipeDetection : MonoBehaviour
         float rads = Mathf.Atan2(dy, dX);
 
         float degrees = rads;
-        degrees*=-1;
+        degrees *= -1;
 
 
+        Vector3 inWorldPosA = CameraController.Instance.dCamera.ScreenToWorldPoint(startPosition);
+        Vector3 inWorldPosB = CameraController.Instance.dCamera.ScreenToWorldPoint(endPosition);
+
+        Vector3 dir = (inWorldPosA - inWorldPosB).normalized;
+
+        v3.x = dir.x;
+        v3.y = dir.y;
+        v3.z = dir.z;
 
         swipeMessage.degree = degrees;
+        swipeMessage.direction=v3;
         await Character.Instance.client.room.Send("swipe", swipeMessage);
-        Debug.Log("Angle" + degrees);
+        Debug.Log("Direction-----------" );
+        Debug.Log("Direction" + dir);
+        Debug.Log("Direction" + inWorldPosA+" / "+inWorldPosB);
+        Debug.Log("Direction" + startPosition+" / "+endPosition);
         //  }
     }
 

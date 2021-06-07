@@ -10,5 +10,8 @@ using Colyseus.Schema;
 public partial class SwipeMessage : Schema {
 	[Type(0, "number")]
 	public float degree = default(float);
+
+	[Type(1, "ref", typeof(V3))]
+	public V3 direction = new V3();
 }
 

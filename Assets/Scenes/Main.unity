@@ -5844,6 +5844,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   dCamera: {fileID: 0}
+  YPositionFollowObject: 30
 --- !u!1 &971990359
 GameObject:
   m_ObjectHideFlags: 0
