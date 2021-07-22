@@ -5,12 +5,13 @@ using Colyseus.Schema;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class GolfBall2:MonoBehaviour, ConnectedObject
+public class GolfBall2 : MonoBehaviour, ConnectedObject
 {
-    public AudioSource audioSource { get;set;}
+    public AudioSource audioSource { get; set; }
     public ObjectState state;
 
     private AudioClip collitionSound;
+    public SObject sObject;
 
     /// <summary>
     /// Start is called on the frame when a script is enabled just before
@@ -20,38 +21,45 @@ public class GolfBall2:MonoBehaviour, ConnectedObject
     {
         Client.Instance.addReadyListener(init);
         collitionSound = Resources.Load<AudioClip>("Sounds/BallCollition");
-        audioSource =gameObject.AddComponent<AudioSource>();
+        audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.spatialBlend = 0.88f;
-       // audioSource.clip = collitionSound;
+        sObject = GetComponent<SObject>();
+        sObject.refreshTime = 1f;
+        // audioSource.clip = collitionSound;
     }
 
     public void play(AudioClip clip, float volume)
     {
-        
-        audioSource.PlayOneShot(clip,volume);
+
+        audioSource.PlayOneShot(clip, volume);
     }
-    public void setState(ObjectState ob){
+    public void setState(ObjectState ob)
+    {
         this.state = ob;
-       // if(Client.Instance.golfballs.)
-       if( !Client.Instance.golfballs.ContainsKey(ob.owner)){
-           Client.Instance.golfballs.Add(ob.owner,GetComponent<SObject>());
-       }else{
-           Debug.Log("GolfBall was aready added");
-       }
-        
+        // if(Client.Instance.golfballs.)
+        if (!Client.Instance.golfballs.ContainsKey(ob.owner))
+        {
+            Client.Instance.golfballs.Add(ob.owner, GetComponent<SObject>());
+        }
+        else
+        {
+            Debug.Log("GolfBall was aready added");
+        }
+
     }
 
     // Start is called before the first frame update
 
-    void init(){
-        
+    void init()
+    {
+
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void onMessage(ObjectMessage m)

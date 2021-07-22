@@ -80,7 +80,8 @@ public class Character : MonoBehaviour
         float number= obj.ReadValue<float>();
          Debug.Log("Using gauntlet "+number);
         gauntletMessage.active = number==0?false:true;
-        await this.client.room.Send("gauntlet",gauntletMessage);
+        //await this.client.room.Send("gauntlet",gauntletMessage);
+        await this.client.room.Send("createBoxes");
     }
 
     void Start()

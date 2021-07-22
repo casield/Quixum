@@ -15,7 +15,7 @@ public class SObject : MonoBehaviour
     private Vector3 newPosition;
     private Quaternion newQuaternion;
     public bool updateToFPS = false;
-    public float refreshTime = .1f;
+    public float refreshTime = 1f;
     private float lastTime = 0;
     public float imaginaryRT = 0;
 

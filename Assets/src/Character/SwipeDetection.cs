@@ -112,7 +112,8 @@ public class SwipeDetection : MonoBehaviour
 
         swipeMessage.degree = degrees;
         swipeMessage.direction=v3;
-        await Character.Instance.client.room.Send("swipe", swipeMessage);
+        //await Character.Instance.client.room.Send("swipe", swipeMessage);
+        //await Character.Instance.client.room.Send("swipe", swipeMessage);
         Debug.Log("Direction-----------" );
         Debug.Log("Direction" + dir);
         Debug.Log("Direction" + inWorldPosA+" / "+inWorldPosB);
