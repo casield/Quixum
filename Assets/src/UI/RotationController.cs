@@ -81,7 +81,7 @@ public class RotationController : MonoBehaviour, IDragHandler, IBeginDragHandler
     {
         if (client != null)
         {
-            await client.room.Send("rotatePlayer", rotateMessage);
+            await client.room.Send("rotate", rotateMessage);
         }
     }
 
