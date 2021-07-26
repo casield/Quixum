@@ -125,7 +125,12 @@ public class Client : MonoBehaviour
         room.OnMessage<string>("error", onErrorMessage);
         room.OnMessage<string>("info", onInfoMessage);
         room.OnMessage<ObjectMessage>("objectMessage", onObjectMessage);
+        room.OnMessage<string>("OVar",OnOVarMessage);
 
+
+    }
+
+    private void OnOVarMessage(string message){
 
     }
 

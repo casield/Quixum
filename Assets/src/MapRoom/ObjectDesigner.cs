@@ -14,7 +14,7 @@ public class ObjectDesigner : MonoBehaviour
     public float mass = 0;
     public string mesh;
     public bool isMesh = false;
-    
+
     void Start()
     {
 
@@ -33,7 +33,7 @@ public class ObjectDesigner : MonoBehaviour
     }
     public ObjectState toJson()
     {
-        uID = this.uID!=""?this.uID:uniqueId();
+        uID = this.uID != "" ? this.uID : uniqueId();
         ObjectState p = new ObjectState();
         if (shape == "box")
         {
@@ -41,18 +41,27 @@ public class ObjectDesigner : MonoBehaviour
             p = new BoxObject();
             BoxObject bo = (BoxObject)p;
             bo.halfSize = new V3();
-            bo.halfSize.x = gameObject.transform.localScale.x ;
-            bo.halfSize.y = gameObject.transform.localScale.y ;
-            bo.halfSize.z = gameObject.transform.localScale.z ;
+            if (isMesh)
+            {
+                bo.halfSize.x = gameObject.transform.localScale.x/2;
+                bo.halfSize.y = gameObject.transform.localScale.y/2;
+                bo.halfSize.z = gameObject.transform.localScale.z/2;
+            }
+            else
+            {
+                bo.halfSize.x = gameObject.transform.localScale.x;
+                bo.halfSize.y = gameObject.transform.localScale.y;
+                bo.halfSize.z = gameObject.transform.localScale.z;
+            }
 
 
         }
-         if (shape == "sphere")
+        if (shape == "sphere")
         {
 
             p = new SphereObject();
             SphereObject bo = (SphereObject)p;
-            bo.radius = gameObject.transform.localScale.x/2;
+            bo.radius = gameObject.transform.localScale.x / 2;
 
 
         }
