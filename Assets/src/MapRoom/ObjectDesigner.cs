@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = System.Random;
 
 public class ObjectDesigner : MonoBehaviour
 {
@@ -23,13 +24,14 @@ public class ObjectDesigner : MonoBehaviour
     {
         // desired length of Id
         // always start with a letter -- base 36 makes for a nice shortcut
-        UnityEngine.Random rand = new UnityEngine.Random();
+       Random rand = new Random();
         var idStr = Convert.ToString((System.Math.Floor(((float)(UnityEngine.Random.Range(0, 1000000)) * 25)) + 10), null);
         // add a timestamp in milliseconds (base 36 again) as the base
         idStr += "_" + Convert.ToString(DateTime.Now.Millisecond, null);
         // similar to above, complete the Id using random, alphanumeric characters
 
         return (idStr);
+        //return "";
     }
     public ObjectState toJson()
     {
