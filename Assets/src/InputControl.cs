@@ -100,7 +100,7 @@ public class @InputControl : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""Move2"",
-                    ""type"": ""Value"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""6f83e1db-a13b-4b37-9599-fe2122fd25db"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
@@ -298,7 +298,7 @@ public class @InputControl : IInputActionCollection, IDisposable
                 {
                     ""name"": ""2D Vector"",
                     ""id"": ""d8a592ce-9b37-482f-b150-e7f114562ddc"",
-                    ""path"": ""2DVector(mode=2)"",
+                    ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

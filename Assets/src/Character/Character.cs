@@ -76,12 +76,12 @@ public class Character : MonoBehaviour
 
     private async void onUseGauntlet(CallbackContext obj)
     {
-      
-        float number= obj.ReadValue<float>();
-         Debug.Log("Using gauntlet "+number);
-        gauntletMessage.active = number==0?false:true;
-        await this.client.room.Send("gauntlet",gauntletMessage);
-       // await this.client.room.Send("createBoxes");
+
+        float number = obj.ReadValue<float>();
+        Debug.Log("Using gauntlet " + number);
+        gauntletMessage.active = number == 0 ? false : true;
+        await this.client.room.Send("gauntlet", gauntletMessage);
+        // await this.client.room.Send("createBoxes");
     }
 
     void Start()
@@ -96,17 +96,17 @@ public class Character : MonoBehaviour
 
     public void OnMove(CallbackContext ctx)
     {
-
         movm = ctx.ReadValue<Vector2>();
-       
-            Vector2 v = ctx.ReadValue<Vector2>();
-            message.x = Convert.ToInt16(v.x * 100f);
-            message.y = Convert.ToInt16(v.y * 100f);
-
-            sendMoveMessage();
+        Debug.Log("on drag inside " + movm);
 
 
-            Debug.Log(v);
+        Vector2 v = ctx.ReadValue<Vector2>();
+        message.x = Convert.ToInt16(v.x * 100f);
+        message.y = Convert.ToInt16(v.y * 100f);
+
+        sendMoveMessage();
+
+
 
     }
 

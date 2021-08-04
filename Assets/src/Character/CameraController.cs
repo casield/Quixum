@@ -27,6 +27,9 @@ public class CameraController : MonoBehaviour
     public float YPositionFollowObject = 30;
 
 
+    public LookObject lookObject;
+
+
 
 
 
@@ -35,23 +38,28 @@ public class CameraController : MonoBehaviour
 
         Instance = this;
         dCamera = GetComponent<Camera>();
-        followObject = new GameObject("Camera Follow Object");
+        //followObject = new GameObject("Camera Follow Object");
     }
 
     public void SetFollowObjectToPlayer()
     {
-        if (player != null)
+     /*   if (player != null)
         {
             newPosition = player.transform.position;
             newPosition.y+=50;
-        }
+        }*/
 
         //followObject.transform.position = Vector3.zero;
     }
 
+    public void SetLookObject(LookObject lookObject){
+        this.lookObject = lookObject;
+        followObject = lookObject.gameObject;
+    }
+
     public void MoveCameraY(float Y)
     {
-        if (Math.Abs(Y) > 0.5)
+        /*if (Math.Abs(Y) > 0.5)
         {
             if(Math.Abs(followObject.transform.localPosition.y) <= maxYPosition){
                 newPosition = followObject.transform.position + new Vector3(0, Y * moveYVelocity, 0);
@@ -59,7 +67,7 @@ public class CameraController : MonoBehaviour
                 followObject.transform.localPosition = new Vector3(0,maxYPosition-.01f,0);
             }
             
-        }
+        }*/
         //Debug.Log(Y);
 
 
@@ -68,7 +76,7 @@ public class CameraController : MonoBehaviour
 
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         if (player != null && !initPlayer)
         {
@@ -78,23 +86,23 @@ public class CameraController : MonoBehaviour
             transform.position = desiredPosition;
             transform.parent = player.transform;
             transform.LookAt(player.transform);
-            followObject.transform.parent = player.gameObject.transform;
-            SetFollowObjectToPlayer();
+            //followObject.transform.parent = player.gameObject.transform;
+            //SetFollowObjectToPlayer();
             initPlayer = true;
 
         }
-        if (player != null)
+        if (player != null && RotationController.Instance!=null)
         {
             
 
             newPosition.x = player.transform.position.x;
             newPosition.z = player.transform.position.z;
             
-            if(RotationController.Instance.rotateMessage.y == 0){
-                newPosition.y = player.transform.position.y;
-            }
+            //if(RotationController.Instance.rotateMessage.y == 0){
+            //    newPosition.y = player.transform.position.y;
+           // }
             newPosition.y = player.transform.position.y+YPositionFollowObject;
-            followObject.transform.position = Vector3.Lerp(followObject.transform.position, newPosition, player.sObject.refreshTime);
+           // followObject.transform.position = Vector3.Lerp(followObject.transform.position, newPosition, player.sObject.refreshTime);
 
             transform.LookAt(followObject.transform);
         }
