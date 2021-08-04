@@ -105,6 +105,14 @@ public class @InputControl : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""DoubleClick"",
+                    ""type"": ""Button"",
+                    ""id"": ""93161c7b-aab4-4b72-8bf3-24f7c0eaa3b8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -360,6 +368,28 @@ public class @InputControl : IInputActionCollection, IDisposable
                     ""action"": ""Move2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6d7d271e-c38c-4820-8f90-513ef25466b4"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": ""MultiTap"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DoubleClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b1943fd9-f7eb-4137-a19f-a62582ee8bbe"",
+                    ""path"": ""<Touchscreen>/primaryTouch/tap"",
+                    ""interactions"": ""MultiTap"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DoubleClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -483,6 +513,7 @@ public class @InputControl : IInputActionCollection, IDisposable
         m_Normal_Jump = m_Normal.FindAction("Jump", throwIfNotFound: true);
         m_Normal_Use_Power1 = m_Normal.FindAction("Use_Power1", throwIfNotFound: true);
         m_Normal_Move2 = m_Normal.FindAction("Move2", throwIfNotFound: true);
+        m_Normal_DoubleClick = m_Normal.FindAction("DoubleClick", throwIfNotFound: true);
         // Swipe
         m_Swipe = asset.FindActionMap("Swipe", throwIfNotFound: true);
         m_Swipe_Touch = m_Swipe.FindAction("Touch", throwIfNotFound: true);
@@ -548,6 +579,7 @@ public class @InputControl : IInputActionCollection, IDisposable
     private readonly InputAction m_Normal_Jump;
     private readonly InputAction m_Normal_Use_Power1;
     private readonly InputAction m_Normal_Move2;
+    private readonly InputAction m_Normal_DoubleClick;
     public struct NormalActions
     {
         private @InputControl m_Wrapper;
@@ -563,6 +595,7 @@ public class @InputControl : IInputActionCollection, IDisposable
         public InputAction @Jump => m_Wrapper.m_Normal_Jump;
         public InputAction @Use_Power1 => m_Wrapper.m_Normal_Use_Power1;
         public InputAction @Move2 => m_Wrapper.m_Normal_Move2;
+        public InputAction @DoubleClick => m_Wrapper.m_Normal_DoubleClick;
         public InputActionMap Get() { return m_Wrapper.m_Normal; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -605,6 +638,9 @@ public class @InputControl : IInputActionCollection, IDisposable
                 @Move2.started -= m_Wrapper.m_NormalActionsCallbackInterface.OnMove2;
                 @Move2.performed -= m_Wrapper.m_NormalActionsCallbackInterface.OnMove2;
                 @Move2.canceled -= m_Wrapper.m_NormalActionsCallbackInterface.OnMove2;
+                @DoubleClick.started -= m_Wrapper.m_NormalActionsCallbackInterface.OnDoubleClick;
+                @DoubleClick.performed -= m_Wrapper.m_NormalActionsCallbackInterface.OnDoubleClick;
+                @DoubleClick.canceled -= m_Wrapper.m_NormalActionsCallbackInterface.OnDoubleClick;
             }
             m_Wrapper.m_NormalActionsCallbackInterface = instance;
             if (instance != null)
@@ -642,6 +678,9 @@ public class @InputControl : IInputActionCollection, IDisposable
                 @Move2.started += instance.OnMove2;
                 @Move2.performed += instance.OnMove2;
                 @Move2.canceled += instance.OnMove2;
+                @DoubleClick.started += instance.OnDoubleClick;
+                @DoubleClick.performed += instance.OnDoubleClick;
+                @DoubleClick.canceled += instance.OnDoubleClick;
             }
         }
     }
@@ -735,6 +774,7 @@ public class @InputControl : IInputActionCollection, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnUse_Power1(InputAction.CallbackContext context);
         void OnMove2(InputAction.CallbackContext context);
+        void OnDoubleClick(InputAction.CallbackContext context);
     }
     public interface ISwipeActions
     {

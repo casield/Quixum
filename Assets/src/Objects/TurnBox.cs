@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurnBox : MonoBehaviour, ConnectedObject
+public class TurnBox : MonoBehaviour, IConnectedObject
 {
 
     // Start is called before the first frame update

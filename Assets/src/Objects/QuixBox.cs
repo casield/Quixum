@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class QuixBox : MonoBehaviour, ConnectedObject
+public class QuixBox : MonoBehaviour, IConnectedObject
 {
     public void onMessage(ObjectMessage m)
     {

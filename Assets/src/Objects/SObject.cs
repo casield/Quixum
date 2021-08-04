@@ -15,7 +15,6 @@ public class SObject : MonoBehaviour
     private Vector3 newPosition;
     private Quaternion newQuaternion;
     public bool updateToFPS = false;
-    public bool smoothMoves = false;
     public float refreshTime = 1f;
     private float lastTime = 0;
     public float imaginaryRT = 0;
@@ -87,14 +86,8 @@ public class SObject : MonoBehaviour
         {
             if (newPosition != this.transform.position)
             {
-                if (smoothMoves)
-                {
-                    this.gameObject.transform.position = Vector3.Lerp(this.gameObject.transform.position, newPosition, refreshTime);
-                }
-                else
-                {
-                    this.gameObject.transform.position = newPosition;
-                }
+                this.gameObject.transform.position = Vector3.Lerp(this.gameObject.transform.position, newPosition, refreshTime);
+
 
             }
         }
@@ -113,17 +106,7 @@ public class SObject : MonoBehaviour
                 }
                 else
                 {
-
-                    if (smoothMoves)
-                    {
-                        this.gameObject.transform.rotation =  Quaternion.Lerp(this.gameObject.transform.rotation, newQuaternion, refreshTime);
-                    }
-                    else
-                    {
-                        this.gameObject.transform.rotation = newQuaternion;
-                    }
-
-                   // this.gameObject.transform.rotation = Quaternion.Lerp(this.gameObject.transform.rotation, newQuaternion, refreshTime);
+                    this.gameObject.transform.rotation = Quaternion.Lerp(this.gameObject.transform.rotation, newQuaternion, refreshTime);
                 }
 
 
@@ -134,6 +117,6 @@ public class SObject : MonoBehaviour
 
     public void onMessage(ObjectMessage message)
     {
-        gameObject.GetComponent<ConnectedObject>().onMessage(message);
+        gameObject.GetComponent<IConnectedObject>().onMessage(message);
     }
 }

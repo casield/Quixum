@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Crocodile : MonoBehaviour, ConnectedObject
+public class Crocodile : MonoBehaviour, IConnectedObject
 {
     public void onMessage(ObjectMessage m)
     {

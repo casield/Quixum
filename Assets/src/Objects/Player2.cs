@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class Player2 : MonoBehaviour, ConnectedObject
+public class Player2 : MonoBehaviour, IConnectedObject
 {
     /// <summary>
     /// Start is called on the frame when a script is enabled just before

@@ -5,7 +5,7 @@ using Colyseus.Schema;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class GolfBall2 : MonoBehaviour, ConnectedObject
+public class GolfBall2 : ConnectedObject
 {
     public AudioSource audioSource { get; set; }
     public ObjectState state;
@@ -25,6 +25,9 @@ public class GolfBall2 : MonoBehaviour, ConnectedObject
         audioSource.spatialBlend = 0.88f;
         sObject = GetComponent<SObject>();
         sObject.refreshTime = 1f;
+
+        var v = gameObject.AddComponent<LookTarget>();
+        v.setState(state);
         // audioSource.clip = collitionSound;
     }
 
@@ -33,7 +36,7 @@ public class GolfBall2 : MonoBehaviour, ConnectedObject
 
         audioSource.PlayOneShot(clip, volume);
     }
-    public void setState(ObjectState ob)
+    public override void setState(ObjectState ob)
     {
         this.state = ob;
         // if(Client.Instance.golfballs.)
@@ -53,22 +56,5 @@ public class GolfBall2 : MonoBehaviour, ConnectedObject
     void init()
     {
 
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    public void onMessage(ObjectMessage m)
-    {
-        //throw new NotImplementedException();
-    }
-
-    public void sendMessageToRoom(string m)
-    {
-        //throw new NotImplementedException();
     }
 }

@@ -50,7 +50,6 @@ public class RotationController : MonoBehaviour, IDragHandler, IBeginDragHandler
         sendData(Vector2.zero);
         actualSendData();
         changeSpritesVisibility(false);
-        CameraController.Instance.SetFollowObjectToPlayer();
     }
 
     private void init()
@@ -131,7 +130,7 @@ public class RotationController : MonoBehaviour, IDragHandler, IBeginDragHandler
     {
         if (rotateMessage.x != 0 || rotateMessage.y != 0)
         {
-            CameraController.Instance.MoveCameraY(rotateMessage.y);
+            
             actualSendData();
         }
     }

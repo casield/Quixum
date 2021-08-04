@@ -237,7 +237,7 @@ public class Client : MonoBehaviour
         if (t != null)
         {
             Debug.Log(t.ToString());
-           ConnectedObject c = (ConnectedObject) gameOb.AddComponent(t);
+           IConnectedObject c = (IConnectedObject) gameOb.AddComponent(t);
            c.setState(ob);
         }
 
