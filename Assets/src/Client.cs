@@ -232,7 +232,8 @@ public class Client : MonoBehaviour
         {
             gameOb.name += "=> " + ob.owner;
         }
-        System.Type t = System.Type.GetType(ob.type + ",Assembly-CSharp");
+        
+        System.Type t = System.Type.GetType(ob.type );
 
         if (t != null)
         {

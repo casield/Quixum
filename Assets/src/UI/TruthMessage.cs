@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using TMPro;
 
+
 public class TruthMessage : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -39,14 +40,14 @@ public class TruthMessage : MonoBehaviour
         this.gameObject.SetActive(true);
         //this.transform.localScale.Set(0, 0, 0);
 
-        this.transform.LeanScale(new Vector3(1, 1), showhideTime);
+       // this.transform.LeanScale(new Vector3(1, 1), showhideTime);
     }
     public void hide()
     {
-        this.transform.LeanScale(new Vector3(0, 0), showhideTime).setOnComplete(() =>
-       {
+       // this.transform.LeanScale(new Vector3(0, 0), showhideTime).setOnComplete(() =>
+      /* {
            this.gameObject.SetActive(false);
-       });
+       });*/
 
     }
 

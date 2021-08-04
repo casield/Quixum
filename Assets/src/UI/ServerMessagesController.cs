@@ -30,7 +30,7 @@ public class ServerMessagesController : MonoBehaviour
         errorWindow.gameObject.SetActive(true);
         errorWindow.alpha = 0;
         errorText.text = error;
-        LeanTween.alphaCanvas(errorWindow, 1, 0.3f).setEaseInBack();
+        //LeanTween.alphaCanvas(errorWindow, 1, 0.3f).setEaseInBack();
     }
 
     // Update is called once per frame

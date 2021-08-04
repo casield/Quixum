@@ -18,10 +18,10 @@ public class CloseButton : MonoBehaviour
 
     public void clickButton(){
        
-        LeanTween.scale(transform.parent.gameObject,new Vector3(0,0,0),0.2f).setEase(LeanTweenType.easeInBack).setOnComplete(()=>{
+        /*LeanTween.scale(transform.parent.gameObject,new Vector3(0,0,0),0.2f).setEase(LeanTweenType.easeInBack).setOnComplete(()=>{
              transform.parent.gameObject.SetActive(!transform.parent.gameObject.activeSelf);
              transform.parent.localScale = Vector3.one;
-        });
+        });*/
         if(onCloseFunc != null){
             onCloseFunc();
         }

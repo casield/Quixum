@@ -24,7 +24,7 @@ public class GameMessages : MonoBehaviour
         gameObject.SetActive(true);
         textMessage.text = text;
         //textMessage.alpha = 0;
-        LeanTween.scaleY(this.gameObject,1,1.3f).setEaseInElastic();
+       // LeanTween.scaleY(this.gameObject,1,1.3f).setEaseInElastic();
 
     }
     public void showMessage(string text, int time){
@@ -38,9 +38,9 @@ public class GameMessages : MonoBehaviour
     }
     public void hideMessage()
     {
-        LeanTween.scaleY(this.gameObject,0,1.3f).setEaseOutElastic().setOnComplete(()=>{
+        /*LeanTween.scaleY(this.gameObject,0,1.3f).setEaseOutElastic().setOnComplete(()=>{
              gameObject.SetActive(false);
-        });
+        });*/
        //
     }
     // Start is called before the first frame update

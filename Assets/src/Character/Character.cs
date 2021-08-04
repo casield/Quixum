@@ -150,12 +150,16 @@ public class Character : MonoBehaviour
     }
     private async void jumpControl()
     {
-        if (inputControl.Normal.Jump.phase == InputActionPhase.Started)
+        if (inputControl != null)
         {
-            jumpmessage.uID = Character.Instance.player.state.uID;
-            await this.client.room.Send("jump", jumpmessage);
-            this.sendJump = true;
+            if (inputControl.Normal.Jump.phase == InputActionPhase.Started)
+            {
+                jumpmessage.uID = Character.Instance.player.state.uID;
+                await this.client.room.Send("jump", jumpmessage);
+                this.sendJump = true;
+            }
         }
+
     }
 
     public void removeListeners()
