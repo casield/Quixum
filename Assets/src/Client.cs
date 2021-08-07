@@ -233,6 +233,7 @@ public class Client : MonoBehaviour
             gameOb.name += "=> " + ob.owner;
         }
         
+        
         System.Type t = System.Type.GetType(ob.type );
 
         if (t != null)
@@ -272,7 +273,11 @@ public class Client : MonoBehaviour
         if (isBox)
         {
             BoxObject boxState = (BoxObject)ob;
-            size = new Vector3(boxState.halfSize.x, boxState.halfSize.y, boxState.halfSize.z);
+           
+         
+                size = new Vector3(boxState.halfSize.x, boxState.halfSize.y, boxState.halfSize.z);
+          
+            
         }
         else
         {
@@ -281,7 +286,9 @@ public class Client : MonoBehaviour
         }
 
         //size.Scale(new Vector3(2, 2, 2));
-
+        if(ob.type=="QuixBox"){
+            Debug.Log("Este 2"+size);
+        }
         gameOb.transform.localScale = size;
         gameOb.transform.parent = ServerObjects.transform;
         return gameOb;

@@ -17,6 +17,7 @@ public class LookObject : ConnectedObject
     private void Start()
     {
         sObject = GetComponent<SObject>();
+        sObject.refreshTime = .7f;
 
 
         CameraController.Instance.SetLookObject(this);
@@ -28,14 +29,14 @@ public class LookObject : ConnectedObject
         Debug.Log("Message to lookObject");
         if (m.message == "player")
         {
-            sObject.refreshTime = 1;
+           // sObject.refreshTime = 1;
             CameraController.Instance.SetInitialCameraPosition();
             isOnPlayer = true;
         }
         if(m.message == "target")
         {
-            sObject.refreshTime = .7f;
-            CameraController.Instance.SetInitialCameraPosition();
+           // sObject.refreshTime = .7f;
+            //CameraController.Instance.SetInitialCameraPosition();
             isOnPlayer=false;
             //SetCamera();
         }
@@ -48,14 +49,7 @@ public class LookObject : ConnectedObject
     }
 
     public void SetCamera()
-    {
-
-        float distanceWithObject = Vector3.Distance(player.sObject.gameObject.transform.position, transform.position);
-
-       var porcenage = (maxDistance/distanceWithObject);
-        Debug.Log("Distance "+distanceWithObject);
-        Debug.Log("Porcentage "+(OnLookingPosition.y/distanceWithObject));
-        
+    {   
        // CameraController.Instance.SetCameraPosition(porcenage*OnLookingPosition.x, (OnLookingPosition.y/distanceWithObject)*100);
         CameraController.Instance.SetCameraPosition(OnLookingPosition.x, OnLookingPosition.y);
     }

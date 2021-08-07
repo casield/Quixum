@@ -20,9 +20,11 @@ public class LookTarget : ConnectedObject
     {
         Ray ray = Camera.main.ScreenPointToRay(Character.Instance.inputControl.Normal.Position.ReadValue<Vector2>());  
       RaycastHit hit;  
+
       if (Physics.Raycast(ray, out hit)) {
           if(hit.transform == this.transform){
               sendMessageToRoom("hit");
+                   Debug.Log("Click");
           }
       }
     }

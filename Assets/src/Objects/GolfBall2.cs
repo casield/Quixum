@@ -26,8 +26,8 @@ public class GolfBall2 : ConnectedObject
         sObject = GetComponent<SObject>();
         sObject.refreshTime = 1f;
 
-        var v = gameObject.AddComponent<LookTarget>();
-        v.setState(state);
+       // var v = gameObject.AddComponent<LookTarget>();
+        //v.setState(state);
         // audioSource.clip = collitionSound;
     }
 

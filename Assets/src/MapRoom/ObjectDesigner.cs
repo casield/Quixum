@@ -24,7 +24,7 @@ public class ObjectDesigner : MonoBehaviour
     {
         // desired length of Id
         // always start with a letter -- base 36 makes for a nice shortcut
-       Random rand = new Random();
+        Random rand = new Random();
         var idStr = Convert.ToString((System.Math.Floor(((float)(UnityEngine.Random.Range(0, 1000000)) * 25)) + 10), null);
         // add a timestamp in milliseconds (base 36 again) as the base
         idStr += "_" + Convert.ToString(DateTime.Now.Millisecond, null);
@@ -45,15 +45,15 @@ public class ObjectDesigner : MonoBehaviour
             bo.halfSize = new V3();
             if (isMesh)
             {
-                bo.halfSize.x = gameObject.transform.localScale.x/2;
-                bo.halfSize.y = gameObject.transform.localScale.y/2;
-                bo.halfSize.z = gameObject.transform.localScale.z/2;
+                bo.halfSize.x = gameObject.transform.localScale.x / 2;
+                bo.halfSize.y = gameObject.transform.localScale.y / 2;
+                bo.halfSize.z = gameObject.transform.localScale.z / 2;
             }
             else
             {
-                bo.halfSize.x = gameObject.transform.localScale.x;
-                bo.halfSize.y = gameObject.transform.localScale.y;
-                bo.halfSize.z = gameObject.transform.localScale.z;
+                    bo.halfSize.x = gameObject.transform.localScale.x;
+                    bo.halfSize.y = gameObject.transform.localScale.y;
+                    bo.halfSize.z = gameObject.transform.localScale.z;
             }
 
 

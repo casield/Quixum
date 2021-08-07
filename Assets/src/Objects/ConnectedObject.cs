@@ -8,7 +8,7 @@ void setState(ObjectState state);
 
 public class ConnectedObject : MonoBehaviour, IConnectedObject
 {
-    ObjectState state;
+    public ObjectState state;
     public virtual void onMessage(ObjectMessage m)
     {
        
