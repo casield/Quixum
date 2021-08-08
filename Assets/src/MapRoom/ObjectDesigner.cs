@@ -51,9 +51,9 @@ public class ObjectDesigner : MonoBehaviour
             }
             else
             {
-                    bo.halfSize.x = gameObject.transform.localScale.x;
-                    bo.halfSize.y = gameObject.transform.localScale.y;
-                    bo.halfSize.z = gameObject.transform.localScale.z;
+                bo.halfSize.x = gameObject.transform.localScale.x;
+                bo.halfSize.y = gameObject.transform.localScale.y;
+                bo.halfSize.z = gameObject.transform.localScale.z;
             }
 
 
@@ -72,9 +72,11 @@ public class ObjectDesigner : MonoBehaviour
         p.quaternion.z = gameObject.transform.rotation.z;
         p.quaternion.w = gameObject.transform.rotation.w;
 
-        p.position.x = gameObject.transform.position.x;
-        p.position.y = gameObject.transform.position.y;
-        p.position.z = gameObject.transform.position.z;
+
+        p.position.x = gameObject.transform.position.x ;
+        p.position.y = gameObject.transform.position.y ;
+        p.position.z = gameObject.transform.position.z ;
+
         p.type = type;
         p.uID = uID;
         p.material = material;
