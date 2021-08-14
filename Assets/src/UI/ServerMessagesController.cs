@@ -21,7 +21,7 @@ public class ServerMessagesController : MonoBehaviour
     }
     void Start()
     {
-        errorWindow.GetComponentInChildren<CloseButton>().onClose(close);
+       // errorWindow.GetComponentInChildren<CloseButton>().onClose(close);
     }
 
     public void showError(string error)

@@ -32,7 +32,7 @@ public class InGame : MonoBehaviour
     void onClickProfile()
     {
         profileWindow.gameObject.SetActive(true);
-        gameObject.SetActive(false);
+       // gameObject.SetActive(false);
     }
     bool onNewMessage()
     {
