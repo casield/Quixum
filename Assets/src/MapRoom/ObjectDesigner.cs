@@ -43,6 +43,7 @@ public class ObjectDesigner : MonoBehaviour
             p = new BoxObject();
             BoxObject bo = (BoxObject)p;
             bo.halfSize = new V3();
+            
             if (boundingBox != null)
             {
                 bo.halfSize.x = boundingBox.mCollider.bounds.extents.x*2;
