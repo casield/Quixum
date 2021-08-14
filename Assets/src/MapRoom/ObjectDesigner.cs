@@ -16,6 +16,7 @@ public class ObjectDesigner : MonoBehaviour
     public string mesh;
     public bool isMesh = false;
 
+    public BoundingBox boundingBox;
     void Start()
     {
 
@@ -36,25 +37,40 @@ public class ObjectDesigner : MonoBehaviour
     public ObjectState toJson()
     {
         uID = this.uID != "" ? this.uID : uniqueId();
-        ObjectState p = new ObjectState();
+        ObjectState p = null;
         if (shape == "box")
         {
-
             p = new BoxObject();
             BoxObject bo = (BoxObject)p;
             bo.halfSize = new V3();
-            if (isMesh)
+            if (boundingBox != null)
             {
-                bo.halfSize.x = gameObject.transform.localScale.x / 2;
-                bo.halfSize.y = gameObject.transform.localScale.y / 2;
-                bo.halfSize.z = gameObject.transform.localScale.z / 2;
+                bo.halfSize.x = boundingBox.mCollider.bounds.extents.x*2;
+                bo.halfSize.y = boundingBox.mCollider.bounds.extents.y*2;
+                bo.halfSize.z = boundingBox.mCollider.bounds.extents.z*2;
             }
             else
             {
-                bo.halfSize.x = gameObject.transform.localScale.x;
-                bo.halfSize.y = gameObject.transform.localScale.y;
-                bo.halfSize.z = gameObject.transform.localScale.z;
+                if (isMesh)
+                {
+                   bo.halfSize.x = gameObject.transform.localScale.x / 2;
+                    bo.halfSize.y = gameObject.transform.localScale.y / 2;
+                    bo.halfSize.z = gameObject.transform.localScale.z / 2;
+
+                  /*  bo.halfSize.x = gameObject.transform.localScale.x;
+                    bo.halfSize.y = gameObject.transform.localScale.y;
+                    bo.halfSize.z = gameObject.transform.localScale.z;*/
+                }
+                else
+                {
+                    bo.halfSize.x = gameObject.transform.localScale.x;
+                    bo.halfSize.y = gameObject.transform.localScale.y;
+                    bo.halfSize.z = gameObject.transform.localScale.z;
+                }
             }
+
+
+
 
 
         }
@@ -72,10 +88,19 @@ public class ObjectDesigner : MonoBehaviour
         p.quaternion.z = gameObject.transform.rotation.z;
         p.quaternion.w = gameObject.transform.rotation.w;
 
+        //if (boundingBox == null)
+        //{
+            p.position.x = gameObject.transform.position.x;
+            p.position.y = gameObject.transform.position.y;
+            p.position.z = gameObject.transform.position.z;
+       /* }else{
+            p.position.x =  boundingBox.mCollider.bounds.center.x-boundingBox.mCollider.bounds.extents.x;
+            p.position.y =  boundingBox.mCollider.bounds.center.y-boundingBox.mCollider.bounds.extents.x;
+            p.position.z =  boundingBox.mCollider.bounds.center.z-boundingBox.mCollider.bounds.extents.x;
 
-        p.position.x = gameObject.transform.position.x ;
-        p.position.y = gameObject.transform.position.y ;
-        p.position.z = gameObject.transform.position.z ;
+            
+        }*/
+
 
         p.type = type;
         p.uID = uID;

@@ -214,6 +214,7 @@ namespace Colyseus
 		protected async void ParseMessage (byte[] bytes)
 		{
 			byte code = bytes[0];
+			
 
 			if (code == Protocol.JOIN_ROOM)
 			{

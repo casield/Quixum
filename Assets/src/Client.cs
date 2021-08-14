@@ -125,21 +125,22 @@ public class Client : MonoBehaviour
         room.OnMessage<string>("error", onErrorMessage);
         room.OnMessage<string>("info", onInfoMessage);
         room.OnMessage<ObjectMessage>("objectMessage", onObjectMessage);
-        room.OnMessage<string>("OVar",OnOVarMessage);
+        room.OnMessage<string>("OVar", OnOVarMessage);
 
 
     }
 
-    private void OnOVarMessage(string message){
+    private void OnOVarMessage(string message)
+    {
 
     }
 
     private void onObjectMessage(ObjectMessage obj)
     {
-       
+
         if (objects.ContainsKey(obj.uID))
         {
-        
+
             objects[obj.uID].onMessage(obj);
         }
         else
@@ -232,15 +233,15 @@ public class Client : MonoBehaviour
         {
             gameOb.name += "=> " + ob.owner;
         }
-        
-        
-        System.Type t = System.Type.GetType(ob.type );
+
+
+        System.Type t = System.Type.GetType(ob.type);
 
         if (t != null)
         {
             Debug.Log(t.ToString());
-           IConnectedObject c = (IConnectedObject) gameOb.AddComponent(t);
-           c.setState(ob);
+            IConnectedObject c = (IConnectedObject)gameOb.AddComponent(t);
+            c.setState(ob);
         }
 
     }
@@ -273,21 +274,26 @@ public class Client : MonoBehaviour
         if (isBox)
         {
             BoxObject boxState = (BoxObject)ob;
-           
-         
-                size = new Vector3(boxState.halfSize.x, boxState.halfSize.y, boxState.halfSize.z);
-          
-            
+
+            size = new Vector3(boxState.halfSize.x, boxState.halfSize.y, boxState.halfSize.z);
+            if (ob.isMesh)
+            {
+                QuixConsole.Log("Is mesh",ob.mesh);
+                size *= 2;
+            }
+
+
         }
         else
         {
             SphereObject boxState = (SphereObject)ob;
-            size = new Vector3(boxState.radius*2, boxState.radius*2, boxState.radius*2);
+            size = new Vector3(boxState.radius * 2, boxState.radius * 2, boxState.radius * 2);
         }
 
         //size.Scale(new Vector3(2, 2, 2));
-        if(ob.type=="QuixBox"){
-            Debug.Log("Este 2"+size);
+        if (ob.type == "QuixBox")
+        {
+            Debug.Log("Este 2" + size);
         }
         gameOb.transform.localScale = size;
         gameOb.transform.parent = ServerObjects.transform;

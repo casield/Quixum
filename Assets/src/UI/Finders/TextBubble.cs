@@ -66,7 +66,7 @@ public class TextBubble : MonoBehaviour
             float distance = Vector3.Distance(Camera.main.transform.position, finder.findObject.transform.position);
             distance = Mathf.Clamp(distance, 0, maxDistance);
             float porcentage = 1 - (distance / maxDistance);
-            Debug.Log(porcentage);
+           // Debug.Log(porcentage);
             transform.localScale = new Vector3(porcentage, porcentage, porcentage);
             y *= porcentage;
             //finder.padding *= porcentage;

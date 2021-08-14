@@ -6154,8 +6154,7 @@ MonoBehaviour:
   isDragging: 0
   arcArrow: {fileID: 0}
   player: {fileID: 0}
-  defaultMaterial: {fileID: 9011811029570699148, guid: 6eef3bff77647aa479897683547f4ed5,
-    type: 3}
+  defaultMaterial: {fileID: 2100000, guid: fbee188de06b33f4e9282de318c4dc2b, type: 2}
   movm: {x: 0, y: 0}
 --- !u!23 &1010974389
 MeshRenderer:

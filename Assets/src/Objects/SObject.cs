@@ -41,8 +41,17 @@ public class SObject : MonoBehaviour
     private void onBoxSizeChange(List<DataChange> changes)
     {
         BoxObject bb = (BoxObject)state;
-
         this.transform.localScale = new Vector3(bb.halfSize.x, bb.halfSize.y, bb.halfSize.z);
+        if (state.isMesh)
+        {
+            this.transform.localScale *= 2;
+        }
+        else
+        {
+
+        }
+
+
 
 
         updateTime();
