@@ -37,5 +37,8 @@ public partial class ObjectState : Schema {
 
 	[Type(9, "boolean")]
 	public bool isMesh = default(bool);
+
+	[Type(10, "ref", typeof(PhyBoundBox))]
+	public PhyBoundBox boundBox = null;
 }
 

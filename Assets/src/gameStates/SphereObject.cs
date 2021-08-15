@@ -8,7 +8,7 @@
 using Colyseus.Schema;
 
 public partial class SphereObject : ObjectState {
-	[Type(10, "number")]
+	[Type(11, "number")]
 	public float radius = default(float);
 }
 
