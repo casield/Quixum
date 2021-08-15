@@ -25,4 +25,10 @@ public class Profile : MonoBehaviour
     {
         this.gameObject.SetActive(false);
     }
+
+    public async void ChangeGauntlet(string type){
+        if(client!= null){
+           await client.room.Send("changeGauntlet",new ChangeGauntletMessage(){type=type});
+        }
+    }
 }
