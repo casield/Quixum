@@ -11,9 +11,6 @@ using UnityEngine.InputSystem;
 
 public class Client : MonoBehaviour
 {
-    public Material material;
-    public Material WallMaterial;
-    public Material BallMaterial;
     public Colyseus.Client client;
     public Colyseus.Room<GameState> room;
 
@@ -21,7 +18,7 @@ public class Client : MonoBehaviour
     ArrayList funcArray = new ArrayList();
     public Dictionary<string, SObject> objects = new Dictionary<string, SObject>();
     public Dictionary<string, SObject> golfballs = new Dictionary<string, SObject>();
-    public PlayerInput playerInput;
+
     public static Client Instance { get; private set; }
     public bool localhost;
     public static string serverIP = "3.133.8.98";
