@@ -33,11 +33,6 @@ public class BallPointer : MonoBehaviour
     {
         inputControl = Character.Instance.inputControl;
     }
-    bool isTouch()
-    {
-        return Client.Instance.playerInput.currentControlScheme.ToLower() == "touch";
-    }
-
     /// <summary>
     /// Update is called every frame, if the MonoBehaviour is enabled.
     /// </summary>

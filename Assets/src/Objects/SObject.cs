@@ -42,17 +42,6 @@ public class SObject : MonoBehaviour
     {
         BoxObject bb = (BoxObject)state;
         this.transform.localScale = new Vector3(bb.halfSize.x, bb.halfSize.y, bb.halfSize.z);
-        if (state.isMesh)
-        {
-            this.transform.localScale *= 2;
-        }
-        else
-        {
-
-        }
-
-
-
 
         updateTime();
     }
@@ -109,17 +98,9 @@ public class SObject : MonoBehaviour
             if (newQuaternion != this.transform.rotation)
             {
 
-                if (state.isMesh)
-                {
-
-                    Quaternion meshQuat = Quaternion.Euler(0, -90, 0);
-
+             
                     this.gameObject.transform.rotation = Quaternion.Lerp(this.gameObject.transform.rotation, newQuaternion, refreshTime);
-                }
-                else
-                {
-                    this.gameObject.transform.rotation = Quaternion.Lerp(this.gameObject.transform.rotation, newQuaternion, refreshTime);
-                }
+             
 
 
             }

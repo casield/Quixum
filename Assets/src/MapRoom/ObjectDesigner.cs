@@ -43,18 +43,18 @@ public class ObjectDesigner : MonoBehaviour
             p = new BoxObject();
             BoxObject bo = (BoxObject)p;
             bo.halfSize = new V3();
-            if (isMesh)
+           /* if (isMesh)
             {
                 bo.halfSize.x = gameObject.transform.localScale.x / 2;
                 bo.halfSize.y = gameObject.transform.localScale.y / 2;
                 bo.halfSize.z = gameObject.transform.localScale.z / 2;
             }
             else
-            {
+            {*/
                 bo.halfSize.x = gameObject.transform.localScale.x;
                 bo.halfSize.y = gameObject.transform.localScale.y;
                 bo.halfSize.z = gameObject.transform.localScale.z;
-            }
+           // }
 
         }
         if (shape == "sphere")

@@ -273,13 +273,6 @@ public class Client : MonoBehaviour
             BoxObject boxState = (BoxObject)ob;
 
             size = new Vector3(boxState.halfSize.x, boxState.halfSize.y, boxState.halfSize.z);
-            if (ob.isMesh)
-            {
-                QuixConsole.Log("Is mesh",ob.mesh);
-                size *= 2;
-            }
-
-
         }
         else
         {
