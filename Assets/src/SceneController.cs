@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class SceneController : MonoBehaviour
 {
     // Start is called before the first frame update
+    public Camera toHideCamera;
     void Start()
     {
         SceneManager.LoadScene("UIScene",LoadSceneMode.Additive);

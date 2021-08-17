@@ -19,17 +19,11 @@ public class CameraController : MonoBehaviour
 
     private GameObject followObject;
 
-    private float moveYVelocity = 4;
-    private float maxYPosition = 30;
 
-
-
-    public float YPositionFollowObject = 30;
 
 
     public LookObject lookObject;
     private Vector2 newPosition = new Vector3();
-    public Vector2 lastPosition = new Vector3();
     public bool hasChanged = false;
 
 
@@ -61,19 +55,14 @@ public class CameraController : MonoBehaviour
 
     private void ActualSetCameraPosition()
     {
-       
+
         Vector3 desiredPosition = player.transform.position - ((player.transform.right * -1) * newPosition.x);
-        Vector3 lastDesiredPosition = player.transform.position - ((player.transform.right * -1) * lastPosition.x);
         desiredPosition.y += newPosition.y;
-        lastDesiredPosition.y+=lastPosition.y;
-        transform.position = desiredPosition;//Vector3.Slerp(desiredPosition,lastDesiredPosition,.1f);
-      
-       var targetRotation = Quaternion.LookRotation(player.transform.position - transform.position);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime);
-        lastPosition = new Vector2(newPosition.x,newPosition.y);
+        transform.position = Vector3.Lerp(player.transform.position, desiredPosition,.9f);
 
+       // var targetRotation = Quaternion.LookRotation(player.transform.position - transform.position);
+        //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime);
 
-        //transform.LookAt(Vector3.Lerp(followObject.transform.position,player.transform.position,.5f),);
 
         hasChanged = false;
         // 
@@ -81,17 +70,16 @@ public class CameraController : MonoBehaviour
 
     public void SetInitialCameraPosition()
     {
-
-
         SetCameraPosition(130, 80);
-          transform.parent = player.transform;
+       // transform.parent = player.transform;
     }
 
 
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
+
         if (player != null && !initPlayer)
         {
 
@@ -100,17 +88,20 @@ public class CameraController : MonoBehaviour
             initPlayer = true;
 
         }
+       // if (hasChanged)
+       // {
+           
+        //}
 
         if (player != null && RotationController.Instance != null)
         {
+             ActualSetCameraPosition();
             var targetRotation = Quaternion.LookRotation(followObject.transform.position - transform.position);
-            //transform.LookAt(Vector3.Lerp(followObject.transform.position,player.transform.position,.5f),);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5 * Time.deltaTime);
+
+            transform.rotation = targetRotation;//Quaternion.Slerp(transform.rotation, targetRotation, 0.1f);
         }
-        if (hasChanged)
-        {
-            ActualSetCameraPosition();
-        }
+
+
 
     }
 }

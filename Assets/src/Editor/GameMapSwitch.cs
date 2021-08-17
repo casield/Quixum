@@ -22,6 +22,15 @@ public class GameMapSwitch : MonoBehaviour
         EditorSceneManager.OpenScene("Assets/Scenes/Main.unity");
     }
 
+    [MenuItem("drokt.com/Go to UIScene")]
+    static void GoToSceneUI()
+    {
+        EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
+
+        EditorSceneManager.OpenScene("Assets/Scenes/UIScene.unity");
+    }
+
+
     // Start is called before the first frame update
     void Start()
     {

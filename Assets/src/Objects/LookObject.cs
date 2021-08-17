@@ -8,7 +8,6 @@ public class LookObject : ConnectedObject
 {
     private SObject sObject;
     private Player2 player;
-
     public Vector2 OnLookingPosition = new Vector2(150, 47);
     public float maxDistance = 1300;
 
@@ -17,7 +16,7 @@ public class LookObject : ConnectedObject
     private void Start()
     {
         sObject = GetComponent<SObject>();
-        sObject.refreshTime = .7f;
+        sObject.refreshTime = 1f;
 
 
         CameraController.Instance.SetLookObject(this);
@@ -58,6 +57,7 @@ public class LookObject : ConnectedObject
     {
         base.setState(state);
         player = Client.Instance.objects[state.owner].GetComponent<Player2>();
+        player.lookObject = this;
     }
 }
 

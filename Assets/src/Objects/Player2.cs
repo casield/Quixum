@@ -14,14 +14,16 @@ public class Player2 : MonoBehaviour, IConnectedObject
     private Color color;
     public ObjectState state;
     public SObject sObject;
+    public LookObject lookObject;
+
 
     void Start()
     {
-        
+
         animator = GetComponent<Animator>();
         sObject = GetComponent<SObject>();
-        sObject.refreshTime = .9f;
-        setNormalSize(); 
+        sObject.refreshTime = 1f;
+        setNormalSize();
     }
 
     void setNormalSize()
@@ -32,7 +34,7 @@ public class Player2 : MonoBehaviour, IConnectedObject
     {
         if (animator != null)
         {
-                
+
             if (m.message == "trigger_ShootAnim")
             {
 
@@ -59,17 +61,19 @@ public class Player2 : MonoBehaviour, IConnectedObject
                 json = JsonUtility.FromJson<DrawLineMessage>(s[1]);
                 Debug.Log(json.x1);
 
-               color = new Color(1.0f, 1f, 1.0f);
-              
+                color = new Color(1.0f, 1f, 1.0f);
+
             }
             //Debug.Log(m.message);
         }
     }
-    private void FixedUpdate() {
-        if(json != null){
-             Debug.DrawLine(new Vector3(json.x1,gameObject.transform.position.y,json.y1), new Vector3(json.x2,gameObject.transform.position.y,json.y2), color);
+    private void FixedUpdate()
+    {
+        if (json != null)
+        {
+            Debug.DrawLine(new Vector3(json.x1, gameObject.transform.position.y, json.y1), new Vector3(json.x2, gameObject.transform.position.y, json.y2), color);
         }
-         
+
     }
     public void setState(ObjectState state)
     {
