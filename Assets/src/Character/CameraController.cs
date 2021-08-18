@@ -60,7 +60,9 @@ public class CameraController : MonoBehaviour
         Vector3 desiredPosition = (player.transform.position - ((player.transform.right * -1) * (newPosition.x-distanceY)));
 
         desiredPosition.y += newPosition.y;
-        transform.position =desiredPosition;// Vector3.Lerp(transform.position, desiredPosition,1f);
+        transform.position = desiredPosition;
+
+
 
 
         hasChanged = false;
@@ -87,17 +89,15 @@ public class CameraController : MonoBehaviour
             initPlayer = true;
 
         }
-       // if (hasChanged)
-       // {
-           
-        //}
+
 
         if (player != null && RotationController.Instance != null)
         {
              ActualSetCameraPosition();
-            var targetRotation = Quaternion.LookRotation(followObject.transform.position - transform.position);
+             dCamera.transform.LookAt(followObject.transform);
+           /* var targetRotation = Quaternion.LookRotation(followObject.transform.position - transform.position);
 
-            transform.rotation = targetRotation;//Quaternion.Slerp(transform.rotation, targetRotation, 0.1f);
+            transform.rotation =targetRotation;*/
         }
 
 

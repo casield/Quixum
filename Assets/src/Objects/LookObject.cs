@@ -15,7 +15,7 @@ public class LookObject : ConnectedObject
     private void Start()
     {
         sObject = GetComponent<SObject>();
-        sObject.refreshTime = 1f;
+        sObject.refreshTime = .9f;
 
 
         CameraController.Instance.SetLookObject(this);
@@ -61,7 +61,7 @@ public class LookObject : ConnectedObject
         player.lookObject = this;
     }
 }
-
+ #if UNITY_EDITOR
 [CustomEditor(typeof(LookObject))]
 public class LevelScriptEditor : Editor
 {
@@ -77,3 +77,4 @@ public class LevelScriptEditor : Editor
 
     }
 }
+#endif

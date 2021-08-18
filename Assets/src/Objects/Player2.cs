@@ -22,7 +22,7 @@ public class Player2 : MonoBehaviour, IConnectedObject
 
         animator = GetComponent<Animator>();
         sObject = GetComponent<SObject>();
-        sObject.refreshTime = 1f;
+        sObject.refreshTime = .9f;
         setNormalSize();
     }
 
