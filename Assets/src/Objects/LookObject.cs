@@ -9,7 +9,6 @@ public class LookObject : ConnectedObject
     private SObject sObject;
     private Player2 player;
     public Vector2 OnLookingPosition = new Vector2(150, 47);
-    public float maxDistance = 1300;
 
     public bool isOnPlayer = true;
 
@@ -43,14 +42,16 @@ public class LookObject : ConnectedObject
     }
     private void FixedUpdate()
     {
-        if (!isOnPlayer)
-            SetCamera();
+       // if (!isOnPlayer)
+          //  SetCamera();
     }
 
     public void SetCamera()
     {   
        // CameraController.Instance.SetCameraPosition(porcenage*OnLookingPosition.x, (OnLookingPosition.y/distanceWithObject)*100);
-        CameraController.Instance.SetCameraPosition(OnLookingPosition.x, OnLookingPosition.y);
+     /*  float distanceinY= player.transform.position.y-transform.position.y;
+       QuixConsole.Log("DinstanceY",distanceinY);
+        CameraController.Instance.SetCameraPosition(OnLookingPosition.x+(distanceinY), OnLookingPosition.y);*/
     }
 
     public override void setState(ObjectState state)

@@ -55,13 +55,12 @@ public class CameraController : MonoBehaviour
 
     private void ActualSetCameraPosition()
     {
+        float distanceY = (player.transform.position.y-player.lookObject.transform.position.y)/1.3f;
 
-        Vector3 desiredPosition = player.transform.position - ((player.transform.right * -1) * newPosition.x);
+        Vector3 desiredPosition = (player.transform.position - ((player.transform.right * -1) * (newPosition.x-distanceY)));
+
         desiredPosition.y += newPosition.y;
-        transform.position = Vector3.Lerp(player.transform.position, desiredPosition,.9f);
-
-       // var targetRotation = Quaternion.LookRotation(player.transform.position - transform.position);
-        //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime);
+        transform.position =desiredPosition;// Vector3.Lerp(transform.position, desiredPosition,1f);
 
 
         hasChanged = false;
