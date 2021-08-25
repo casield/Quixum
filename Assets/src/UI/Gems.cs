@@ -31,7 +31,7 @@ public class Gems : MonoBehaviour
         //
         client = Client.Instance;
 
-        client.userState.OnChange += onUserChange;
+        client.user.userState.OnChange += onUserChange;
 
 
     }

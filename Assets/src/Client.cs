@@ -22,7 +22,8 @@ public class Client : MonoBehaviour
     public static Client Instance { get; private set; }
     public bool localhost;
     public static string serverIP = "3.133.8.98";
-    public UserState userState;
+    public User user;
+    public Dictionary<string,User> users = new Dictionary<string, User>();
 
     void Awake()
     {
@@ -53,7 +54,7 @@ public class Client : MonoBehaviour
 
     public void addReadyListener(UnityAction func)
     {
-        if (this.room != null && this.userState != null)
+        if (this.room != null && this.user != null)
         {
             func();
         }
@@ -158,14 +159,17 @@ public class Client : MonoBehaviour
 
     private void onUserAdded(UserState value, string key)
     {
+        User user = new User(value);
         if (value.sessionId == room.SessionId)
         {
-            this.userState = value;
+            
+            this.user = user;
             foreach (UnityAction func in funcArray)
             {
                 func();
             }
         }
+        users.Add(value.sessionId,user);
     }
     public void setListeners()
     {

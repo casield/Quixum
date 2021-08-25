@@ -24,6 +24,7 @@ public class Player2 : MonoBehaviour, IConnectedObject
         sObject = GetComponent<SObject>();
         sObject.refreshTime = .9f;
         setNormalSize();
+
     }
 
     void setNormalSize()
@@ -84,11 +85,11 @@ public class Player2 : MonoBehaviour, IConnectedObject
             Character.Instance.ballPointer = ballPointer;
             Character.Instance.player = this;
             CameraController.Instance.player = this;
+            Client.Instance.user.player = this;
         }
         else
         {
-            ballPointer = GetComponentInChildren<BallPointer>();
-            Destroy(ballPointer.gameObject);
+            Client.Instance.users[state.owner].player = this;
         }
     }
 

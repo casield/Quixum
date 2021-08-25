@@ -17,9 +17,6 @@ public class LookObject : ConnectedObject
         sObject = GetComponent<SObject>();
         sObject.refreshTime = .9f;
 
-
-        CameraController.Instance.SetLookObject(this);
-
     }
 
     public override void onMessage(ObjectMessage m)
@@ -57,8 +54,13 @@ public class LookObject : ConnectedObject
     public override void setState(ObjectState state)
     {
         base.setState(state);
-        player = Client.Instance.objects[state.owner].GetComponent<Player2>();
+        player = Client.Instance.users[state.owner].player;
         player.lookObject = this;
+
+        if(state.owner == Client.Instance.user.userState.sessionId){
+           CameraController.Instance.SetLookObject(this); 
+        }
+        
     }
 }
  #if UNITY_EDITOR
