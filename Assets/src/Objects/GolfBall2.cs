@@ -24,7 +24,7 @@ public class GolfBall2 : ConnectedObject
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.spatialBlend = 0.88f;
         sObject = GetComponent<SObject>();
-        sObject.refreshTime = 1f;
+        sObject.refreshTime = .9f;
 
        // var v = gameObject.AddComponent<LookTarget>();
         //v.setState(state);
