@@ -2828,6 +2828,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocity: 0
+  pointerObjSize: 0.2
+  shootObjSize: 1
+  crossPointerMaterial: {fileID: 2100000, guid: 6fc3209be834ece4384ae85ce00013ed,
+    type: 2}
 --- !u!222 &1153683321
 CanvasRenderer:
   m_ObjectHideFlags: 0

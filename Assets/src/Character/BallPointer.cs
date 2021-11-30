@@ -26,6 +26,8 @@ public class BallPointer : MonoBehaviour
     private Color colorShoot = new Color(1, 1, 1, .9f);
     private GameObject shootObj;
 
+    public Material crossPointerMaterial;
+
 
     // Start is called before the first frame update
     /// <summary>
@@ -65,6 +67,7 @@ public class BallPointer : MonoBehaviour
         pointerObj.transform.localPosition = new Vector3();
         pointer = pointerObj.AddComponent<Image>();
         pointer.sprite = Resources.Load<Sprite>("GUI/CrossBallPointer");
+        pointer.material=crossPointerMaterial;
         RectTransform rectTransform = (RectTransform)pointerObj.transform;
         rectTransform.transform.localScale = new Vector3(pointerObjSize, pointerObjSize, pointerObjSize);
         pointer.color = color;
@@ -89,7 +92,7 @@ public class BallPointer : MonoBehaviour
             if(look!=null){
                 Vector3 screenPosition = Camera.main.WorldToScreenPoint(look.transform.position);
                 shootObj.transform.position = screenPosition;
-                pointerObj.transform.position=screenPosition;
+               // pointerObj.transform.position=screenPosition;
             }
               
         }
