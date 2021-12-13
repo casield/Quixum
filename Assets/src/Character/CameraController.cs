@@ -55,9 +55,9 @@ public class CameraController : MonoBehaviour
 
     private void ActualSetCameraPosition()
     {
-        float distanceY = (player.transform.position.y-player.lookObject.transform.position.y)/1.3f;
+        float distanceY = (player.transform.position.y - player.lookObject.transform.position.y) / 1.3f;
 
-        Vector3 desiredPosition = (player.transform.position - ((player.transform.right * -1) * (newPosition.x-distanceY)));
+        Vector3 desiredPosition = (player.transform.position - ((player.transform.right * -1) * (newPosition.x - distanceY)));
 
         desiredPosition.y += newPosition.y;
         transform.position = desiredPosition;
@@ -72,13 +72,13 @@ public class CameraController : MonoBehaviour
     public void SetInitialCameraPosition()
     {
         SetCameraPosition(130, 80);
-       // transform.parent = player.transform;
+        // transform.parent = player.transform;
     }
 
 
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
 
         if (player != null && !initPlayer)
@@ -93,11 +93,8 @@ public class CameraController : MonoBehaviour
 
         if (player != null && RotationController.Instance != null)
         {
-             ActualSetCameraPosition();
-             dCamera.transform.LookAt(followObject.transform);
-           /* var targetRotation = Quaternion.LookRotation(followObject.transform.position - transform.position);
-
-            transform.rotation =targetRotation;*/
+            ActualSetCameraPosition();
+            dCamera.transform.LookAt(followObject.transform);
         }
 
 
