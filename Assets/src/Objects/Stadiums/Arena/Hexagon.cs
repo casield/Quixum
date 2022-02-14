@@ -11,8 +11,13 @@ public class Hexagon : ConnectedObject
 
     GameObject GridObject;
     static string _GRIDOBJECT_NAME = "Hexgrid";
+    public Color color = new Color();
+    public Renderer render;
+
+
     void Start()
     {
+        render = gameObject.GetComponent<Renderer>();
         var hexobject = GameObject.Find(_GRIDOBJECT_NAME);
         if (hexobject != null)
         {
@@ -22,6 +27,7 @@ public class Hexagon : ConnectedObject
         else
         {
             GridObject = new GameObject(_GRIDOBJECT_NAME);
+            GridObject.AddComponent<Hexgrid>();
             transform.parent = GridObject.transform;
         }
     }
@@ -48,11 +54,11 @@ public class Hexagon : ConnectedObject
     {
         if (m.message.Contains("c:"))
         {
-            QuixConsole.Log(m.message);
+            QuixConsole.Log("Color", m.message);
             var func = m.message.Split(':');
             ColorUtility.TryParseHtmlString(func[1], out Color color);
-            gameObject.GetComponent<Renderer>().sharedMaterial.SetColor("Color",color);
-
+            QuixConsole.Log("Color parsed", color);
+            render.material.color =  color;
         }
         base.onMessage(m);
         // text.text = m.message;

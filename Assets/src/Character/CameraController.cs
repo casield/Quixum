@@ -7,29 +7,13 @@ public class CameraController : MonoBehaviour
 {
     // Start is called before the first frame update
     public Player2 player;
-
-
-
     public static CameraController Instance { get; private set; }
-
-
     private bool initPlayer = false;
-
     public Camera dCamera;
-
     private GameObject followObject;
-
-
-
-
     public LookObject lookObject;
-    private Vector2 newPosition = new Vector3();
+    public Vector2 newPosition = new Vector3();
     public bool hasChanged = false;
-
-
-
-
-
     void Awake()
     {
 
@@ -71,7 +55,7 @@ public class CameraController : MonoBehaviour
 
     public void SetInitialCameraPosition()
     {
-        SetCameraPosition(130, 80);
+        SetCameraPosition(250, 250);
         // transform.parent = player.transform;
     }
 

@@ -33,28 +33,29 @@ public class RotationController : MonoBehaviour, IDragHandler, IBeginDragHandler
         Vector2 pointerPosition = pos;
         fingerSprite.transform.position = pointerPosition;
         Vector2 result = startPosition - pointerPosition;
-        Vector2 normal = result.normalized;
-        sendData(result / (Screen.width));
+
+        sendData(result.normalized);
         //Debug.Log(result);
     }
     private void dragStart(Vector2 pos)
     {
-        startPosition = pos;
+        startPosition = pos;//new Vector2(Screen.width / 2, Screen.height / 2);
         isDragging = true;
         startSprite.transform.position = startPosition;
         changeSpritesVisibility(true);
     }
     private void dragEnd()
     {
-        isDragging = false;
-        sendData(Vector2.zero);
-        actualSendData();
-        changeSpritesVisibility(false);
+         isDragging = false;
+         sendData(Vector2.zero);
+         actualSendData();
+         changeSpritesVisibility(false);
     }
 
     private void init()
     {
         client = Client.Instance;
+        dragStart(Vector2.zero);
     }
     void changeSpritesVisibility(bool active)
     {
@@ -84,33 +85,6 @@ public class RotationController : MonoBehaviour, IDragHandler, IBeginDragHandler
         }
     }
 
-    private void onFingerUp(Finger obj)
-    {
-        if (activeFinger == obj)
-        {
-            dragEnd();
-            activeFinger = null;
-        }
-
-    }
-
-    private void onFingerMove(Finger obj)
-    {
-        if (isDragging && activeFinger == obj)
-        {
-            drag(obj.screenPosition);
-        }
-    }
-
-    private void onFingerDown(Finger obj)
-    {
-        if (activeFinger == null)
-        {
-            activeFinger = obj;
-            drag(obj.screenPosition);
-        }
-
-    }
     public void OnEndDrag(PointerEventData eventData)
     {
         dragEnd();
@@ -128,9 +102,17 @@ public class RotationController : MonoBehaviour, IDragHandler, IBeginDragHandler
 
     private void FixedUpdate()
     {
-        if (rotateMessage.x != 0 || rotateMessage.y != 0)
+        /*if (Character.Instance != null)
         {
-            
+
+                var pos = Character.Instance.inputControl.Normal.Position.ReadValue<Vector2>();
+
+                drag(pos);
+
+        }*/
+        if (rotateMessage.x != 0 || rotateMessage.y != 0 && Character.Instance.inputControl.Normal.Click.ReadValue<bool>())
+        {
+
             actualSendData();
         }
     }

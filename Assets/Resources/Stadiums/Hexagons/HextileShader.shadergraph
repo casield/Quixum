@@ -110,20 +110,6 @@
         {
             "m_OutputSlot": {
                 "m_Node": {
-                    "m_Id": "30c8513aa1c04ebfa0c100dae135b0f0"
-                },
-                "m_SlotId": 2
-            },
-            "m_InputSlot": {
-                "m_Node": {
-                    "m_Id": "7e4e69a5bd154cd98f8a03424989795a"
-                },
-                "m_SlotId": 0
-            }
-        },
-        {
-            "m_OutputSlot": {
-                "m_Node": {
                     "m_Id": "430c572bcf82419dab19d1d5937f1f26"
                 },
                 "m_SlotId": 1
@@ -229,6 +215,20 @@
             "m_InputSlot": {
                 "m_Node": {
                     "m_Id": "430c572bcf82419dab19d1d5937f1f26"
+                },
+                "m_SlotId": 0
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "f5ef1f8864284d9e8efbbf06eb6da69d"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "7e4e69a5bd154cd98f8a03424989795a"
                 },
                 "m_SlotId": 0
             }
@@ -429,7 +429,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
     "m_ObjectId": "11ed1a45cb8f42eb930a4bce6379da01",
     "m_Id": 0,
-    "m_DisplayName": "Color",
+    "m_DisplayName": "_Color",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -1587,7 +1587,7 @@
     "m_Guid": {
         "m_GuidSerialized": "3409d2e3-d422-43ce-a4ab-1a6c2cd1dba5"
     },
-    "m_Name": "Color",
+    "m_Name": "_Color",
     "m_DefaultReferenceName": "Color_9313eca595ce4cf48b2457449291c1b0",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,

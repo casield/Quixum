@@ -1087,6 +1087,7 @@ MonoBehaviour:
   player: {fileID: 0}
   dCamera: {fileID: 0}
   lookObject: {fileID: 0}
+  newPosition: {x: 0, y: 0}
   hasChanged: 0
 --- !u!114 &963194231
 MonoBehaviour:

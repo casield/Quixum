@@ -30,26 +30,11 @@ public class LookObject : ConnectedObject
         }
         if(m.message == "target")
         {
-           // sObject.refreshTime = .7f;
-            //CameraController.Instance.SetInitialCameraPosition();
             isOnPlayer=false;
-            //SetCamera();
         }
 
     }
-    private void FixedUpdate()
-    {
-       // if (!isOnPlayer)
-          //  SetCamera();
-    }
 
-    public void SetCamera()
-    {   
-       // CameraController.Instance.SetCameraPosition(porcenage*OnLookingPosition.x, (OnLookingPosition.y/distanceWithObject)*100);
-     /*  float distanceinY= player.transform.position.y-transform.position.y;
-       QuixConsole.Log("DinstanceY",distanceinY);
-        CameraController.Instance.SetCameraPosition(OnLookingPosition.x+(distanceinY), OnLookingPosition.y);*/
-    }
 
     public override void setState(ObjectState state)
     {
@@ -63,20 +48,3 @@ public class LookObject : ConnectedObject
         
     }
 }
- #if UNITY_EDITOR
-[CustomEditor(typeof(LookObject))]
-public class LevelScriptEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        DrawDefaultInspector();
-        LookObject myTarget = (LookObject)target;
-        if (GUILayout.Button("Build Camera"))
-        {
-            myTarget.SetCamera();
-        }
-
-
-    }
-}
-#endif

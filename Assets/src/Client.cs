@@ -21,7 +21,7 @@ public class Client : MonoBehaviour
 
     public static Client Instance { get; private set; }
     public bool localhost;
-    public static string serverIP = "3.23.130.126";
+    public static string serverIP = "3.144.132.125";
     public User user;
     public Dictionary<string,User> users = new Dictionary<string, User>();
 
