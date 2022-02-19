@@ -1,12 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using Colyseus;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using System;
-
 public class GUIController : MonoBehaviour
 {
     /// <summary>
