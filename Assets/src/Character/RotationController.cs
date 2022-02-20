@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.UI;
-using static UnityEngine.InputSystem.InputAction;
-using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
-
 public class RotationController : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
     Client client;
@@ -20,16 +14,18 @@ public class RotationController : MonoBehaviour, IDragHandler, IBeginDragHandler
     Finger activeFinger;
 
     public MoveMessage rotateMessage = new MoveMessage();
-    private void Awake()
+    private void Start()
     {
         Instance = this;
         Client.Instance.addReadyListener(init);
         startSprite.gameObject.SetActive(false);
         fingerSprite.gameObject.SetActive(false);
+        QuixConsole.Log("Hola!!");
     }
 
     private void drag(Vector2 pos)
     {
+                QuixConsole.Log("Hola!!");
         Vector2 pointerPosition = pos;
         fingerSprite.transform.position = pointerPosition;
         Vector2 result = startPosition - pointerPosition;
@@ -102,14 +98,6 @@ public class RotationController : MonoBehaviour, IDragHandler, IBeginDragHandler
 
     private void FixedUpdate()
     {
-        /*if (Character.Instance != null)
-        {
-
-                var pos = Character.Instance.inputControl.Normal.Position.ReadValue<Vector2>();
-
-                drag(pos);
-
-        }*/
         if (rotateMessage.x != 0 || rotateMessage.y != 0 && Character.Instance.inputControl.Normal.Click.ReadValue<bool>())
         {
 

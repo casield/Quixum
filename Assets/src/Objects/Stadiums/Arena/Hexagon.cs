@@ -58,7 +58,7 @@ public class Hexagon : ConnectedObject
             var func = m.message.Split(':');
             ColorUtility.TryParseHtmlString(func[1], out Color color);
             QuixConsole.Log("Color parsed", color);
-            render.material.color =  color;
+            //render.material.color =  color;
         }
         base.onMessage(m);
         // text.text = m.message;
