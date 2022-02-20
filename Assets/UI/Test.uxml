@@ -1,14 +1,19 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <ui:VisualElement name="Container" style="height: 100%; align-items: auto; justify-content: space-between;">
-        <ui:VisualElement name="top" style="width: 100%; height: 20%; background-color: rgba(209, 137, 137, 0);">
+        <ui:VisualElement name="top" style="width: 100%; height: auto; background-color: rgba(209, 137, 137, 0);">
             <ui:VisualElement name="top-top" style="height: 65%; flex-direction: row; align-items: center; justify-content: space-between; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;">
                 <ui:VisualElement name="profile" style="width: 70px; height: 70px; background-color: rgb(255, 255, 255); border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-left-width: 3px; border-right-width: 3px; border-top-width: 3px; border-bottom-width: 3px; border-top-left-radius: 100%; border-bottom-left-radius: 100%; border-top-right-radius: 100%; border-bottom-right-radius: 100%; align-items: center; justify-content: center;">
                     <ui:VisualElement name="profile-image" style="background-image: resource(&apos;GUI/4x/CharFace@4x&apos;); width: 41px; height: 51px;" />
                 </ui:VisualElement>
-                <ui:VisualElement name="Gems" style="background-image: resource(&apos;GUI/1x/Gems-8&apos;); width: 220px; height: 58px; -unity-background-scale-mode: scale-to-fit;" />
+                <ui:VisualElement style="background-color: rgb(0, 0, 0); width: 203px; height: 100%; border-top-left-radius: 9px; border-bottom-left-radius: 9px; border-top-right-radius: 9px; border-bottom-right-radius: 9px; justify-content: flex-start; align-items: center; flex-direction: row;">
+                    <ui:VisualElement style="width: 47px; height: 100%; background-color: rgb(149, 26, 229); border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-left-width: 2px; border-right-width: 2px; border-top-width: 2px; border-bottom-width: 2px; border-top-left-radius: 31px; border-bottom-left-radius: 31px; border-top-right-radius: 31px; border-bottom-right-radius: 31px; scale: 1 1; translate: -18px 0; justify-content: center; align-items: center;">
+                        <ui:VisualElement style="width: 80%; height: 80%; background-image: resource(&apos;GUI/4x/GemsIcon@4x&apos;); -unity-background-scale-mode: scale-to-fit;" />
+                    </ui:VisualElement>
+                    <ui:Label text="0000000" display-tooltip-when-elided="true" style="-unity-font: resource(&apos;GUI/Fonts/PoetsenOne-Regular&apos;); font-size: 26px; color: rgb(210, 210, 210); -unity-font-definition: none;" />
+                </ui:VisualElement>
             </ui:VisualElement>
-            <ui:VisualElement name="top-bottom" style="height: 38px; align-items: flex-start; justify-content: center;">
-                <ui:Button text="Shop" display-tooltip-when-elided="true" name="Shop" style="padding-left: 17px; padding-right: 17px; padding-top: 17px; padding-bottom: 17px;" />
+            <ui:VisualElement name="top-bottom" style="height: 62%; align-items: flex-start; justify-content: center;">
+                <ui:Button text="Shop" display-tooltip-when-elided="true" name="shopButton" style="padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px; margin-left: 17px; background-color: rgb(219, 77, 174); border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-left-width: 3px; border-right-width: 3px; border-top-width: 3px; border-bottom-width: 3px; border-top-left-radius: 20px; border-bottom-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; -unity-font: resource(&apos;GUI/Fonts/PoetsenOne-Regular&apos;); -unity-font-definition: none; color: rgb(255, 255, 255); overflow: hidden;" />
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="bottom" style="background-color: rgba(178, 165, 165, 0); height: 20%; width: 100%; opacity: 0.53;" />

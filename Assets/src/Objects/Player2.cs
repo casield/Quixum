@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class Player2 : MonoBehaviour, IConnectedObject
+public class Player2 :ConnectedObject
 {
     /// <summary>
     /// Start is called on the frame when a script is enabled just before
@@ -12,10 +12,12 @@ public class Player2 : MonoBehaviour, IConnectedObject
     Animator animator;
     private DrawLineMessage json;
     private Color color;
-    public ObjectState state;
     public SObject sObject;
     public LookObject lookObject;
 
+    public Player2()
+    {
+    }
 
     void Start()
     {
@@ -31,7 +33,7 @@ public class Player2 : MonoBehaviour, IConnectedObject
     {
         this.transform.localScale = new Vector3(2, 2, 2);
     }
-    public void onMessage(ObjectMessage m)
+    public override void onMessage(ObjectMessage m)
     {
         if (animator != null)
         {
@@ -76,7 +78,7 @@ public class Player2 : MonoBehaviour, IConnectedObject
         }
 
     }
-    public void setState(ObjectState state)
+    public override void setState(ObjectState state)
     {
 
         this.state = state;
@@ -91,11 +93,6 @@ public class Player2 : MonoBehaviour, IConnectedObject
         {
             Client.Instance.users[state.owner].player = this;
         }
-    }
-
-    public void sendMessageToRoom(string m)
-    {
-        throw new System.NotImplementedException();
     }
 }
 
