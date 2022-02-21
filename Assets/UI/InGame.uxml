@@ -1,5 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <ui:VisualElement name="Container" style="height: 100%; align-items: auto; justify-content: space-between;">
+        <RotationControllerUI name="RotationControllerUI" />
         <ui:VisualElement name="top" style="width: 100%; height: auto; background-color: rgba(209, 137, 137, 0);">
             <ui:VisualElement name="top-top" style="height: 65%; flex-direction: row; align-items: center; justify-content: space-between; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;">
                 <ui:VisualElement name="profile" style="width: 70px; height: 70px; background-color: rgb(255, 255, 255); border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-left-width: 3px; border-right-width: 3px; border-top-width: 3px; border-bottom-width: 3px; border-top-left-radius: 100%; border-bottom-left-radius: 100%; border-top-right-radius: 100%; border-bottom-right-radius: 100%; align-items: center; justify-content: center;">

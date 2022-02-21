@@ -75,7 +75,7 @@ public class CameraController : MonoBehaviour
         }
 
 
-        if (player != null && RotationController.Instance != null)
+        if (player != null)
         {
             ActualSetCameraPosition();
             dCamera.transform.LookAt(followObject.transform);
