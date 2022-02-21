@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="InGame" src="project://database/Assets/UI/InGame.uxml?fileID=9197481963319205126&amp;guid=6c702ccf39df4744e8c050c8ddb79bc8&amp;type=3#InGame" />
+    <ui:Template name="Shop" src="project://database/Assets/UI/Shop.uxml?fileID=9197481963319205126&amp;guid=80daf857462649f438679d0f4fdaae61&amp;type=3#Shop" />
+    <RootManager style="height: 100%;">
+        <ui:Instance template="Shop" name="Shop" style="position: absolute; width: 100%; height: 100%; display: none;" />
+        <ui:Instance template="InGame" name="InGame" style="position: absolute; width: 100%; height: 100%;" />
+    </RootManager>
+</ui:UXML>

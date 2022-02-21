@@ -28,7 +28,7 @@ public class GUIConsole : MonoBehaviour
     void OnDisable() { Application.logMessageReceived -= Log; }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K)) { doShow = !doShow; }
+        //if (Input.GetKeyDown(KeyCode.K)) { doShow = !doShow; }
        
     }
     public void Log(string logString, string stackTrace, LogType type)

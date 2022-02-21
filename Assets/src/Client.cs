@@ -16,6 +16,9 @@ public class Client : MonoBehaviour
 
     public GameObject ServerObjects;
     ArrayList funcArray = new ArrayList();
+
+    public delegate void OnReadyEvent();
+    public event OnReadyEvent OnReadyListener;
     public Dictionary<string, SObject> objects = new Dictionary<string, SObject>();
     public Dictionary<string, SObject> golfballs = new Dictionary<string, SObject>();
 
@@ -168,6 +171,8 @@ public class Client : MonoBehaviour
             {
                 func();
             }
+
+            OnReadyListener?.Invoke();
         }
         users.Add(value.sessionId,user);
     }

@@ -25,7 +25,6 @@ public class RotationController : MonoBehaviour, IDragHandler, IBeginDragHandler
 
     private void drag(Vector2 pos)
     {
-                QuixConsole.Log("Hola!!");
         Vector2 pointerPosition = pos;
         fingerSprite.transform.position = pointerPosition;
         Vector2 result = startPosition - pointerPosition;
@@ -98,7 +97,7 @@ public class RotationController : MonoBehaviour, IDragHandler, IBeginDragHandler
 
     private void FixedUpdate()
     {
-        if (rotateMessage.x != 0 || rotateMessage.y != 0 && Character.Instance.inputControl.Normal.Click.ReadValue<bool>())
+        if (rotateMessage.x != 0 || rotateMessage.y != 0 && Character.Instance.inputControl.Normal.Click.ReadValue<float>() >0)
         {
 
             actualSendData();

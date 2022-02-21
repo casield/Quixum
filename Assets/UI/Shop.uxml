@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement style="height: 100%; width: 100%; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); display: flex; visibility: visible;">
+        <ui:VisualElement style="height: auto; justify-content: center; flex-direction: row;">
+            <ui:Label text="SHOP" display-tooltip-when-elided="true" name="ShopLabel" style="-unity-font: resource(&apos;GUI/Fonts/PoetsenOne-Regular&apos;); -unity-font-definition: none; font-size: 49px; -unity-text-align: middle-center; justify-content: center; margin-left: 11px; margin-right: 11px; margin-top: 11px; margin-bottom: 11px; flex-grow: 2;" />
+            <ui:VisualElement style="flex-grow: 2; align-items: flex-end; justify-content: center;">
+                <ui:Button text="Close" display-tooltip-when-elided="true" name="close-shop" style="height: 44px; width: 58px;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ShopManager focusable="true" />
+    </ui:VisualElement>
+</ui:UXML>
